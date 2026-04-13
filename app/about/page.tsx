@@ -5,9 +5,8 @@ import { MapPin, Phone, MessageCircle, Clock, Star } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import TrustSignals from "@/components/TrustSignals";
 import { generateGeneralWhatsAppLink, SHOP_CONTACT } from "@/lib/whatsapp";
-import { cn } from "@/lib/utils"; // cn utility import karein
+import { cn } from "@/lib/utils";
 
-// Shop values/features
 const shopValues = [
   {
     icon: Star,
@@ -22,17 +21,16 @@ const shopValues = [
   {
     icon: Phone,
     title: "Excellent Support",
-    description: "Got questions? Reach out to us on WhatsApp anytime. We're here to help!",
+    description: "Got questions? Reach out to us on WhatsApp anytime. We&apos;re here to help!",
   },
 ];
 
 export default function AboutPage() {
   const whatsappLink = generateGeneralWhatsAppLink();
-  const googleMapsUrl = "https://maps.google.com/?q=Saima+Mall+Rashid+Minhas+Road+Karachi";
+  const googleMapsUrl = "https://maps.google.com";
 
   return (
     <div className="min-h-screen bg-white">
-      {/* Hero Section */}
       <section className="bg-gradient-to-br from-[#00B140]/10 via-white to-gold/10 pt-24 pb-12 md:pt-32 md:pb-20">
         <div className="container-custom">
           <div className="max-w-3xl mx-auto text-center">
@@ -47,11 +45,9 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Owner Section */}
       <section className="container-custom py-12 md:py-20">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           <div className="relative group">
-            {/* Image Border: Default Light Green, Hover Dark Green */}
             <div className="aspect-[4/5] rounded-3xl overflow-hidden bg-white relative shadow-2xl border-2 border-[#00B140]/20 group-hover:border-[#00B140] transition-all duration-500">
                <Image
                 src="/images/products/rehan.png"
@@ -60,7 +56,6 @@ export default function AboutPage() {
                 className="object-cover transition-transform duration-700 group-hover:scale-105"
               /> 
             </div>
-            {/* Decorative circles updated to brand green */}
             <div className="absolute -bottom-4 -right-4 w-24 h-24 bg-[#00B140]/10 rounded-full -z-10 group-hover:bg-[#00B140]/20 transition-colors" />
             <div className="absolute -top-4 -left-4 w-16 h-16 bg-[#00B140]/5 rounded-full -z-10" />
           </div>
@@ -70,7 +65,7 @@ export default function AboutPage() {
             <h3 className="text-xl text-[#00B140] font-bold mb-6 tracking-tight">Rehan Khan</h3>
             <div className="prose prose-gray">
               <p className="text-gray-600 leading-relaxed mb-4">
-                Welcome to New AYAN Cosmetics! I'm Rehan Khan, and I'm passionate
+                Welcome to New AYAN Cosmetics! I am Rehan Khan, and I am passionate
                 about bringing you the best quality cosmetics and fragrances at competitive prices.
               </p>
               <p className="text-gray-600 leading-relaxed mb-4">
@@ -90,7 +85,6 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Values Section */}
       <section className="bg-gray-50/50 py-12 md:py-20">
         <div className="container-custom">
           <h2 className="text-2xl md:text-3xl font-bold text-gray-900 text-center mb-12">Why Choose Us?</h2>
@@ -101,11 +95,7 @@ export default function AboutPage() {
                 <div 
                   key={index} 
                   className={cn(
-                    "bg-white p-8 rounded-2xl transition-all duration-300 text-center",
-                    // Default Light Green Border
-                    "border border-[#00B140]/20 shadow-sm",
-                    // Hover Dark Green Border
-                    "hover:border-[#00B140] hover:shadow-xl hover:-translate-y-2"
+                    "bg-white p-8 rounded-2xl transition-all duration-300 text-center border border-[#00B140]/20 shadow-sm hover:border-[#00B140] hover:shadow-xl hover:-translate-y-2"
                   )}
                 >
                   <div className="inline-flex items-center justify-center w-16 h-16 bg-[#00B140]/10 rounded-2xl mb-6">
@@ -120,12 +110,10 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Shop Location Section */}
       <section className="container-custom py-12 md:py-20">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           <div>
             <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-6">Visit Our Shop</h2>
-
             <div className="space-y-6 mb-8">
               <div className="flex items-start gap-4 group">
                 <div className="p-3 bg-[#00B140]/10 rounded-xl group-hover:bg-[#00B140] group-hover:text-white transition-colors">
@@ -136,7 +124,6 @@ export default function AboutPage() {
                   <p className="text-gray-600">Shop NO-G-16, Saima Mall, Rashid Minhas Road, Karachi</p>
                 </div>
               </div>
-
               <div className="flex items-start gap-4 group">
                 <div className="p-3 bg-[#00B140]/10 rounded-xl group-hover:bg-[#00B140] group-hover:text-white transition-colors">
                   <Phone className="h-6 w-6" />
@@ -147,7 +134,6 @@ export default function AboutPage() {
                 </div>
               </div>
             </div>
-
             <a href={googleMapsUrl} target="_blank" rel="noopener noreferrer">
               <Button className="gap-2 bg-[#00B140] hover:bg-black text-white px-8 py-6 rounded-xl shadow-xl transition-all">
                 Get Directions
@@ -155,9 +141,7 @@ export default function AboutPage() {
               </Button>
             </a>
           </div>
-
           <div className="relative group">
-            {/* Visiting Card Look with Green Border */}
             <div className="aspect-[3/2] rounded-3xl overflow-hidden bg-white relative shadow-2xl border-2 border-[#00B140]/20 group-hover:border-[#00B140] transition-all duration-500">
                <div className="absolute inset-0 flex flex-col items-center justify-center p-8 text-center bg-gradient-to-br from-white to-gray-50">
                 <h3 className="text-2xl font-black text-[#00B140] mb-2 italic tracking-tighter">NEW AYAN COSMETICS</h3>
