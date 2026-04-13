@@ -3,7 +3,7 @@ import { MapPin, Phone, Instagram, MessageCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import TrustSignals from "@/components/TrustSignals";
-import { generateGeneralWhatsAppLink, SHOP_CONTACT } from "@/lib/whatsapp";
+import { generateGeneralWhatsAppLink } from "@/lib/whatsapp";
 
 export const metadata: Metadata = {
   title: "Contact Us | AYAN Cosmetics",

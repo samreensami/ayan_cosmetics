@@ -9,7 +9,14 @@ import { ShoppingBag, MessageCircle } from "lucide-react";
 import { generateGeneralWhatsAppLink } from "@/lib/whatsapp";
 
 // --- Orbiting Item Component ---
-function OrbitingItem({ src, alt, angle, radius = 420 }: any) {
+interface OrbitingItemProps {
+  src: string;
+  alt: string;
+  angle: number;
+  radius?: number;
+}
+
+function OrbitingItem({ src, alt, angle, radius = 420 }: OrbitingItemProps) {
   const x = useMemo(() => radius * Math.cos(angle * (Math.PI / 180)), [radius, angle]);
   const y = useMemo(() => radius * Math.sin(angle * (Math.PI / 180)), [radius, angle]);
 
