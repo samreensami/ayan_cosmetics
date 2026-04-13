@@ -1,0 +1,139 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 0 0% 5%;
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 5%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 5%;
+    --primary: 145 100% 35%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 0 0% 96%;
+    --secondary-foreground: 0 0% 5%;
+    --muted: 0 0% 96%;
+    --muted-foreground: 0 0% 45%;
+    --accent: 48 100% 50%;
+    --accent-foreground: 0 0% 5%;
+    --destructive: 0 85% 50%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 0 0% 90%;
+    --input: 0 0% 90%;
+    --ring: 145 100% 35%;
+    --radius: 0.75rem;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+@layer components {
+  .glass-card {
+    @apply bg-white/80 backdrop-blur-xl border border-white/30 rounded-2xl shadow-xl;
+  }
+
+  /* Light inviting green gradient for Hero background */
+  .hero-gradient-light {
+    background: linear-gradient(
+      135deg,
+      #626563 0%,
+      #7ff4ac 25%,
+      #86ac99 50%,
+      #c4f09e 75%,
+      #62e894 100%
+    );
+  }
+
+  /* AYAN Logo Text - Red with Gold Glow (matching visiting card) */
+  .ayan-logo-text {
+    color: #DC2626;
+    text-shadow:
+      0 0 10px rgba(255, 215, 0, 1),
+      0 0 20px rgba(255, 215, 0, 0.9),
+      0 0 30px rgba(255, 215, 0, 0.7),
+      0 0 40px rgba(255, 215, 0, 0.5),
+      0 0 50px rgba(255, 215, 0, 0.3),
+      2px 2px 4px rgba(0, 0, 0, 0.3);
+    filter: drop-shadow(0 0 15px rgba(255, 215, 0, 0.6));
+  }
+
+  .gold-shimmer {
+    background: linear-gradient(90deg, #ffd700, #fff9c4, #ffd700);
+    background-size: 200% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: shimmer 3s linear infinite;
+  }
+
+  .product-card {
+    @apply transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl rounded-2xl overflow-hidden;
+  }
+
+  .section-heading {
+    @apply relative inline-block pb-3;
+  }
+
+  .section-heading::after {
+    content: "";
+    @apply absolute bottom-0 left-1/2 -translate-x-1/2 w-16 h-1 bg-primary rounded-full;
+  }
+
+  .whatsapp-pulse {
+    animation: pulse-glow 2s ease-in-out infinite;
+  }
+
+  /* Navbar with vibrant green background */
+  .navbar-green {
+    background-color: #00b140;
+  }
+}
+
+@layer utilities {
+  .container-custom {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+
+  .text-gradient {
+    @apply bg-gradient-to-r from-primary via-green-500 to-primary bg-clip-text text-transparent;
+  }
+
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 15px rgba(0, 177, 64, 0.5); }
+  50% { box-shadow: 0 0 30px rgba(0, 177, 64, 0.8); }
+}
+
+::selection {
+  @apply bg-primary/30;
+}
+
+*:focus-visible {
+  @apply outline-none ring-2 ring-primary ring-offset-2;
+}
