@@ -14,9 +14,8 @@ export default function ProductCard({ product }: { product: Product }) {
   const [imageError, setImageError] = useState(false);
   const { addToCart } = useCart();
 
-  // Dynamic WhatsApp Link using Order Number (03242162485)
-  // generateWhatsAppLink function ab lib/whatsapp.ts se order number uthaye ga
-  const orderViaWhatsApp = generateWhatsAppLink(product.name);
+  // EDIT: Yahan price bhi pass kar rahe hain taake message complete jaye
+  const orderViaWhatsApp = generateWhatsAppLink(product.name, product.price);
 
   const handleAddToCart = () => {
     addToCart(product);
@@ -124,6 +123,7 @@ export default function ProductCard({ product }: { product: Product }) {
             )}
           </button>
 
+          {/* EDIT: Ye button ab Order Number (03242162485) par message bheje ga */}
           <a
             href={orderViaWhatsApp}
             target="_blank"
@@ -138,7 +138,6 @@ export default function ProductCard({ product }: { product: Product }) {
   );
 }
 
-// Skeleton loading part remains same...
 export function ProductCardSkeleton() {
     return (
       <div className="isolate relative flex flex-col h-full bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">

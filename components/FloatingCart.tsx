@@ -3,7 +3,8 @@
 import React from "react";
 import { X, Plus, Minus, ShoppingCart, Trash2 } from "lucide-react";
 import { useCart } from "@/lib/CartContext";
-import { WHATSAPP_NUMBER } from "@/lib/whatsapp";
+// Yahan humne purana WHATSAPP_NUMBER hata kar ORDER_NUMBER import kiya hai
+import { ORDER_NUMBER } from "@/lib/whatsapp";
 import Image from "next/image";
 
 export default function FloatingCart() {
@@ -15,13 +16,14 @@ export default function FloatingCart() {
     let message = "*🛍️ New Order from AYAN Cosmetics*\n\n";
     items.forEach((item, index) => {
       message += `${index + 1}. *${item.product.name}*\n`;
-      message += `   Qty: ${item.quantity}\n\n`;
+      message += `    Qty: ${item.quantity}\n\n`;
     });
     message += `───────────────\n`;
     message += `Please confirm prices and availability. Thank you!`;
 
     const encoded = encodeURIComponent(message);
-    window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encoded}`, "_blank");
+    // Yahan ORDER_NUMBER use ho raha hai jo export ho chuka hai
+    window.open(`https://wa.me/${ORDER_NUMBER}?text=${encoded}`, "_blank");
   };
 
   if (items.length === 0 && !isOpen) return null;
