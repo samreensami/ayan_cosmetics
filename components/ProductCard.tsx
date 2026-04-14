@@ -48,20 +48,20 @@ export default function ProductCard({ product }: ProductCardProps) {
     inStock,
   } = product;
 
-  const whatsappLink = generateWhatsAppLink(name);
+  // Direct Number Fix for WhatsApp
+  const whatsappLink = `https://wa.me/923242162485?text=Assalam-o-Alaikum%2C%20I%20want%20to%20order%3A%20${encodeURIComponent(name)}`;
 
   return (
     <Card 
       className={cn(
-        "group overflow-hidden transition-all duration-300 rounded-2xl bg-white",
-        // Bager hover ke halka green border, hover par dark green aur shadow
+        "group overflow-hidden transition-all duration-300 rounded-2xl bg-white flex flex-col h-full",
         "border border-[#00b140]/20 shadow-sm",
         "hover:border-[#00b140] hover:shadow-xl hover:-translate-y-1 hover:ring-1 hover:ring-[#00b140]"
       )}
     >
-      {/* Image Container */}
-      <div className="relative aspect-square overflow-hidden bg-gray-50/50">
-        <Link href={`/shop/${slug}`}>
+      {/* Image Container - Aspect Square fixes the "jumping" layout */}
+      <div className="relative aspect-square w-full overflow-hidden bg-gray-50/50">
+        <Link href={`/shop/${slug}`} className="block w-full h-full">
           <div className="relative w-full h-full">
             {imageError ? (
               <div className="absolute inset-0 bg-gradient-to-br from-[#00b140]/5 to-[#FFD700]/5 flex flex-col items-center justify-center">
@@ -78,6 +78,7 @@ export default function ProductCard({ product }: ProductCardProps) {
                 className="object-cover transition-transform duration-700 group-hover:scale-110"
                 sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
                 onError={() => setImageError(true)}
+                priority={isBestSeller}
               />
             )}
             
@@ -91,15 +92,15 @@ export default function ProductCard({ product }: ProductCardProps) {
           </div>
         </Link>
 
-        {/* Badges - Styled more boldly */}
+        {/* Badges */}
         <div className="absolute top-3 left-3 flex flex-col gap-2 z-20">
           {isNew && (
-            <Badge className="bg-[#00b140] hover:bg-[#00b140] text-white font-bold px-3 py-1 border-none shadow-md">
+            <Badge className="bg-[#00b140] hover:bg-[#00b140] text-white font-bold px-3 py-1 border-none shadow-md text-[10px]">
               NEW
             </Badge>
           )}
           {isBestSeller && (
-            <Badge className="bg-[#FFD700] hover:bg-[#FFD700] text-black font-bold px-3 py-1 border-none shadow-md">
+            <Badge className="bg-[#FFD700] hover:bg-[#FFD700] text-black font-bold px-3 py-1 border-none shadow-md text-[10px]">
               BEST SELLER
             </Badge>
           )}
@@ -115,7 +116,7 @@ export default function ProductCard({ product }: ProductCardProps) {
       </div>
 
       {/* Product Info */}
-      <CardContent className="p-5">
+      <CardContent className="p-5 flex flex-col flex-grow">
         <p className="text-[10px] text-[#00b140] font-black uppercase tracking-[0.2em] mb-2">
           {brand}
         </p>
@@ -126,7 +127,7 @@ export default function ProductCard({ product }: ProductCardProps) {
           </h3>
         </Link>
 
-        <div className="mb-5 flex items-center justify-between">
+        <div className="mb-5 flex items-center justify-between mt-auto">
           <StarRating rating={rating} reviewCount={reviewCount} size="sm" />
         </div>
 
@@ -150,23 +151,16 @@ export default function ProductCard({ product }: ProductCardProps) {
             disabled={!inStock}
           >
             {justAdded ? (
-              <>
-                <Check className="h-4 w-4" />
-                Added
-              </>
+              <><Check className="h-4 w-4" /> Added</>
             ) : (
-              <>
-                <ShoppingCart className="h-4 w-4" />
-                Add to Cart
-              </>
+              <><ShoppingCart className="h-4 w-4" /> Add to Cart</>
             )}
           </Button>
+          
           <a href={whatsappLink} target="_blank" rel="noopener noreferrer" className="block">
             <Button
               variant="outline"
-              className={cn(
-                "h-12 w-12 p-0 rounded-xl border-[#00b140]/30 hover:bg-[#00b140] hover:text-white hover:border-[#00b140] transition-all",
-              )}
+              className="h-12 w-12 p-0 rounded-xl border-[#00b140]/30 hover:bg-[#00b140] hover:text-white transition-all"
             >
               <MessageCircle className="h-4 w-4" />
             </Button>
