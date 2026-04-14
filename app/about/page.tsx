@@ -1,5 +1,3 @@
-"use client";
-
 import Image from "next/image";
 import { MapPin, Phone, MessageCircle, Clock, Star } from "lucide-react";
 import { Button } from "@/components/ui/button";
