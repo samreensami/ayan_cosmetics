@@ -1,35 +1,35 @@
+"use client";
+
 import { Metadata } from "next";
-import { MapPin, Phone, Instagram, MessageCircle } from "lucide-react";
+import { MapPin, Phone, Instagram, MessageCircle, Facebook } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import TrustSignals from "@/components/TrustSignals";
-import { generateGeneralWhatsAppLink } from "@/lib/whatsapp";
 
-export const metadata: Metadata = {
-  title: "Contact Us | AYAN Cosmetics",
-  description: "Contact AYAN Cosmetics via WhatsApp or visit our shop at Saima Mall, Rashid Minhas Road, Karachi. Phone: 0333-2304345",
-};
+// WhatsApp links with different numbers
+const WHATSAPP_ORDER_LINK = "https://wa.me/923242162485?text=Hello%2C%20I%20want%20to%20place%20an%20order.";
+const WHATSAPP_GENERAL_LINK = "https://wa.me/923332304145?text=Hello%2C%20I%20have%20a%20general%20inquiry.";
 
 const contactMethods = [
   {
     icon: MessageCircle,
-    title: "WhatsApp",
-    value: "0333-2304345",
-    description: "Chat with us instantly",
-    href: generateGeneralWhatsAppLink(),
+    title: "WhatsApp (Inquiry)",
+    value: "0333-2304145",
+    description: "General questions & help",
+    href: WHATSAPP_GENERAL_LINK,
     color: "bg-[#25D366]",
     iconColor: "text-white",
     external: true,
   },
   {
-    icon: Phone,
-    title: "Phone",
-    value: "0333-2304345",
-    description: "Call us directly",
-    href: "tel:03332304345",
-    color: "bg-blue-500",
+    icon: Facebook,
+    title: "Facebook",
+    value: "AYAN Cosmetics",
+    description: "Connect on Facebook",
+    href: "https://www.facebook.com/share/1An9ucPzHR/",
+    color: "bg-[#1877F2]",
     iconColor: "text-white",
-    external: false,
+    external: true,
   },
   {
     icon: Instagram,
@@ -44,17 +44,15 @@ const contactMethods = [
 ];
 
 export default function ContactPage() {
-  const whatsappLink = generateGeneralWhatsAppLink();
-
   return (
     <div className="min-h-screen bg-gray-50">
-      <section className="bg-gradient-to-br from-primary/10 via-white to-gold/10 pt-24 pb-12 md:pt-32 md:pb-16">
-        <div className="container-custom">
+      <section className="bg-gradient-to-br from-primary/10 via-white to-gold/10 pt-20 pb-10 md:pt-32 md:pb-16">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl mx-auto text-center">
             <h1 className="text-3xl md:text-5xl font-bold text-gray-900 mb-6">
               Get in <span className="text-primary">Touch</span>
             </h1>
-            <p className="text-lg text-gray-600 leading-relaxed">
+            <p className="text-base md:text-lg text-gray-600 leading-relaxed">
               Have a question about our products? Want to place an order? We&apos;d
               love to hear from you! Reach out via WhatsApp for the fastest
               response.
@@ -63,8 +61,9 @@ export default function ContactPage() {
         </div>
       </section>
 
-      <section className="container-custom py-12 md:py-16">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 md:py-16">
+        {/* Contact Cards Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
           {contactMethods.map((method, index) => {
             const Icon = method.icon;
             return (
@@ -73,16 +72,16 @@ export default function ContactPage() {
                 href={method.href}
                 target={method.external ? "_blank" : undefined}
                 rel={method.external ? "noopener noreferrer" : undefined}
-                className="block"
+                className="block group"
               >
-                <Card className="h-full hover:shadow-lg transition-shadow">
+                <Card className="h-full hover:shadow-xl transition-all duration-300 border-none shadow-sm">
                   <CardContent className="p-6 text-center">
-                    <div className={`inline-flex items-center justify-center w-16 h-16 ${method.color} rounded-full mb-4`}>
-                      <Icon className={`h-8 w-8 ${method.iconColor}`} />
+                    <div className={`inline-flex items-center justify-center w-14 h-14 md:w-16 md:h-16 ${method.color} rounded-full mb-4 group-hover:scale-110 transition-transform`}>
+                      <Icon className={`h-7 w-7 md:h-8 md:w-8 ${method.iconColor}`} />
                     </div>
                     <h3 className="text-lg font-semibold text-gray-900 mb-1">{method.title}</h3>
-                    <p className="text-primary font-medium mb-2">{method.value}</p>
-                    <p className="text-sm text-gray-500">{method.description}</p>
+                    <p className="text-primary font-medium mb-2 text-sm md:text-base">{method.value}</p>
+                    <p className="text-xs md:text-sm text-gray-500">{method.description}</p>
                   </CardContent>
                 </Card>
               </a>
@@ -90,72 +89,70 @@ export default function ContactPage() {
           })}
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-          <Card className="overflow-hidden">
-            <div className="bg-[#25D366] p-8 text-white text-center">
-              <MessageCircle className="h-16 w-16 mx-auto mb-4" fill="white" />
-              <h2 className="text-2xl font-bold mb-2">Order on WhatsApp</h2>
-              <p className="opacity-90 mb-6">
-                The fastest way to reach us! Send us a message and we&apos;ll respond within minutes.
+        {/* Order Section & Address */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12">
+          <Card className="overflow-hidden border-none shadow-md">
+            <div className="bg-[#25D366] p-6 md:p-8 text-white text-center">
+              <MessageCircle className="h-12 w-12 md:h-16 md:w-16 mx-auto mb-4" fill="white" />
+              <h2 className="text-2xl md:text-3xl font-bold mb-2">Order on WhatsApp</h2>
+              <p className="text-sm md:text-base opacity-90 mb-6">
+                Direct Order Number: <strong>0324-2162485</strong><br/>
+                Send us a message and we&apos;ll respond within minutes.
               </p>
-              <a href={whatsappLink} target="_blank" rel="noopener noreferrer">
-                <Button size="xl" className="bg-white text-[#25D366] hover:bg-gray-100 gap-2">
-                  <MessageCircle className="h-5 w-5" /> Start Chat
+              <a href={WHATSAPP_ORDER_LINK} target="_blank" rel="noopener noreferrer">
+                <Button size="lg" className="bg-white text-[#25D366] hover:bg-gray-100 gap-2 font-bold px-8">
+                  <MessageCircle className="h-5 w-5" /> Start Order
                 </Button>
               </a>
             </div>
             <CardContent className="p-6 bg-white">
-              <h3 className="font-semibold text-gray-900 mb-4">How it works:</h3>
-              <ol className="space-y-3 text-gray-600">
-                <li className="flex items-start gap-3">
-                  <span className="flex-shrink-0 w-6 h-6 rounded-full bg-primary text-white text-sm flex items-center justify-center">1</span>
-                  <span>Click the button to open WhatsApp</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <span className="flex-shrink-0 w-6 h-6 rounded-full bg-primary text-white text-sm flex items-center justify-center">2</span>
-                  <span>Tell us which products you&apos;re interested in</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <span className="flex-shrink-0 w-6 h-6 rounded-full bg-primary text-white text-sm flex items-center justify-center">3</span>
-                  <span>We&apos;ll confirm availability and total price</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <span className="flex-shrink-0 w-6 h-6 rounded-full bg-primary text-white text-sm flex items-center justify-center">4</span>
-                  <span>Share your address for Cash on Delivery!</span>
-                </li>
-              </ol>
+              <h3 className="font-semibold text-gray-900 mb-4 text-center md:text-left">Easy Ordering Steps:</h3>
+              <div className="space-y-4 max-w-sm mx-auto md:mx-0">
+                {[
+                  "Click the 'Start Order' button above",
+                  "Share product photos or names",
+                  "Confirm availability & price",
+                  "Get delivery at your doorstep!"
+                ].map((step, i) => (
+                  <div key={i} className="flex items-center gap-3">
+                    <span className="flex-shrink-0 w-6 h-6 rounded-full bg-[#25D366] text-white text-xs flex items-center justify-center font-bold">
+                      {i + 1}
+                    </span>
+                    <span className="text-sm text-gray-700">{step}</span>
+                  </div>
+                ))}
+              </div>
             </CardContent>
           </Card>
 
           <div className="space-y-6">
-            <Card>
+            <Card className="border-none shadow-sm hover:shadow-md transition-shadow">
               <CardContent className="p-6">
-                <div className="flex items-center gap-6">
-                  <div className="flex-shrink-0">
-                    <div className="w-32 h-32 bg-gradient-to-br from-purple-100 to-pink-100 rounded-lg flex items-center justify-center">
-                      <Instagram className="h-8 w-8 text-pink-500" />
-                    </div>
+                <div className="flex flex-col sm:flex-row items-center sm:items-start text-center sm:text-left gap-4 md:gap-6">
+                  <div className="p-4 bg-blue-50 rounded-xl">
+                    <Phone className="h-6 w-6 text-blue-600" />
                   </div>
                   <div>
-                    <h3 className="font-semibold text-gray-900 mb-2">Follow Us on Instagram</h3>
-                    <a href="https://instagram.com/AYANCOSMETICS.OFFICIAL" target="_blank" rel="noopener noreferrer" className="text-pink-500 hover:underline font-medium">@AYANCOSMETICS.OFFICIAL</a>
-                    <p className="text-sm text-gray-500 mt-2">Scan the QR code or click to follow us for new arrivals!</p>
+                    <h3 className="font-semibold text-gray-900 mb-1">Direct Contact</h3>
+                    <p className="text-blue-600 font-bold mb-1">0333-2304145</p>
+                    <p className="text-xs text-gray-500">Available for calls during shop hours</p>
                   </div>
                 </div>
               </CardContent>
             </Card>
 
-            <Card>
+            <Card className="border-none shadow-sm hover:shadow-md transition-shadow">
               <CardContent className="p-6">
-                <div className="flex items-start gap-4">
-                  <div className="p-3 bg-primary/10 rounded-lg flex-shrink-0">
+                <div className="flex flex-col sm:flex-row items-center sm:items-start text-center sm:text-left gap-4 md:gap-6">
+                  <div className="p-4 bg-primary/10 rounded-xl">
                     <MapPin className="h-6 w-6 text-primary" />
                   </div>
                   <div>
-                    <h3 className="font-semibold text-gray-900 mb-2">Visit Our Shop</h3>
-                    <address className="text-gray-600 not-italic leading-relaxed">
-                      <strong>New AYAN Cosmetics</strong><br />
-                      Shop NO-G-16, Saima Mall, Rashid Minhas Road, Karachi
+                    <h3 className="font-semibold text-gray-900 mb-1">Visit Our Shop</h3>
+                    <address className="text-gray-600 not-italic text-sm leading-relaxed">
+                      <strong className="text-gray-900">New AYAN Cosmetics</strong><br />
+                      Shop NO-G-16, Saima Mall,<br /> 
+                      Rashid Minhas Road, Karachi
                     </address>
                   </div>
                 </div>
