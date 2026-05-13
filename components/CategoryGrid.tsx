@@ -2,128 +2,100 @@
 
 import React from "react";
 import Link from "next/link";
-import { Sparkles, Droplets, Eye, Heart, ShoppingBag, Scissors, SprayCan } from "lucide-react";
+import { motion } from "framer-motion";
+import {
+  Heart, Droplets, Sparkles, SprayCan,
+  Eye, ShoppingBag, Layers, Scissors,
+} from "lucide-react";
 
-/**
- * CategoryGrid Component for Home Page
- *
- * Displays product categories with icons in a visually appealing grid
- * Links to the shop page with category filter applied
- *
- * Categories based on spec:
- * - Lipstick, Foundation, Mascara, Eyeshadow, Blush, Concealer
- * - Highlighter, Skincare, Haircare, Perfume, Cosmetic Bags
- */
-
-// Category configuration with icons and colors
 const categories = [
-  {
-    name: "Lipstick",
-    slug: "Lipstick",
-    icon: Heart,
-    color: "bg-red-50 text-red-500 hover:bg-red-100",
-    borderColor: "border-red-200",
-  },
-  {
-    name: "Foundation",
-    slug: "Foundation",
-    icon: Droplets,
-    color: "bg-amber-50 text-amber-600 hover:bg-amber-100",
-    borderColor: "border-amber-200",
-  },
-  {
-    name: "Skincare",
-    slug: "Skincare",
-    icon: Sparkles,
-    color: "bg-green-50 text-green-500 hover:bg-green-100",
-    borderColor: "border-green-200",
-  },
-  {
-    name: "Perfumes",
-    slug: "Perfume",
-    icon: SprayCan,
-    color: "bg-purple-50 text-purple-500 hover:bg-purple-100",
-    borderColor: "border-purple-200",
-  },
-  {
-    name: "Eye Makeup",
-    slug: "Eyeshadow",
-    icon: Eye,
-    color: "bg-pink-50 text-pink-500 hover:bg-pink-100",
-    borderColor: "border-pink-200",
-  },
-  {
-    name: "Cosmetic Bags",
-    slug: "Cosmetic+Bags",
-    icon: ShoppingBag,
-    color: "bg-blue-50 text-blue-500 hover:bg-blue-100",
-    borderColor: "border-blue-200",
-  },
-  {
-    name: "Mascara",
-    slug: "Mascara",
-    icon: Eye,
-    color: "bg-gray-50 text-gray-600 hover:bg-gray-100",
-    borderColor: "border-gray-200",
-  },
-  {
-    name: "Haircare",
-    slug: "Haircare",
-    icon: Scissors,
-    color: "bg-orange-50 text-orange-500 hover:bg-orange-100",
-    borderColor: "border-orange-200",
-  },
+  { name: "Lipstick",       slug: "Lipstick",       icon: Heart       },
+  { name: "Foundation",     slug: "Foundation",     icon: Droplets    },
+  { name: "Skincare",       slug: "Skincare",       icon: Sparkles    },
+  { name: "Perfumes",       slug: "Perfume",        icon: SprayCan    },
+  { name: "Eye Makeup",     slug: "Eyeshadow",      icon: Eye         },
+  { name: "Cosmetic Bags",  slug: "Cosmetic+Bags",  icon: ShoppingBag },
+  { name: "Mascara",        slug: "Mascara",        icon: Layers      },
+  { name: "Haircare",       slug: "Haircare",       icon: Scissors    },
 ];
+
+const row1 = [...categories.slice(0, 4), ...categories.slice(0, 4)];
+const row2 = [...categories.slice(4, 8), ...categories.slice(4, 8)];
 
 export default function CategoryGrid() {
   return (
-    <section className="py-12 md:py-20 bg-white">
+    <section className="py-20 bg-[#529538] overflow-hidden border-t border-white/10"> 
       <div className="container-custom">
         {/* Section Header */}
-        <div className="text-center mb-10 md:mb-14">
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+        <div className="text-center mb-16">
+          <h2 className="text-4xl font-bold text-white mb-4 tracking-tight uppercase">
             Shop by Category
           </h2>
-          <p className="text-gray-600 max-w-2xl mx-auto">
-            Explore our wide range of genuine cosmetics, fragrances, and beauty accessories
-          </p>
+          <div className="h-1 w-24 bg-white/30 mx-auto rounded-full"></div>
         </div>
 
-        {/* Category Grid */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 md:gap-6">
-          {categories.map((category) => {
-            const Icon = category.icon;
-            return (
-              <Link
-                key={category.slug}
-                href={`/shop?category=${category.slug}`}
-                className={`group relative flex flex-col items-center justify-center p-6 md:p-8 rounded-2xl border ${category.borderColor} ${category.color} transition-all duration-300 hover:shadow-lg hover:-translate-y-1`}
-              >
-                {/* Icon */}
-                <div className="mb-3 md:mb-4 transition-transform duration-300 group-hover:scale-110">
-                  <Icon className="h-8 w-8 md:h-10 md:w-10" strokeWidth={1.5} />
-                </div>
+        <div className="flex flex-col gap-10">
+          {/* Row 1: Right to Left */}
+          <div className="flex overflow-hidden">
+            <motion.div 
+              className="flex gap-6 whitespace-nowrap"
+              animate={{ x: ["0%", "-50%"] }}
+              transition={{ ease: "linear", duration: 15, repeat: Infinity }}
+            >
+              {row1.map((category, index) => (
+                <CategoryCard key={`row1-${index}`} category={category} />
+              ))}
+            </motion.div>
+          </div>
 
-                {/* Category Name */}
-                <h3 className="font-medium text-gray-800 text-sm md:text-base text-center">
-                  {category.name}
-                </h3>
-              </Link>
-            );
-          })}
+          {/* Row 2: Left to Right */}
+          <div className="flex overflow-hidden">
+            <motion.div 
+              className="flex gap-6 whitespace-nowrap"
+              animate={{ x: ["-50%", "0%"] }}
+              transition={{ ease: "linear", duration: 15, repeat: Infinity }}
+            >
+              {row2.map((category, index) => (
+                <CategoryCard key={`row2-${index}`} category={category} />
+              ))}
+            </motion.div>
+          </div>
         </div>
 
-        {/* View All Link */}
-        <div className="text-center mt-10">
+        {/* View All Button */}
+        <div className="text-center mt-16">
           <Link
             href="/shop"
-            className="inline-flex items-center gap-2 text-primary font-medium hover:gap-3 transition-all"
+            className="px-10 py-3 bg-white text-[#529538] font-bold uppercase tracking-widest hover:bg-black hover:text-white transition-all duration-300 inline-block rounded-none shadow-lg"
           >
-            View All Products
-            <span className="text-lg">→</span>
+            View All Collection
           </Link>
         </div>
       </div>
     </section>
+  );
+}
+
+function CategoryCard({ category }: { category: any }) {
+  const Icon = category.icon;
+  return (
+    <Link
+      href={`/shop?category=${category.slug}`}
+      className="
+        flex flex-col items-center justify-center gap-4
+        w-[200px] h-[160px] rounded-xl border border-white/20
+        bg-white/10 backdrop-blur-md
+        hover:bg-white hover:scale-105
+        transition-all duration-500 group
+      "
+    >
+      <Icon
+        className="h-10 w-10 text-white group-hover:text-[#529538] transition-colors duration-300"
+        strokeWidth={1.2}
+      />
+      <span className="text-xs font-bold tracking-[0.2em] uppercase text-white group-hover:text-[#529538] transition-colors duration-300">
+        {category.name}
+      </span>
+    </Link>
   );
 }

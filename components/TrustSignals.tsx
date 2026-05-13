@@ -1,115 +1,97 @@
-import React from "react";
-import { Truck, Shield, BadgeCheck, Clock } from "lucide-react";
+"use client";
 
-/**
- * TrustSignals Component
- *
- * Displays trust-building elements as per spec:
- * - Cash on Delivery Available
- * - 100% Genuine Products
- * - Fast Delivery in Karachi
- *
- * Used on home page and product detail pages
- */
+import { motion } from "framer-motion";
+import { Truck, ShieldCheck, RotateCcw, Headphones } from "lucide-react";
+import { cn } from "@/lib/utils";
+
+// Variants with "as const" to fix the Framer Motion transition error
+const containerVariants = {
+  hidden: {},
+  visible: { transition: { staggerChildren: 0.1 } },
+};
+
+const cardVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: { 
+    opacity: 1, 
+    y: 0, 
+    transition: { 
+      duration: 0.6, 
+      ease: "easeOut" as const 
+    } 
+  },
+};
 
 const trustSignals = [
   {
     icon: Truck,
-    title: "Cash on Delivery",
-    description: "Pay when you receive",
-    color: "text-blue-500",
-    bgColor: "bg-blue-50",
-  },
-  {
-    icon: BadgeCheck,
-    title: "100% Genuine",
-    description: "Authentic products only",
-    color: "text-primary",
-    bgColor: "bg-green-50",
-  },
-  {
-    icon: Clock,
     title: "Fast Delivery",
-    description: "Quick shipping in Karachi",
-    color: "text-purple-500",
-    bgColor: "bg-purple-50",
+    description: "Karachi same day dispatch",
   },
   {
-    icon: Shield,
-    title: "Secure Shopping",
-    description: "Your trust matters",
-    color: "text-orange-500",
-    bgColor: "bg-orange-50",
+    icon: ShieldCheck,
+    title: "100% Authentic",
+    description: "Genuine branded products",
+  },
+  {
+    icon: RotateCcw,
+    title: "Easy Returns",
+    description: "Hassle-free 7-day policy",
+  },
+  {
+    icon: Headphones,
+    title: "24/7 Support",
+    description: "Direct WhatsApp assistance",
   },
 ];
 
 interface TrustSignalsProps {
-  variant?: "default" | "compact" | "banner";
+  variant?: "banner" | "compact";
 }
 
-export default function TrustSignals({ variant = "default" }: TrustSignalsProps) {
-  if (variant === "banner") {
-    return (
-      <div className="bg-primary py-3">
-        <div className="container-custom">
-          <div className="flex flex-wrap justify-center gap-6 md:gap-12 text-sm font-medium text-white">
-            <div className="flex items-center gap-2">
-              <span className="text-gold">✓</span>
-              Cash on Delivery Available
-            </div>
-            <div className="flex items-center gap-2">
-              <span className="text-gold">✓</span>
-              100% Genuine Products
-            </div>
-            <div className="flex items-center gap-2">
-              <span className="text-gold">✓</span>
-              Fast Delivery in Karachi
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
-  if (variant === "compact") {
-    return (
-      <div className="flex flex-wrap justify-center gap-4 md:gap-8 py-4">
-        {trustSignals.slice(0, 3).map((signal) => (
-          <div key={signal.title} className="flex items-center gap-2">
-            <signal.icon className={`h-5 w-5 ${signal.color}`} />
-            <span className="text-sm font-medium text-gray-700">
-              {signal.title}
-            </span>
-          </div>
-        ))}
-      </div>
-    );
-  }
-
+export default function TrustSignals({ variant = "banner" }: TrustSignalsProps) {
   return (
-    <section className="py-12 bg-gray-50">
-      <div className="container-custom">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
-          {trustSignals.map((signal) => {
-            const Icon = signal.icon;
-            return (
-              <div
-                key={signal.title}
-                className="flex flex-col items-center text-center p-6 rounded-xl bg-white shadow-sm hover:shadow-md transition-shadow"
-              >
-                <div
-                  className={`${signal.bgColor} p-4 rounded-full mb-4`}
-                >
-                  <Icon className={`h-6 w-6 ${signal.color}`} />
+    <section className={cn(
+      "relative overflow-hidden border-y border-white/5",
+      variant === "compact" ? "py-8 bg-black/20" : "py-16 bg-black"
+    )}>
+      {/* Background Glow Effect */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-px bg-gradient-to-r from-transparent via-[#529538]/30 to-transparent z-0" />
+
+      <div className="container-custom relative z-10">
+        <motion.div
+          className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-0"
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.2 }}
+        >
+          {trustSignals.map((signal, index) => (
+            <motion.div
+              key={signal.title}
+              variants={cardVariants}
+              className={cn(
+                "flex flex-col items-center text-center p-6 group transition-all",
+                index !== trustSignals.length - 1 && "lg:border-r lg:border-white/10"
+              )}
+            >
+              {/* Animated Icon Container */}
+              <div className="relative mb-6">
+                <div className="absolute inset-0 bg-[#529538] blur-xl opacity-0 group-hover:opacity-20 transition-opacity" />
+                <div className="relative bg-zinc-900 border border-white/10 p-4 rounded-full group-hover:border-[#529538]/50 group-hover:text-[#529538] transition-all duration-500">
+                  <signal.icon className="h-6 w-6 text-white group-hover:text-[#529538]" strokeWidth={1} />
                 </div>
-                <h3 className="font-semibold text-gray-900 mb-1">
-                  {signal.title}
-                </h3>
-                <p className="text-sm text-gray-500">{signal.description}</p>
               </div>
-            );
-          })}
-        </div>
+
+              <h3 className="font-black text-white mb-2 uppercase tracking-[0.3em] text-[10px] group-hover:text-[#529538] transition-colors">
+                {signal.title}
+              </h3>
+              <p className="text-[11px] text-zinc-500 uppercase tracking-wider font-medium">
+                {signal.description}
+              </p>
+            </motion.div>
+          ))}
+        </motion.div>
       </div>
     </section>
   );

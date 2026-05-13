@@ -1,128 +1,137 @@
 "use client";
 
-import { useMemo, useEffect, useState } from "react";
+import { useState } from "react";
+import { motion } from "framer-motion";
 import Link from "next/link";
 import Image from "next/image";
-import { motion } from "framer-motion";
-import { Button } from "@/components/ui/button";
 import { ShoppingBag, MessageCircle } from "lucide-react";
 import { generateGeneralWhatsAppLink } from "@/lib/whatsapp";
 
-// --- Orbiting Item Component ---
-interface OrbitingItemProps {
-  src: string;
-  alt: string;
-  angle: number;
-  radius: number; // Ab radius dynamic pass hoga
-}
-
-function OrbitingItem({ src, alt, angle, radius }: OrbitingItemProps) {
-  const x = useMemo(() => radius * Math.cos(angle * (Math.PI / 180)), [radius, angle]);
-  const y = useMemo(() => radius * Math.sin(angle * (Math.PI / 180)), [radius, angle]);
-
-  return (
-    <div
-      className="absolute p-1.5 sm:p-2 bg-white/10 backdrop-blur-md rounded-full border border-white/20 shadow-2xl transition-all duration-500"
-      style={{
-        transform: `translate(${x}px, ${y}px)`,
-      }}
-    >
-      {/* Mobile par w-12 aur computer par w-24 */}
-      <div className="relative w-12 h-12 sm:w-24 sm:h-24">
-        <Image
-          src={src}
-          alt={alt}
-          fill
-          className="object-contain drop-shadow-xl"
-        />
-      </div>
-    </div>
-  );
-}
+// Shared luxury fade-in-left animation factory
+const fadeLeft = (delay = 0) => ({
+  initial: { opacity: 0, x: -50 },
+  animate: { opacity: 1, x: 0 },
+  transition: {
+    duration: 0.95,
+    ease: [0.25, 0.46, 0.45, 0.94] as [number, number, number, number],
+    delay,
+  },
+});
 
 export default function Hero() {
-  // Mobile responsive state
-  const [radius, setRadius] = useState(420);
-
-  useEffect(() => {
-    const handleResize = () => {
-      // Agar screen mobile hai toh radius 150-180 rakhein, warna 420
-      setRadius(window.innerWidth < 768 ? 160 : 420);
-    };
-    handleResize();
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
-
-  const orbitItems = [
-    { src: "/images/products/hs1.png", alt: "Product 1", angle: 0 },
-    { src: "/images/products/hs2.png", alt: "Product 2", angle: 60 },
-    { src: "/images/products/hs3.png", alt: "Product 3", angle: 120 },
-    { src: "/images/products/hs4.png", alt: "Product 4", angle: 180 },
-    { src: "/images/products/hs5.png", alt: "Product 5", angle: 240 },
-    { src: "/images/products/hs6.png", alt: "Product 6", angle: 300 },
-  ];
+  const [imgError, setImgError] = useState(false);
 
   return (
-    <section className="relative min-h-screen w-full overflow-hidden hero-gradient-light bg-white flex items-center justify-center">
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_30%,rgba(0,177,64,0.2),transparent_50%)] z-0" />
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_70%,rgba(255,215,0,0.15),transparent_50%)] z-0" />
+    <section className="relative h-screen w-full overflow-hidden bg-black">
 
-      <div className="relative z-10 flex flex-col items-center justify-center text-center px-4 w-full h-screen">
-        
-        {/* ORBIT SYSTEM */}
-        <div className="absolute flex items-center justify-center w-full h-full pointer-events-none">
-          <motion.div
-            animate={{ rotate: 360 }}
-            transition={{
-              duration: 40,
-              repeat: Infinity,
-              ease: "linear",
-            }}
-            className="relative flex items-center justify-center"
+      {/* ── Background Image ── */}
+      {!imgError ? (
+        <Image
+          src="/images/products/hero1.png"
+          alt="AYAN Cosmetics – Dewy Glow Collection"
+          fill
+          priority
+          sizes="100vw"
+          className="object-cover object-center md:object-right-top"
+          onError={() => setImgError(true)}
+        />
+      ) : (
+        <div className="absolute inset-0 bg-gradient-to-br from-[#001a00] via-[#003d00] to-[#00b140]" />
+      )}
+
+      {/* ── Overlays ── */}
+      {/* Left-heavy gradient so right side (girl's face) stays clear */}
+      <div className="absolute inset-0 bg-gradient-to-r from-black/75 via-black/40 to-black/10 z-10" />
+      {/* Bottom fade */}
+      <div className="absolute bottom-0 left-0 right-0 h-28 bg-gradient-to-t from-black/70 to-transparent z-10" />
+
+      {/* ── Content Grid ── */}
+      {/*
+        Desktop: 2-col grid. Text lives in col-1 (left ~45%).
+        Right col is intentionally empty — the girl's face shows there.
+        Mobile: single column, centered.
+      */}
+      <div className="relative z-20 h-full w-full grid grid-cols-1 md:grid-cols-[48%_52%]">
+
+        {/* LEFT COLUMN — Text Block */}
+        <div className="flex flex-col justify-center px-6 sm:px-8 md:pl-8 lg:pl-12
+                        items-center text-center
+                        md:items-start md:text-left">
+
+          {/* Tag line */}
+          <motion.p
+            {...fadeLeft(0.1)}
+            className="text-[#00b140] tracking-[0.35em] text-[10px] sm:text-xs md:text-sm
+                       font-bold uppercase mb-4 md:mb-5"
           >
-            {orbitItems.map((item, idx) => (
-              <OrbitingItem
-                key={idx}
-                src={item.src}
-                alt={item.alt}
-                angle={item.angle}
-                radius={radius} 
-              />
-            ))}
+            Karachi&apos;s Premium Beauty Store
+          </motion.p>
+
+          {/* Main headline */}
+          <motion.h1
+            {...fadeLeft(0.3)}
+            className="text-white font-black uppercase leading-[0.88] tracking-tighter
+                       text-[2.4rem] sm:text-6xl md:text-7xl lg:text-[5.5rem]"
+          >
+            THE SECRET TO
+            <br />
+            <span className="text-[#00b140]">KARACHI&apos;S</span>
+            <br />
+            BEST DEWY
+            <br />
+            GLOW
+          </motion.h1>
+
+          {/* Sub-headline */}
+          <motion.p
+            {...fadeLeft(0.55)}
+            className="text-gray-300 mt-5 md:mt-6 max-w-xs md:max-w-sm
+                       text-sm sm:text-base md:text-lg italic font-light"
+          >
+            Experience the AYAN Glass Skin Collection.
+          </motion.p>
+
+          {/* Buttons — move with text block */}
+          <motion.div
+            {...fadeLeft(0.75)}
+            className="flex flex-col sm:flex-row gap-3 sm:gap-4 mt-8 md:mt-10
+                       w-full sm:w-auto"
+          >
+            <Link href="/shop" className="w-full sm:w-auto">
+              <button
+                className="w-full sm:w-auto flex items-center justify-center gap-2
+                           px-8 py-4 text-sm sm:text-base font-bold rounded-none
+                           bg-black text-white border-2 border-black
+                           hover:bg-[#00b140] hover:border-[#00b140]
+                           transition-colors duration-300"
+              >
+                <ShoppingBag size={17} />
+                Shop Now
+              </button>
+            </Link>
+
+            <a
+              href={generateGeneralWhatsAppLink()}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-full sm:w-auto"
+            >
+              <button
+                className="w-full sm:w-auto flex items-center justify-center gap-2
+                           px-8 py-4 text-sm sm:text-base font-bold rounded-none
+                           bg-transparent text-white border-2 border-white
+                           hover:bg-white hover:text-black
+                           transition-colors duration-300"
+              >
+                <MessageCircle size={17} />
+                WhatsApp Us
+              </button>
+            </a>
           </motion.div>
         </div>
 
-        {/* CENTER CONTENT */}
-        <div className="relative z-20">
-          <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-gray-500 tracking-[0.2em] sm:tracking-[0.4em] text-[10px] sm:text-xs font-bold uppercase mb-4">
-            Karachi&apos;s Premium Beauty Store
-          </motion.p>
-          
-          {/* Mobile par Heading size thora kam kiya taake products ke peechay na chhupay */}
-          <motion.h1 initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} className="text-5xl md:text-9xl font-black text-[#00b140] leading-none ayan-logo-text drop-shadow-2xl">
-            AYAN
-          </motion.h1>
-          <motion.h2 initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-3xl md:text-7xl font-bold text-gray-800 mb-8 sm:mb-12">
-            COSMETICS
-          </motion.h2>
-          
-          <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center pointer-events-auto">
-            <Link href="/shop">
-              <Button size="lg" className="px-8 sm:px-12 py-6 sm:py-8 text-lg sm:text-xl font-bold rounded-full bg-[#06adf0] hover:bg-black text-white shadow-xl transition-all hover:scale-105">
-                <ShoppingBag className="mr-2" /> Shop Now
-              </Button>
-            </Link>
-            <a href={generateGeneralWhatsAppLink()} target="_blank" rel="noopener noreferrer">
-              <Button size="lg" className="px-8 sm:px-12 py-6 sm:py-8 text-lg sm:text-xl font-bold rounded-full bg-[#4bec0c] hover:bg-black text-white shadow-xl transition-all hover:scale-105">
-                <MessageCircle className="mr-2" /> WhatsApp
-              </Button>
-            </a>
-          </div>
-        </div>
+        {/* RIGHT COLUMN — intentionally empty, shows the model/girl */}
       </div>
-
-      <div className="absolute bottom-0 left-0 right-0 h-64 bg-gradient-to-t from-white via-white/70 to-transparent z-30" />
     </section>
   );
 }

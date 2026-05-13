@@ -7,6 +7,7 @@ import WhatsAppButton from "@/components/WhatsAppButton";
 import CookieConsent from "@/components/CookieConsent";
 import { CartProvider } from "@/lib/CartContext";
 import FloatingCart from "@/components/FloatingCart";
+import AyanAIChat from "@/components/AyanAIChat";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -16,25 +17,33 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   title: {
-    default: "AYAN Cosmetics - Premium Beauty Store in Karachi",
-    template: "%s | AYAN Cosmetics",
+    default: "AYAN Cosmetics Karachi | 100% Original Branded Makeup & Perfumes",
+    template: "%s | AYAN Cosmetics Karachi",
   },
   description:
-    "Your trusted destination for genuine cosmetics, premium fragrances, and beauty accessories in Karachi. Cash on Delivery available.",
+    "Shop 100% genuine MAC, Huda Beauty & NYX in Karachi. Customized bridal & birthday beauty boxes, free shade matching, same-day delivery. WhatsApp: 0333-2304145.",
   keywords: [
-    "cosmetics Karachi",
-    "genuine makeup Karachi",
-    "perfumes Pakistan",
+    "branded cosmetics Karachi",
+    "original makeup Karachi",
+    "customized beauty boxes Karachi",
+    "bridal beauty box Pakistan",
+    "genuine perfumes Karachi",
+    "Huda Beauty Karachi",
+    "MAC cosmetics Karachi",
+    "beauty box gift Karachi",
     "AYAN Cosmetics",
-    "beauty products Karachi",
+    "Saima Mall cosmetics",
+    "shade matching Karachi",
+    "foundation shades Pakistan",
   ],
   authors: [{ name: "AYAN Cosmetics" }],
   openGraph: {
     type: "website",
     locale: "en_PK",
     siteName: "AYAN Cosmetics",
-    title: "AYAN Cosmetics - Premium Beauty Store in Karachi",
-    description: "Genuine cosmetics, fragrances & skincare in Karachi.",
+    title: "AYAN Cosmetics Karachi | 100% Original Branded Makeup & Perfumes",
+    description:
+      "Genuine branded cosmetics, fragrances & customized beauty boxes in Karachi. Bridal sets, birthday gifts & shade matching. Fast delivery nationwide.",
   },
   metadataBase: new URL("https://ayancosmetics.pk"),
 };
@@ -54,6 +63,7 @@ export default function RootLayout({
           <WhatsAppButton />
           <CookieConsent />
           <FloatingCart />
+          <AyanAIChat />
         </CartProvider>
       </body>
     </html>

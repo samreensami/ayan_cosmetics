@@ -144,7 +144,8 @@ export default function Footer() {
               <div className="text-sm leading-relaxed">
                 <p className="font-medium text-white">New AYAN Cosmetics</p>
                 <p>Shop NO-G-16</p>
-                <p>Saeed Shopping Mall / Saima Mall</p>
+                <p>localhost:3000
+                  Saima Mall</p>
                 <p>Rashid Minhas Road</p>
                 <p>Karachi, Pakistan</p>
               </div>
@@ -159,7 +160,7 @@ export default function Footer() {
           {/* Disclaimer - Required by spec */}
           <p className="text-xs text-gray-500 text-center mb-4 leading-relaxed max-w-3xl mx-auto">
             We are an independent retailer based in Saima Mall, Karachi. All
-            brand names, trademarks, and images belong to their respective
+            brand names trademarks and images belong to their respective
             owners. We sell genuine products.
           </p>
 

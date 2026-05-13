@@ -23,7 +23,8 @@ export interface FilterState {
 
 interface ProductFiltersProps {
   filters: FilterState;
-  onFilterChange: (filters: FilterState) => void;
+  // Prop ka naam badal kar updateAction kar diya taake serialization error khatam ho jaye
+  updateAction: (filters: FilterState) => void; 
   totalProducts: number;
   filteredCount: number;
 }
@@ -45,12 +46,11 @@ const sortOptions = [
 
 export default function ProductFilters({
   filters,
-  onFilterChange,
+  updateAction, // Yahan bhi update kar diya
   totalProducts,
   filteredCount,
 }: ProductFiltersProps) {
   const categories: string[] = getAllCategories();
-    
   const brands = getAllBrands();
 
   const hasActiveFilters =
@@ -62,7 +62,7 @@ export default function ProductFilters({
     key: K,
     value: FilterState[K]
   ) => {
-    onFilterChange({ ...filters, [key]: value });
+    updateAction({ ...filters, [key]: value });
   };
 
   const toggleConcern = (concern: Concern) => {
@@ -73,7 +73,7 @@ export default function ProductFilters({
   };
 
   const clearFilters = () => {
-    onFilterChange({
+    updateAction({
       category: "",
       brand: "",
       concerns: [],
@@ -82,9 +82,7 @@ export default function ProductFilters({
   };
 
   return (
-    // Background updated to our new light green brand color
     <div className="space-y-6 p-6 bg-[#f7fff9] rounded-2xl border border-[#00b140]/20">
-      {/* Filter Header */}
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
           <SlidersHorizontal className="h-5 w-5 text-[#00b140]" />
@@ -100,7 +98,6 @@ export default function ProductFilters({
         )}
       </div>
 
-      {/* Shop by Concern - Badge filters */}
       <div>
         <h3 className="font-bold text-gray-900 mb-3">Shop by Concern</h3>
         <div className="flex flex-wrap gap-2">
@@ -121,94 +118,64 @@ export default function ProductFilters({
         </div>
       </div>
 
-      {/* Dropdown Filters Row */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {/* Category Filter */}
         <div>
-          <label className="block text-sm font-bold text-gray-700 mb-2">
-            Category
-          </label>
-          <Select
-            value={filters.category}
-            onValueChange={(value) => updateFilter("category", value)}
-          >
-            <SelectTrigger className="bg-white border-[#00b140]/30 focus:ring-[#00b140]">
+          <label className="block text-sm font-bold text-gray-700 mb-2">Category</label>
+          <Select value={filters.category} onValueChange={(value) => updateFilter("category", value)}>
+            <SelectTrigger className="bg-white border-[#00b140]/30">
               <SelectValue placeholder="All Categories" />
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="all">All Categories</SelectItem>
               {categories.map((category) => (
-                <SelectItem key={category} value={category}>
-                  {category}
-                </SelectItem>
+                <SelectItem key={category} value={category}>{category}</SelectItem>
               ))}
             </SelectContent>
           </Select>
         </div>
 
-        {/* Brand Filter */}
         <div>
-          <label className="block text-sm font-bold text-gray-700 mb-2">
-            Brand
-          </label>
-          <Select
-            value={filters.brand}
-            onValueChange={(value) => updateFilter("brand", value)}
-          >
-            <SelectTrigger className="bg-white border-[#00b140]/30 focus:ring-[#00b140]">
+          <label className="block text-sm font-bold text-gray-700 mb-2">Brand</label>
+          <Select value={filters.brand} onValueChange={(value) => updateFilter("brand", value)}>
+            <SelectTrigger className="bg-white border-[#00b140]/30">
               <SelectValue placeholder="All Brands" />
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="all">All Brands</SelectItem>
               {brands.map((brand) => (
-                <SelectItem key={brand} value={brand}>
-                  {brand}
-                </SelectItem>
+                <SelectItem key={brand} value={brand}>{brand}</SelectItem>
               ))}
             </SelectContent>
           </Select>
         </div>
 
-        {/* Sort By */}
         <div>
-          <label className="block text-sm font-bold text-gray-700 mb-2">
-            Sort By
-          </label>
-          <Select
-            value={filters.sortBy}
-            onValueChange={(value) => updateFilter("sortBy", value)}
-          >
-            <SelectTrigger className="bg-white border-[#00b140]/30 focus:ring-[#00b140]">
+          <label className="block text-sm font-bold text-gray-700 mb-2">Sort By</label>
+          <Select value={filters.sortBy} onValueChange={(value) => updateFilter("sortBy", value)}>
+            <SelectTrigger className="bg-white border-[#00b140]/30">
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
               {sortOptions.map((option) => (
-                <SelectItem key={option.value} value={option.value}>
-                  {option.label}
-                </SelectItem>
+                <SelectItem key={option.value} value={option.value}>{option.label}</SelectItem>
               ))}
             </SelectContent>
           </Select>
         </div>
       </div>
 
-      {/* Active Filter Tags */}
       {hasActiveFilters && (
         <div className="flex flex-wrap gap-2 pt-4 border-t border-[#00b140]/10">
           {filters.category && filters.category !== "all" && (
-            <Badge className="bg-[#00b140] text-white gap-1 hover:bg-[#00b140]/80">
+            <Badge className="bg-[#00b140] text-white gap-1">
               {filters.category}
-              <button onClick={() => updateFilter("category", "")} className="ml-1">
-                <X className="h-3 w-3" />
-              </button>
+              <button onClick={() => updateFilter("category", "")} className="ml-1"><X className="h-3 w-3" /></button>
             </Badge>
           )}
           {filters.brand && filters.brand !== "all" && (
-            <Badge className="bg-[#FFD700] text-black gap-1 hover:bg-[#FFD700]/80">
+            <Badge className="bg-[#FFD700] text-black gap-1">
               {filters.brand}
-              <button onClick={() => updateFilter("brand", "")} className="ml-1">
-                <X className="h-3 w-3" />
-              </button>
+              <button onClick={() => updateFilter("brand", "")} className="ml-1"><X className="h-3 w-3" /></button>
             </Badge>
           )}
         </div>

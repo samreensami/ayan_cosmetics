@@ -66,6 +66,13 @@ export default function Navbar() {
                 {link.label}
               </Link>
             ))}
+
+            {/* Deals — highlighted button */}
+            <Link href="/deals" className="relative inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full text-sm font-bold text-white transition-all hover:scale-105 hover:brightness-110"
+              style={{ background: "linear-gradient(135deg, #ff3b3b 0%, #cc0000 100%)", boxShadow: "0 2px 14px rgba(220,0,0,0.45)" }}>
+              <span className="absolute inset-0 rounded-full animate-ping opacity-20 pointer-events-none" style={{ background: "#ff3b3b" }} />
+              🔥 Deals
+            </Link>
           </div>
 
           {/* Desktop Actions */}
@@ -140,6 +147,13 @@ export default function Navbar() {
                 {link.label}
               </Link>
             ))}
+
+            {/* Deals — highlighted button (mobile) */}
+            <Link href="/deals" onClick={() => setIsMenuOpen(false)}
+              className="mx-4 py-3 rounded-xl text-center text-white font-bold transition-all hover:brightness-110"
+              style={{ background: "linear-gradient(135deg, #ff3b3b 0%, #cc0000 100%)", boxShadow: "0 2px 10px rgba(220,0,0,0.4)" }}>
+              🔥 Deals — Limited Time Offers
+            </Link>
             
             <div className="px-4 py-3 border-t border-white/10 mt-2">
               <a href="tel:0333-2304145" className="flex items-center gap-2 text-white font-bold">

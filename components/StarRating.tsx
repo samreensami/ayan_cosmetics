@@ -1,23 +1,8 @@
 "use client";
 
-import React from "react";
-import { Star } from "lucide-react";
-import { cn } from "@/lib/utils";
-
-/**
- * StarRating Component for AYAN Cosmetics
- *
- * Displays a 5-star rating system with gold stars
- * Used on product cards and product detail pages
- *
- * Props:
- * - rating: number (0-5, can be decimal like 4.5)
- * - reviewCount: optional number to display total reviews
- * - size: 'sm' | 'md' | 'lg' for different star sizes
- * - showCount: boolean to show/hide review count
- * - interactive: boolean for interactive rating input
- * - onRatingChange: callback for interactive mode
- */
+import React, { useState } from "react"; // React import fix
+import { Star } from "lucide-react";     // Star icon import fix
+import { cn } from "@/lib/utils";        // cn utility import fix
 
 interface StarRatingProps {
   rating: number;
@@ -38,34 +23,25 @@ export default function StarRating({
   onRatingChange,
   className,
 }: StarRatingProps) {
-  const [hoverRating, setHoverRating] = React.useState<number | null>(null);
+  const [hoverRating, setHoverRating] = useState<number | null>(null);
 
-  // Size configurations
   const sizeClasses = {
-    sm: "h-3.5 w-3.5",
-    md: "h-5 w-5",
-    lg: "h-6 w-6",
+    sm: "h-3 w-3",
+    md: "h-4 w-4",
+    lg: "h-5 w-5",
   };
 
-  const textSizeClasses = {
-    sm: "text-xs",
-    md: "text-sm",
-    lg: "text-base",
-  };
-
-  // Calculate which rating to display (hover or actual)
   const displayRating = hoverRating !== null ? hoverRating : rating;
 
-  // Handle star click in interactive mode
   const handleStarClick = (starIndex: number) => {
     if (interactive && onRatingChange) {
       onRatingChange(starIndex + 1);
     }
   };
 
-  // Render a single star
   const renderStar = (index: number) => {
     const starValue = index + 1;
+    const activeColor = "text-[#529538] fill-[#529538]"; 
     const fillPercentage = Math.min(Math.max(displayRating - index, 0), 1) * 100;
 
     return (
@@ -77,45 +53,36 @@ export default function StarRating({
         onMouseLeave={() => interactive && setHoverRating(null)}
         disabled={!interactive}
         className={cn(
-          "relative",
-          interactive && "cursor-pointer hover:scale-110 transition-transform",
+          "relative transition-all duration-300",
+          interactive && "cursor-pointer hover:scale-125 active:scale-90",
           !interactive && "cursor-default"
         )}
-        aria-label={`${starValue} star${starValue > 1 ? "s" : ""}`}
       >
-        {/* Empty star (background) */}
-        <Star
-          className={cn(sizeClasses[size], "text-gray-300 fill-gray-300")}
-        />
-        {/* Filled star (overlay with clip) */}
+        <Star className={cn(sizeClasses[size], "text-zinc-700 fill-zinc-800")} />
         <div
-          className="absolute inset-0 overflow-hidden"
+          className="absolute inset-0 overflow-hidden transition-all duration-500"
           style={{ width: `${fillPercentage}%` }}
         >
-          <Star
-            className={cn(sizeClasses[size], "text-gold fill-gold")}
-          />
+          <Star className={cn(sizeClasses[size], activeColor)} />
         </div>
       </button>
     );
   };
 
   return (
-    <div className={cn("flex items-center gap-1", className)}>
-      {/* Stars */}
+    <div className={cn("flex items-center gap-2", className)}>
       <div className="flex items-center gap-0.5">
         {[0, 1, 2, 3, 4].map(renderStar)}
       </div>
 
-      {/* Rating value and review count */}
       {showCount && (
-        <div className={cn("flex items-center gap-1 ml-1", textSizeClasses[size])}>
-          <span className="font-medium text-gray-700">
+        <div className="flex items-center gap-1.5 pt-0.5">
+          <span className="text-[11px] font-black text-white tracking-tighter">
             {rating.toFixed(1)}
           </span>
           {reviewCount !== undefined && (
-            <span className="text-gray-500">
-              ({reviewCount.toLocaleString()} {reviewCount === 1 ? "review" : "reviews"})
+            <span className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest border-l border-zinc-700 pl-2">
+              {reviewCount} Reviews
             </span>
           )}
         </div>
@@ -124,62 +91,51 @@ export default function StarRating({
   );
 }
 
-/**
- * Interactive Star Rating for Review Form
- * Separate component for cleaner review submission
- */
+// ---------------------------------------------------------
+// Interactive Version for Forms
+// ---------------------------------------------------------
+
 interface InteractiveStarRatingProps {
   value: number;
-  onChange: (rating: number) => void;
+  onSelect: (rating: number) => void; 
   size?: "sm" | "md" | "lg";
   className?: string;
 }
 
 export function InteractiveStarRating({
   value,
-  onChange,
+  onSelect,
   size = "lg",
   className,
 }: InteractiveStarRatingProps) {
-  const [hoverValue, setHoverValue] = React.useState<number | null>(null);
-
-  const sizeClasses = {
-    sm: "h-4 w-4",
-    md: "h-6 w-6",
-    lg: "h-8 w-8",
-  };
+  const [hoverValue, setHoverValue] = useState<number | null>(null);
+  const sizeClasses = { sm: "h-5 w-5", md: "h-7 w-7", lg: "h-10 w-10" };
 
   return (
-    <div className={cn("flex items-center gap-1", className)}>
+    <div className={cn("flex items-center gap-2", className)}>
       {[1, 2, 3, 4, 5].map((star) => {
         const isActive = (hoverValue ?? value) >= star;
         return (
           <button
             key={star}
             type="button"
-            onClick={() => onChange(star)}
+            onClick={() => onSelect && onSelect(star)}
             onMouseEnter={() => setHoverValue(star)}
             onMouseLeave={() => setHoverValue(null)}
-            className="transition-transform hover:scale-110"
-            aria-label={`Rate ${star} star${star > 1 ? "s" : ""}`}
+            className="transition-transform hover:scale-110 active:scale-95 outline-none"
           >
             <Star
               className={cn(
                 sizeClasses[size],
-                "transition-colors",
+                "transition-all duration-300",
                 isActive
-                  ? "text-gold fill-gold"
-                  : "text-gray-300 fill-gray-300 hover:text-gold/50"
+                  ? "text-[#529538] fill-[#529538] drop-shadow-[0_0_8px_rgba(82,149,56,0.5)]"
+                  : "text-zinc-700 fill-zinc-900 hover:text-[#529538]/50"
               )}
             />
           </button>
         );
       })}
-      {value > 0 && (
-        <span className="ml-2 text-sm text-gray-600">
-          {value} {value === 1 ? "star" : "stars"}
-        </span>
-      )}
     </div>
   );
 }
