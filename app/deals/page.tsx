@@ -1,254 +1,149 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { ShoppingBag, ArrowLeft, Zap } from "lucide-react";
+import React from "react";
 import Image from "next/image";
-import Link from "next/link";
-
-// ── No business logic changes ─────────────────────────────────────────────────
-
-const WHATSAPP_NUMBER = "923332304345";
-
-interface Deal {
-  id: number;
-  name: string;
-  actualPrice: number;
-  dealPrice: number;
-  imagePath: string;
-}
-
-const AYAN_DEALS: Deal[] = [
-  { id: 1, name: "cosmetic with box",              actualPrice: 3500,  dealPrice: 2499, imagePath: "/images/products/lipstic.jpg"      },
-  { id: 2, name: "Huda Beauty Rose Gold Palette",  actualPrice: 6500,  dealPrice: 4499, imagePath: "/images/products/blush1.jpeg"      },
-  { id: 3, name: "Royal Oud Luxury Perfume",        actualPrice: 5500,  dealPrice: 3999, imagePath: "/images/products/p1.jpg"           },
-  { id: 4, name: "Floral Bloom Premium Fragrance",  actualPrice: 7000,  dealPrice: 4999, imagePath: "/images/products/p2.jpeg"          },
-  { id: 5, name: "Liquid Blush — Natural Glow",     actualPrice: 2500,  dealPrice: 1799, imagePath: "/images/products/liquidblush.jpg"  },
-  { id: 6, name: "Bridal Beauty Box — Premium",     actualPrice: 12000, dealPrice: 8999, imagePath: "/images/products/box2.jpg"         },
-  { id: 7, name: "Deep Cleansing Face Wash",        actualPrice: 1800,  dealPrice: 1199, imagePath: "/images/products/deepcleaning.jpg" },
-  { id: 8, name: "Velvet Finish Lipstick",          actualPrice: 2800,  dealPrice: 1999, imagePath: "/images/products/lipstic1.jpg"     },
-];
-
-function discountPct(actual: number, deal: number) {
-  return Math.round(((actual - deal) / actual) * 100);
-}
-
-function openWhatsApp(name: string, dealPrice: number) {
-  const msg = `Assalam-o-Alaikum AYAN Cosmetics, I want to avail the deal for ${name} at the special price of Rs. ${dealPrice}. Is this available?`;
-  window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`, "_blank");
-}
-
-// ── Framer Motion — clean fade-in-up with stagger ────────────────────────────
-
-const gridVariants = {
-  hidden: {},
-  show: { transition: { staggerChildren: 0.1 } },
-};
-
-const itemVariants = {
-  hidden: { opacity: 0, y: 30 },
-  show:   { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" as const } },
-};
-
-// ── Page ──────────────────────────────────────────────────────────────────────
+import { ShoppingBag, ArrowRight } from "lucide-react";
+import { PRODUCTS } from "@/lib/products";
 
 export default function DealsPage() {
+  // Products filter out karein jo dynamic deals hain
+  const dealItems = PRODUCTS.filter((p) => p.isDeal);
+
+  const handleOrderWhatsApp = (productName: string, dealPrice: number) => {
+    const text = `Assalam-o-Alaikum AYAN Cosmetics! Main website se "DEALS PAGE" check kar raha/rahi hoon. Mjhe ye deal confirm karni hai:\n\n📦 *Product:* ${productName}\n💰 *Deal Price:* Rs. ${dealPrice}\n\nKindly availability check kar ke confirm kar dein! ✨`;
+    window.open(`https://wa.me/923332304145?text=${encodeURIComponent(text)}`, "_blank");
+  };
+
   return (
-    <main className="min-h-screen bg-white">
-
-      {/* ── Top bar ── */}
-      <div className="sticky top-0 z-20 bg-white border-b border-gray-100">
-        <div className="max-w-7xl mx-auto px-6 h-14 flex items-center justify-between">
-
-          <motion.div whileHover={{ x: -3 }} whileTap={{ scale: 0.95 }}>
-            <Link
-              href="/"
-              className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-widest text-gray-400 hover:text-black transition-colors duration-200"
-            >
-              <ArrowLeft size={14} />
-              Back to Home
-            </Link>
-          </motion.div>
-
-          <div className="flex items-center gap-2">
-            <motion.div
-              animate={{ opacity: [1, 0.3, 1] }}
-              transition={{ duration: 1.2, repeat: Infinity }}
-            >
-              <Zap size={13} className="text-amber-500 fill-amber-400" />
-            </motion.div>
-            <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-amber-600">
-              Flash Deals — Limited Stock
-            </span>
-          </div>
-
+    <div className="bg-black min-h-screen text-white pt-24 pb-16 font-sans">
+      
+      {/* ── LUXURY GREEN GLAM BANNER HIGHLIGHT ── */}
+      <div className="relative w-full h-[260px] md:h-[340px] bg-gradient-to-r from-zinc-950 via-zinc-900 to-green-950/40 border-b border-zinc-900 flex items-center justify-center text-center px-4 overflow-hidden mb-12">
+        <div className="absolute inset-0 opacity-10 bg-[radial-gradient(#529538_1px,transparent_1px)] [background-size:16px_16px]" />
+        <div className="relative z-10 max-w-3xl">
+          <span className="text-[10px] md:text-xs font-black uppercase tracking-[0.3em] text-[#529538] mb-3 block">
+            Limited Time Offers
+          </span>
+          <h1 className="text-4xl md:text-6xl font-black uppercase tracking-tight text-white mb-4">
+            EXCLUSIVE <span className="text-[#529538]">DEALS</span>
+          </h1>
+          <p className="text-zinc-400 text-xs md:text-sm max-w-xl mx-auto font-medium leading-relaxed">
+            Grab 100% genuine premium cosmetics and curated luxury gift boxes at verified markdown prices direct from Saima Mall outlet.
+          </p>
         </div>
       </div>
 
-      {/* ── Hero ── */}
-      <section className="max-w-7xl mx-auto px-6 pt-16 pb-12 text-center">
+      <div className="container mx-auto px-4 max-w-7xl">
+        
+        {/* ── SECTION 1: POORI VANITY BOX COMBO DEAL (IMAGE 4) ── */}
+        <h2 className="text-sm font-black uppercase tracking-[0.2em] text-zinc-400 mb-6 flex items-center gap-2">
+          <span className="w-2 h-2 rounded-full bg-[#529538] animate-pulse" /> Custom Bundles & Vanity Sets
+        </h2>
+        
+        {dealItems.filter(p => p.isComboDeal).map((combo) => (
+          <div key={combo.id} className="bg-zinc-950 border border-zinc-900 rounded-[32px] p-6 md:p-8 flex flex-col lg:flex-row gap-8 items-center mb-16 shadow-[0_0_50px_rgba(82,149,56,0.05)]">
+            <div className="w-full lg:w-2/5 aspect-square relative rounded-2xl overflow-hidden bg-zinc-900 border border-zinc-800">
+              <div className="absolute top-4 left-4 z-10 bg-[#529538] text-black text-[10px] font-black uppercase tracking-widest px-3 py-1.5 rounded-lg shadow-md">
+                BEST VALUE COMBO 🔥
+              </div>
+              <Image 
+                src={combo.imagePath} 
+                alt={combo.name}
+                fill
+                className="object-cover"
+              />
+            </div>
+            <div className="flex-1 text-center lg:text-left">
+              <h3 className="text-xl md:text-3xl font-black text-white uppercase tracking-wide mb-3">{combo.name}</h3>
+              <p className="text-zinc-400 text-xs md:text-sm leading-relaxed mb-6 font-medium max-w-2xl">{combo.description}</p>
+              
+              <div className="flex flex-wrap items-center justify-center lg:justify-start gap-4 mb-8">
+                <span className="text-3xl md:text-5xl font-black text-[#529538]">Rs. {combo.price}</span>
+                <span className="text-base md:text-xl text-zinc-600 line-through font-bold mt-1 md:mt-2">
+                  Rs. {combo.actualPrice}
+                </span>
+                <span className="bg-[#529538]/10 text-[#529538] text-[11px] font-black px-3 py-1 rounded-full uppercase tracking-wider border border-[#529538]/20">
+                  Save Rs. {(combo.actualPrice || 0) - combo.price}
+                </span>
+              </div>
 
-        <motion.p
-          initial={{ opacity: 0, y: -10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.4, delay: 0.1 }}
-          className="text-[10px] font-bold uppercase tracking-[0.3em] text-[#529538] mb-4"
-        >
-          Exclusive Deals — AYAN Cosmetics
-        </motion.p>
-
-        <motion.h1
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.55, delay: 0.2 }}
-          className="text-5xl sm:text-6xl font-extrabold uppercase tracking-widest text-black leading-tight mb-5"
-        >
-          Today&apos;s{" "}
-          <span className="text-[#529538]">Offers</span>
-        </motion.h1>
-
-        <motion.p
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.35 }}
-          className="text-sm text-gray-400 tracking-wide max-w-lg mx-auto"
-        >
-          100% original branded cosmetics at unbeatable prices.{" "}
-          <span className="text-gray-600 font-semibold">
-            Order on WhatsApp — same-day Karachi delivery.
-          </span>
-        </motion.p>
-
-        {/* Thin divider */}
-        <motion.div
-          initial={{ scaleX: 0 }}
-          animate={{ scaleX: 1 }}
-          transition={{ duration: 0.6, delay: 0.5 }}
-          className="w-16 h-px bg-black mx-auto mt-8"
-        />
-
-      </section>
-
-      {/* ── Deals Grid ── */}
-      <section className="max-w-7xl mx-auto px-6 pb-28">
-        <motion.div
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-px bg-gray-100"
-          variants={gridVariants}
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true, amount: 0.05 }}
-        >
-          {AYAN_DEALS.map((deal) => {
-            const saved   = deal.actualPrice - deal.dealPrice;
-            const discount = discountPct(deal.actualPrice, deal.dealPrice);
-
-            return (
-              <motion.article
-                key={deal.id}
-                variants={itemVariants}
-                whileHover={{
-                  y: -5,
-                  zIndex: 10,
-                  boxShadow: "0 20px 40px rgba(0,0,0,0.10)",
-                  transition: { duration: 0.25 },
-                }}
-                className="group relative flex flex-col bg-white"
+              <button
+                onClick={() => handleOrderWhatsApp(combo.name, combo.price)}
+                className="w-full sm:w-auto bg-[#529538] hover:bg-[#437d2e] text-white font-black text-xs uppercase tracking-widest px-8 py-4.5 rounded-xl transition-all shadow-[0_4px_20px_rgba(82,149,56,0.2)] flex items-center justify-center gap-2 cursor-pointer group"
               >
-                {/* Image */}
-                <div className="relative aspect-square overflow-hidden bg-gray-50">
-                  <Image
-                    src={deal.imagePath}
-                    alt={deal.name}
+                Claim This Bundle Pack
+                <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
+              </button>
+            </div>
+          </div>
+        ))}
+
+        {/* ── SECTION 2: INDIVIDUAL DEALS GRID (IMAGES 5 & 6) ── */}
+        <h2 className="text-sm font-black uppercase tracking-[0.2em] text-zinc-400 mb-8 flex items-center gap-2">
+          <span className="w-2 h-2 rounded-full bg-[#529538]" /> Single Product Price Drops
+        </h2>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {dealItems.filter(p => !p.isComboDeal).map((product) => {
+            const savings = (product.actualPrice || 0) - product.price;
+            
+            return (
+              <div key={product.id} className="bg-zinc-950 border border-zinc-900 hover:border-zinc-800 rounded-[24px] overflow-hidden flex flex-col shadow-xl transition-all duration-300 group">
+                {/* Product Card Image Frame */}
+                <div className="aspect-square relative w-full bg-zinc-900 border-b border-zinc-900">
+                  <div className="absolute top-3 left-3 z-10 bg-black/80 text-white font-bold text-[9px] uppercase tracking-wider px-2.5 py-1 rounded-md border border-zinc-800">
+                    Now Rs. {product.price}
+                  </div>
+                  <Image 
+                    src={product.imagePath} 
+                    alt={product.name}
                     fill
-                    className="object-cover transition-transform duration-700 group-hover:scale-105"
-                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                    className="object-cover group-hover:scale-105 transition-transform duration-500"
                   />
-
-                  {/* Save badge — top left */}
-                  <span
-                    className="absolute top-3 left-3 text-[10px] font-bold uppercase tracking-widest px-2.5 py-1 text-white"
-                    style={{ background: "#529538" }}
-                  >
-                    Save {discount}%
-                  </span>
-
-                  {/* New Arrival badge — shown for first 2 items */}
-                  {deal.id <= 2 && (
-                    <span className="absolute top-3 right-3 text-[10px] font-bold uppercase tracking-widest px-2.5 py-1 bg-black text-white">
-                      New Arrival
-                    </span>
-                  )}
                 </div>
 
-                {/* Content */}
-                <div className="flex flex-col flex-1 p-6">
-
-                  {/* Product name */}
-                  <h3 className="text-xs font-bold uppercase tracking-widest text-black leading-snug line-clamp-2 mb-4">
-                    {deal.name}
-                  </h3>
-
-                  {/* Pricing */}
-                  <div className="flex items-baseline gap-3 mb-4">
-                    <span className="text-lg font-extrabold text-black">
-                      Rs. {deal.dealPrice.toLocaleString()}
+                {/* Product Card Details */}
+                <div className="p-5 flex-1 flex flex-col justify-between">
+                  <div>
+                    <span className="text-[10px] font-bold text-[#529538] tracking-widest uppercase mb-1.5 block">
+                      {product.category}
                     </span>
-                    <span className="text-xs text-gray-400 line-through">
-                      Rs. {deal.actualPrice.toLocaleString()}
-                    </span>
+                    <h3 className="text-sm font-black text-white uppercase tracking-wide line-clamp-1 mb-2">
+                      {product.name}
+                    </h3>
+                    <p className="text-zinc-500 text-[11px] line-clamp-2 font-medium mb-4">
+                      {product.description}
+                    </p>
                   </div>
 
-                  {/* Save label */}
-                  <p className="text-[10px] font-bold uppercase tracking-widest text-[#529538] mb-5">
-                    You Save Rs. {saved.toLocaleString()}
-                  </p>
+                  {/* Pricing and Action Strip */}
+                  <div className="pt-3 border-t border-zinc-900/80">
+                    <div className="flex items-baseline gap-2 mb-4">
+                      <span className="text-lg font-black text-white">Rs. {product.price}</span>
+                      <span className="text-xs text-zinc-600 line-through font-bold">
+                        Rs. {product.actualPrice}
+                      </span>
+                      <span className="text-[10px] font-black text-[#529538] ml-auto">
+                        -{Math.round((savings / (product.actualPrice || 1)) * 100)}% OFF
+                      </span>
+                    </div>
 
-                  {/* CTA — Maybelline style sharp rectangle */}
-                  <motion.button
-                    onClick={() => openWhatsApp(deal.name, deal.dealPrice)}
-                    whileTap={{ scale: 0.97 }}
-                    className="mt-auto w-full py-3 rounded-none text-xs font-bold uppercase tracking-[0.15em] text-white bg-black transition-colors duration-300 hover:bg-[#529538] flex items-center justify-center gap-2"
-                  >
-                    <ShoppingBag size={13} />
-                    Order on WhatsApp
-                  </motion.button>
-
+                    <button
+                      onClick={() => handleOrderWhatsApp(product.name, product.price)}
+                      className="w-full bg-zinc-900 hover:bg-[#529538] text-zinc-300 hover:text-white border border-zinc-800 hover:border-transparent text-[10px] font-black uppercase tracking-widest py-3 rounded-xl transition-all flex items-center justify-center gap-2 cursor-pointer"
+                    >
+                      <ShoppingBag size={12} />
+                      Order via WhatsApp
+                    </button>
+                  </div>
                 </div>
-              </motion.article>
+
+              </div>
             );
           })}
-        </motion.div>
+        </div>
 
-        {/* ── Bottom CTA ── */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.3 }}
-          transition={{ duration: 0.5 }}
-          className="mt-20 border border-gray-100 p-12 text-center"
-        >
-          <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-[#529538] mb-3">
-            Can&apos;t Find What You&apos;re Looking For?
-          </p>
-          <p className="text-xl font-extrabold uppercase tracking-widest text-black mb-6">
-            Ask For A Custom Deal
-          </p>
-          <p className="text-sm text-gray-400 mb-8 max-w-md mx-auto">
-            Chat with Ayan AI or message Rehan directly — we&apos;ll curate a personalised beauty deal for you.
-          </p>
-          <motion.a
-            href={`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent("Assalam-o-Alaikum AYAN Cosmetics! I want to inquire about a custom deal.")}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            whileHover={{ backgroundColor: "#529538" }}
-            whileTap={{ scale: 0.97 }}
-            className="inline-flex items-center gap-2 px-8 py-3.5 rounded-none text-xs font-bold uppercase tracking-[0.15em] text-white bg-black transition-colors duration-300 hover:bg-[#529538]"
-          >
-            <ShoppingBag size={13} />
-            Chat on WhatsApp
-          </motion.a>
-        </motion.div>
-
-      </section>
-    </main>
+      </div>
+    </div>
   );
 }

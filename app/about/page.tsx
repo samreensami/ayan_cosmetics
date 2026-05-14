@@ -1,5 +1,8 @@
+"use client";
+
+import React from "react";
 import Image from "next/image";
-import { MapPin, Phone, MessageCircle, Clock, Star } from "lucide-react";
+import { MapPin, Phone, MessageCircle, Clock, Star, Award, ShieldCheck, Zap } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import TrustSignals from "@/components/TrustSignals";
 import { generateGeneralWhatsAppLink, SHOP_CONTACT } from "@/lib/whatsapp";
@@ -7,19 +10,19 @@ import { cn } from "@/lib/utils";
 
 const shopValues = [
   {
-    icon: Star,
-    title: "100% Genuine Products",
-    description: "We only sell authentic products from verified sources. Your trust is our priority.",
+    icon: ShieldCheck,
+    title: "100% Genuine",
+    description: "Every product is sourced directly from verified distributors. No fakes, just beauty.",
   },
   {
-    icon: Clock,
-    title: "Fast Delivery",
-    description: "Quick delivery across Karachi. Same-day dispatch for orders placed before 2 PM.",
+    icon: Zap,
+    title: "Karachi Fast-Track",
+    description: "Orders before 2 PM are dispatched the same day for lightning-fast delivery.",
   },
   {
-    icon: Phone,
-    title: "Excellent Support",
-    description: "Got questions? Reach out to us on WhatsApp anytime. We&apos;re here to help!",
+    icon: Award,
+    title: "Expert Curation",
+    description: "Hand-picked cosmetics and fragrances that match global beauty standards.",
   },
 ];
 
@@ -28,54 +31,69 @@ export default function AboutPage() {
   const googleMapsUrl = "https://maps.google.com";
 
   return (
-    <div className="min-h-screen bg-white">
-      <section className="bg-gradient-to-br from-[#00B140]/10 via-white to-gold/10 pt-24 pb-12 md:pt-32 md:pb-20">
+    <div className="min-h-screen bg-black text-white selection:bg-[#529538] overflow-x-hidden">
+      
+      {/* ── HERO SECTION ── */}
+      <section className="relative pt-32 pb-20 overflow-hidden">
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[600px] bg-[#529538]/10 blur-[120px] rounded-full -z-10" />
+        
         <div className="container-custom">
-          <div className="max-w-3xl mx-auto text-center">
-            <h1 className="text-3xl md:text-5xl font-bold text-gray-900 mb-6">
-              About <span className="text-[#00B140]">AYAN</span> Cosmetics
+          <div className="max-w-4xl mx-auto text-center">
+            <h1 
+              className="text-5xl md:text-8xl font-black italic uppercase tracking-tighter leading-none mb-8 opacity-0"
+              style={{ animation: "slideDown 0.8s cubic-bezier(0.25,0.46,0.45,0.94) forwards" }}
+            >
+              Legacy of <span className="text-[#529538]">Beauty</span>
             </h1>
-            <p className="text-lg text-gray-600 leading-relaxed">
-              Your trusted destination for genuine cosmetics, premium fragrances,
-              and beauty accessories in Karachi since we opened our doors.
+            <p 
+              className="text-xl md:text-2xl text-gray-400 font-medium tracking-wide max-w-2xl mx-auto leading-relaxed opacity-0"
+              style={{ animation: "fadeIn 1s ease-out 0.4s forwards" }}
+            >
+              Serving Karachi with authentic luxury and premium beauty essentials since our inception at Saima Mall.
             </p>
           </div>
         </div>
       </section>
 
-      <section className="container-custom py-12 md:py-20">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-          <div className="relative group">
-            <div className="aspect-[4/5] rounded-3xl overflow-hidden bg-white relative shadow-2xl border-2 border-[#00B140]/20 group-hover:border-[#00B140] transition-all duration-500">
-               <Image
+      {/* ── OWNER SECTION ── */}
+      <section className="container-custom py-24">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+          <div 
+            className="relative group opacity-0"
+            style={{ animation: "slideRight 0.8s ease-out 0.2s forwards" }}
+          >
+            <div className="aspect-[4/5] rounded-[40px] overflow-hidden bg-zinc-900 relative border border-zinc-800 transition-all duration-700 hover:border-[#529538]/50 shadow-2xl">
+              <Image
                 src="/images/products/rehan.png"
-                alt="Rehan Khan - Owner of AYAN Cosmetics"
+                alt="Rehan Khan - Founder"
                 fill
-                className="object-cover transition-transform duration-700 group-hover:scale-105"
-              /> 
+                className="object-cover transition-transform duration-1000 group-hover:scale-110"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-60" />
             </div>
-            <div className="absolute -bottom-4 -right-4 w-24 h-24 bg-[#00B140]/10 rounded-full -z-10 group-hover:bg-[#00B140]/20 transition-colors" />
-            <div className="absolute -top-4 -left-4 w-16 h-16 bg-[#00B140]/5 rounded-full -z-10" />
+            <div className="absolute -bottom-6 -left-6 w-32 h-32 border-l-4 border-b-4 border-[#529538] -z-10 rounded-bl-3xl animate-pulse" />
           </div>
 
-          <div>
-            <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4">Meet the Owner</h2>
-            <h3 className="text-xl text-[#00B140] font-bold mb-6 tracking-tight">Rehan Khan</h3>
-            <div className="prose prose-gray">
-              <p className="text-gray-600 leading-relaxed mb-4">
-                Welcome to New AYAN Cosmetics! I am Rehan Khan, and I am passionate
-                about bringing you the best quality cosmetics and fragrances at competitive prices.
-              </p>
-              <p className="text-gray-600 leading-relaxed mb-4">
-                Our shop at Saima Mall has been serving beauty enthusiasts across Karachi with genuine products from top brands.
-              </p>
+          <div 
+            className="space-y-8 opacity-0"
+            style={{ animation: "slideLeft 0.8s ease-out 0.4s forwards" }}
+          >
+            <div className="inline-block px-4 py-2 bg-[#529538]/20 border border-[#529538]/40 rounded-full">
+               <span className="text-[#529538] text-xs font-black uppercase tracking-[4px]">The Founder</span>
+            </div>
+            <h2 className="text-4xl md:text-6xl font-black italic uppercase tracking-tighter leading-tight">
+              Rehan <br /> Khan
+            </h2>
+            <div className="prose prose-invert lg:prose-lg text-gray-400">
+              <p>&quot;Quality shouldn&apos;t be a luxury. At New AYAN Cosmetics, we bridge the gap between premium global brands and our local beauty enthusiasts.&quot;</p>
+              <p className="mt-4">Our flagship store at **Saima Mall** isn&apos;t just a shop—it&apos;s a destination for authenticity in Karachi&apos;s cosmetics landscape.</p>
             </div>
 
-            <div className="mt-8">
+            <div className="pt-6">
               <a href={whatsappLink} target="_blank" rel="noopener noreferrer">
-                <Button variant="default" size="lg" className="bg-[#00B140] hover:bg-black text-white gap-2 shadow-lg hover:scale-105 transition-all rounded-xl px-8 py-6">
-                  <MessageCircle className="h-5 w-5" />
-                  Chat with Us
+                <Button className="bg-[#529538] hover:bg-white hover:text-black text-white font-black uppercase tracking-widest px-10 py-8 rounded-full text-sm transition-all transform hover:scale-105 shadow-[0_0_30px_rgba(82,149,56,0.3)]">
+                  <MessageCircle className="mr-3 h-5 w-5 fill-current" />
+                  Direct Consultation
                 </Button>
               </a>
             </div>
@@ -83,24 +101,26 @@ export default function AboutPage() {
         </div>
       </section>
 
-      <section className="bg-gray-50/50 py-12 md:py-20">
+      {/* ── VALUES (Staggered Animation) ── */}
+      <section className="bg-zinc-900/50 py-24 border-y border-zinc-800">
+        <div className="container-custom text-center mb-16">
+           <h2 className="text-3xl font-black uppercase tracking-widest text-white">Our Core Values</h2>
+        </div>
         <div className="container-custom">
-          <h2 className="text-2xl md:text-3xl font-bold text-gray-900 text-center mb-12">Why Choose Us?</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
             {shopValues.map((value, index) => {
               const Icon = value.icon;
               return (
                 <div 
                   key={index} 
-                  className={cn(
-                    "bg-white p-8 rounded-2xl transition-all duration-300 text-center border border-[#00B140]/20 shadow-sm hover:border-[#00B140] hover:shadow-xl hover:-translate-y-2"
-                  )}
+                  className="group p-10 rounded-[40px] bg-black border border-zinc-800 hover:border-[#529538] transition-all duration-500 opacity-0 translate-y-10"
+                  style={{ animation: `fadeInUp 0.6s ease-out ${0.2 + index * 0.2}s forwards` }}
                 >
-                  <div className="inline-flex items-center justify-center w-16 h-16 bg-[#00B140]/10 rounded-2xl mb-6">
-                    <Icon className="h-8 w-8 text-[#00B140]" />
+                  <div className="w-16 h-16 bg-zinc-900 rounded-2xl flex items-center justify-center mb-8 group-hover:bg-[#529538] transition-colors duration-500">
+                    <Icon className="h-8 w-8 text-[#529538] group-hover:text-white" />
                   </div>
-                  <h3 className="text-xl font-bold text-gray-900 mb-3">{value.title}</h3>
-                  <p className="text-gray-600 text-sm leading-relaxed">{value.description}</p>
+                  <h3 className="text-2xl font-black uppercase tracking-tighter mb-4">{value.title}</h3>
+                  <p className="text-gray-500 leading-relaxed font-medium">{value.description}</p>
                 </div>
               );
             })}
@@ -108,54 +128,87 @@ export default function AboutPage() {
         </div>
       </section>
 
-      <section className="container-custom py-12 md:py-20">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-          <div>
-            <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-6">Visit Our Shop</h2>
-            <div className="space-y-6 mb-8">
-              <div className="flex items-start gap-4 group">
-                <div className="p-3 bg-[#00B140]/10 rounded-xl group-hover:bg-[#00B140] group-hover:text-white transition-colors">
-                  <MapPin className="h-6 w-6" />
+      {/* ── VISIT SECTION ── */}
+      <section className="container-custom py-24">
+        <div 
+          className="bg-zinc-900 rounded-[50px] p-8 md:p-16 border border-zinc-800 overflow-hidden relative opacity-0 scale-95"
+          style={{ animation: "fadeIn 1s ease-out 0.6s forwards" }}
+        >
+          <div className="absolute top-0 right-0 w-96 h-96 bg-[#529538]/5 blur-[100px] rounded-full" />
+          
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+            <div>
+              <h2 className="text-4xl md:text-5xl font-black italic uppercase tracking-tighter mb-10">Experience It <br /> In-Store</h2>
+              <div className="space-y-10">
+                <div className="flex items-center gap-6 group">
+                  <div className="w-12 h-12 rounded-full border border-zinc-700 flex items-center justify-center group-hover:bg-[#529538] group-hover:border-[#529538] transition-all">
+                    <MapPin className="h-5 w-5 text-gray-400 group-hover:text-white" />
+                  </div>
+                  <p className="text-gray-400 font-bold uppercase tracking-widest text-[10px] md:text-xs">
+                    Shop No- G-16 Saima shopping mall main Rashid Minhas Road Karachi
+                  </p>
                 </div>
-                <div>
-                  <h3 className="font-bold text-gray-900 mb-1">Address</h3>
-                  <p className="text-gray-600">Shop NO-G-16, Saima Mall, Rashid Minhas Road, Karachi</p>
+                <div className="flex items-center gap-6 group">
+                  <div className="w-12 h-12 rounded-full border border-zinc-700 flex items-center justify-center group-hover:bg-[#529538] group-hover:border-[#529538] transition-all">
+                    <Phone className="h-5 w-5 text-gray-400 group-hover:text-white" />
+                  </div>
+                  <a href={`tel:${SHOP_CONTACT.phone}`} className="text-white font-black text-xl hover:text-[#529538] transition-colors uppercase italic tracking-tighter">
+                    {SHOP_CONTACT.phone}
+                  </a>
                 </div>
               </div>
-              <div className="flex items-start gap-4 group">
-                <div className="p-3 bg-[#00B140]/10 rounded-xl group-hover:bg-[#00B140] group-hover:text-white transition-colors">
-                  <Phone className="h-6 w-6" />
-                </div>
-                <div>
-                  <h3 className="font-bold text-gray-900 mb-1">Phone</h3>
-                  <a href={`tel:${SHOP_CONTACT.phone}`} className="text-[#00B140] hover:underline font-bold">{SHOP_CONTACT.phone}</a>
-                </div>
+              <div className="mt-12">
+                <a href={googleMapsUrl} target="_blank" rel="noopener noreferrer">
+                  <Button variant="outline" className="border-green-800 text-black hover:bg-white hover:text-black font-black uppercase tracking-[3px] text-[10px] h-14 px-8 rounded-full transition-all">
+                    Open in Maps
+                  </Button>
+                </a>
               </div>
             </div>
-            <a href={googleMapsUrl} target="_blank" rel="noopener noreferrer">
-              <Button className="gap-2 bg-[#00B140] hover:bg-black text-white px-8 py-6 rounded-xl shadow-xl transition-all">
-                Get Directions
-                <MapPin className="h-5 w-5" />
-              </Button>
-            </a>
-          </div>
-          <div className="relative group">
-            <div className="aspect-[3/2] rounded-3xl overflow-hidden bg-white relative shadow-2xl border-2 border-[#00B140]/20 group-hover:border-[#00B140] transition-all duration-500">
-               <div className="absolute inset-0 flex flex-col items-center justify-center p-8 text-center bg-gradient-to-br from-white to-gray-50">
-                <h3 className="text-2xl font-black text-[#00B140] mb-2 italic tracking-tighter">NEW AYAN COSMETICS</h3>
-                <div className="w-20 h-1 bg-red-600 mb-4 rounded-full"></div>
-                <p className="font-black text-gray-800 text-xl tracking-tight">Rehan Khan</p>
-                <p className="text-[#00B140] font-bold">0333-2304345</p>
-                <p className="text-xs text-gray-400 mt-6 max-w-[250px] uppercase font-bold tracking-widest leading-loose">
-                  Shop G-16, Saima Mall, Rashid Minhas Road, Karachi
-                </p>
+
+            <div className="relative group">
+              <div className="aspect-video bg-gradient-to-br from-zinc-800 to-black rounded-3xl p-10 border border-green-900 shadow-2xl flex flex-col justify-between transform transition-transform group-hover:rotate-1 group-hover:scale-105">
+                <div>
+                   <h3 className="text-3xl font-black italic tracking-tighter text-[#529538]">NEW AYAN</h3>
+                   <p className="text-[10px] font-black uppercase tracking-[5px] text-zinc-500">Cosmetics & Fragrances</p>
+                </div>
+                <div className="space-y-1">
+                   <p className="font-black text-xl tracking-tight text-white">Rehan Khan</p>
+                   <p className="text-sm text-zinc-400 font-bold tracking-widest uppercase">Proprietor</p>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      <TrustSignals variant="banner" />
+      <div className="bg-zinc-950 py-10">
+        <TrustSignals variant="banner" />
+      </div>
+
+      {/* ── TRANSITION ANIMATIONS ── */}
+      <style jsx global>{`
+        @keyframes fadeIn {
+          from { opacity: 0; transform: scale(0.95); }
+          to { opacity: 1; transform: scale(1); }
+        }
+        @keyframes fadeInUp {
+          from { opacity: 0; transform: translateY(40px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes slideDown {
+          from { opacity: 0; transform: translateY(-50px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes slideRight {
+          from { opacity: 0; transform: translateX(-60px); }
+          to { opacity: 1; transform: translateX(0); }
+        }
+        @keyframes slideLeft {
+          from { opacity: 0; transform: translateX(60px); }
+          to { opacity: 1; transform: translateX(0); }
+        }
+      `}</style>
     </div>
   );
 }

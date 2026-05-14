@@ -1,18 +1,11 @@
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { Instagram, Phone, MapPin, MessageCircle } from "lucide-react";
+import { Instagram, Phone, MapPin, MessageCircle, Mail } from "lucide-react";
 import { SHOP_CONTACT } from "@/lib/whatsapp";
 
 /**
  * Footer Component for AYAN Cosmetics
- *
- * Includes:
- * - Shop information and contact details
- * - Quick navigation links
- * - Social media links
- * - Required disclaimer about brand names
- * - Trust signals
  */
 
 const footerLinks = {
@@ -143,10 +136,8 @@ export default function Footer() {
               <MapPin className="h-5 w-5 mt-0.5 flex-shrink-0 text-primary" />
               <div className="text-sm leading-relaxed">
                 <p className="font-medium text-white">New AYAN Cosmetics</p>
-                <p>Shop NO-G-16</p>
-                <p>localhost:3000
-                  Saima Mall</p>
-                <p>Rashid Minhas Road</p>
+                <p>Shop No. G-16, Saima Shopping Mall,</p>
+                <p>Main Rashid Minhas Road,</p>
                 <p>Karachi, Pakistan</p>
               </div>
             </div>
@@ -155,22 +146,37 @@ export default function Footer() {
       </div>
 
       {/* Disclaimer & Copyright */}
-      <div className="border-t border-gray-800">
+      <div className="border-t border-gray-800 bg-gray-950/50">
         <div className="container-custom py-6">
-          {/* Disclaimer - Required by spec */}
+          {/* Disclaimer */}
           <p className="text-xs text-gray-500 text-center mb-4 leading-relaxed max-w-3xl mx-auto">
             We are an independent retailer based in Saima Mall, Karachi. All
-            brand names trademarks and images belong to their respective
+            brand names, trademarks, and images belong to their respective
             owners. We sell genuine products.
           </p>
 
-          {/* Copyright */}
-          <div className="flex flex-col md:flex-row items-center justify-between gap-4">
+          {/* Copyright & Developer Signature */}
+          <div className="flex flex-col md:flex-row items-center justify-between gap-4 border-t border-gray-900 pt-4">
             <p className="text-sm text-gray-500">
               © {new Date().getFullYear()} AYAN Cosmetics. All rights reserved.
             </p>
+            
+            {/* Developer Credit Line */}
+            <div className="flex items-center gap-2 text-xs text-gray-400 bg-gray-900/60 px-4 py-2 rounded-full border border-gray-800">
+              <span>Built by Samreen Sami</span>
+              <span className="text-gray-600">|</span>
+              <a 
+                href="mailto:samreen.sami84@gmail.com" 
+                className="flex items-center gap-1 hover:text-primary transition-colors"
+                title="Contact Developer"
+              >
+                <Mail className="h-3 w-3" />
+                samreen.sami84@gmail.com
+              </a>
+            </div>
+
             <p className="text-sm text-gray-500">
-              Contact: {SHOP_CONTACT.name} - {SHOP_CONTACT.phone}
+              Owner: Rehan Khan — {SHOP_CONTACT.phone}
             </p>
           </div>
         </div>

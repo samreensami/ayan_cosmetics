@@ -6,7 +6,7 @@ export type Category =
   | "Skincare"
   | "Face Powder"
   | "Beauty Box"
-  | "Perfumes"; 
+  | "Perfumes";
 
 export type Concern =
   | "Dry Skin"
@@ -51,7 +51,19 @@ export interface Product {
   reviewCount: number;
 }
 
-// Updated products list with Perfumes
+// ── Separate interface for Deals page products ──────────────────────────────
+export interface DealProduct {
+  id: string;
+  name: string;
+  price: number;
+  imagePath: string;
+  description: string;
+  category: string;
+  isDeal?: boolean;
+  actualPrice?: number;
+  isComboDeal?: boolean;
+}
+
 export const products: Product[] = [
   {
     id: "1",
@@ -146,7 +158,6 @@ export const products: Product[] = [
     rating: 4.5,
     reviewCount: 23,
   },
-
   {
     id: "8",
     slug: "royal-oud-perfume",
@@ -306,7 +317,6 @@ export const products: Product[] = [
     rating: 4.8,
     reviewCount: 41,
   },
-// Remaining Beauty Boxes
   {
     id: "19",
     slug: "luxury-gift-box-4",
@@ -363,8 +373,6 @@ export const products: Product[] = [
     rating: 5.0,
     reviewCount: 12,
   },
-
-  // Remaining Blush/Tint Images
   {
     id: "23",
     slug: "blush-palette-2",
@@ -420,51 +428,120 @@ export const products: Product[] = [
     inStock: true,
     rating: 4.5,
     reviewCount: 27,
-  }
-
+  },
 ];
 
-export const getFeaturedProducts = (limit = 8) => {
-  return products.filter(p => p.isBestSeller || p.isNew).slice(0, limit);
-};
+// ── Deals page products (separate from main catalog) ───────────────────────
+export const PRODUCTS: DealProduct[] = [
+  {
+    id: "luxury-full-glam-box",
+    name: "AYAN Luxury Full Glam Box & Organizer",
+    price: 8000,
+    imagePath: "/images/products/deal1.png",
+    description: "Complete signature master bundle featuring premium eyeshadow palette, HD foundations, lipsticks, liners, and beauty blenders arranged in a luxury vanity organizer.",
+    category: "Bundles",
+    isDeal: true,
+    isComboDeal: true,
+    actualPrice: 11500,
+  },
+  {
+    id: "fit-me-matte-poreless",
+    name: "Fit Me Matte + Poreless Foundation Tube",
+    price: 2950,
+    imagePath: "/images/products/deal2.png",
+    description: "Ultra-blendable liquid foundation for a flawless matte finish. Controls shine and blurs pores.",
+    category: "Foundation",
+    isDeal: true,
+    actualPrice: 3500,
+  },
+  {
+    id: "benetint-lip-cheek",
+    name: "BeneTint Lip & Cheek Liquid Tint",
+    price: 599,
+    imagePath: "/images/products/deal3.png",
+    description: "Rose-tinted lip and cheek stain. Smudge-proof and transparent long-lasting formula.",
+    category: "Tint",
+    isDeal: true,
+    actualPrice: 850,
+  },
+  {
+    id: "super-stay-active-wear",
+    name: "Super Stay 30H Full Coverage Foundation",
+    price: 2150,
+    imagePath: "/images/products/deal4.png",
+    description: "High-pigment foundation with a weightless, ultra-matte locking behavior.",
+    category: "Foundation",
+    isDeal: true,
+    actualPrice: 2500,
+  },
+  {
+    id: "colossal-mascara-yellow",
+    name: "The Colossal Intense Volume Mascara",
+    price: 1750,
+    imagePath: "/images/products/deal5.png",
+    description: "Iconic mega brush volumizing waterproof mascara for dramatic thick lashes.",
+    category: "Eye Makeup",
+    isDeal: true,
+    actualPrice: 1850,
+  },
+  {
+    id: "baby-skin-instant-primer",
+    name: "Baby Skin Instant Pore Eraser Primer",
+    price: 2350,
+    imagePath: "/images/products/deal6.png",
+    description: "Lightweight breathable pore blurring makeup base primer for smooth skin.",
+    category: "Primer",
+    isDeal: true,
+    actualPrice: 2800,
+  },
+  {
+    id: "fit-me-concealer",
+    name: "Fit Me Liquid Concealer Stick",
+    price: 1500,
+    imagePath: "/images/products/deal7.png",
+    description: "Natural coverage concealer to conceal redness, flaws, and under-eye dark circles.",
+    category: "Concealer",
+    isDeal: true,
+    actualPrice: 2100,
+  },
+];
 
-export const getProductBySlug = (slug: string) => {
-  return products.find(p => p.slug === slug);
-};
+// ── Helper functions ────────────────────────────────────────────────────────
 
-export const getAllCategories = (): Category[] => {
-  return [...new Set(products.map(p => p.category))];
-};
+export const getFeaturedProducts = (limit = 8): Product[] =>
+  products.filter((p) => p.isBestSeller || p.isNew).slice(0, limit);
 
-export const getAllBrands = (): string[] => {
-  return [...new Set(products.map(p => p.brand))];
-};
+export const getProductBySlug = (slug: string): Product | undefined =>
+  products.find((p) => p.slug === slug);
 
-export const getRelatedProducts = (product: Product, limit = 4): Product[] => {
-  return products
-    .filter(p => p.id !== product.id && p.category === product.category)
+export const getAllCategories = (): Category[] =>
+  [...new Set(products.map((p) => p.category))];
+
+export const getAllBrands = (): string[] =>
+  [...new Set(products.map((p) => p.brand))];
+
+export const getRelatedProducts = (product: Product, limit = 4): Product[] =>
+  products
+    .filter((p) => p.id !== product.id && p.category === product.category)
     .slice(0, limit);
-};
 
-export const getProductReviews = (productId: string): Review[] => {
-  return [
-    {
-      id: "1",
-      productId,
-      userName: "Sarah K.",
-      rating: 5,
-      comment: "Excellent product! Highly recommend.",
-      date: "2024-01-15",
-      verified: true,
-    },
-    {
-      id: "2",
-      productId,
-      userName: "Ayesha M.",
-      rating: 4,
-      comment: "Good quality, fast delivery.",
-      date: "2024-01-10",
-      verified: true,
-    },
-  ];
-};
+export const getProductReviews = (productId: string): Review[] => [
+  {
+    id: "1",
+    productId,
+    userName: "Sarah K.",
+    rating: 5,
+    comment: "Excellent product! Highly recommend.",
+    date: "2024-01-15",
+    verified: true,
+  },
+  {
+    id: "2",
+    productId,
+    userName: "Ayesha M.",
+    rating: 4,
+    comment: "Good quality, fast delivery.",
+    date: "2024-01-10",
+    verified: true,
+  },
+];

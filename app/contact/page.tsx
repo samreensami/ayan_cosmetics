@@ -1,150 +1,164 @@
 "use client";
 
-import { MapPin, Phone, Instagram, MessageCircle, Facebook } from "lucide-react";
+import React from "react";
+import { MapPin, Phone, MessageCircle, Mail, Clock, ShieldCheck } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import TrustSignals from "@/components/TrustSignals";
-
-// Fixed Numbers for Inquiry and Order
-const INQUIRY_NUMBER = "923332304145";
-const ORDER_NUMBER = "923242162485";
-
-const WHATSAPP_ORDER_LINK = `https://wa.me/${ORDER_NUMBER}?text=Hello%2C%20I%20want%20to%20place%20an%20order.`;
-const WHATSAPP_GENERAL_LINK = `https://wa.me/${INQUIRY_NUMBER}?text=Hello%2C%20I%20have%20a%20general%20inquiry.`;
-
-const contactMethods = [
-  {
-    icon: MessageCircle,
-    title: "WhatsApp (Inquiry)",
-    value: "0333-2304145",
-    description: "General questions & help",
-    href: WHATSAPP_GENERAL_LINK,
-    color: "bg-[#25D366]",
-    iconColor: "text-white",
-    external: true,
-  },
-  {
-    icon: Facebook,
-    title: "Facebook",
-    value: "AYAN Cosmetics",
-    description: "Connect on Facebook",
-    href: "https://www.facebook.com/share/1An9ucPzHR/",
-    color: "bg-[#1877F2]",
-    iconColor: "text-white",
-    external: true,
-  },
-  {
-    icon: Instagram,
-    title: "Instagram",
-    value: "@AYANCOSMETICS.OFFICIAL",
-    description: "Follow us for updates",
-    href: "https://instagram.com/AYANCOSMETICS.OFFICIAL",
-    color: "bg-gradient-to-br from-purple-600 via-pink-500 to-orange-400",
-    iconColor: "text-white",
-    external: true,
-  },
-];
+import { SHOP_CONTACT, generateGeneralWhatsAppLink } from "@/lib/whatsapp";
 
 export default function ContactPage() {
+  const whatsappLink = generateGeneralWhatsAppLink();
+  const googleMapsUrl = "https://maps.google.com/?q=Shop+G-16+Saima+Shopping+Mall+Karachi";
+
   return (
-    <div className="min-h-screen bg-gray-50">
-      <section className="bg-gradient-to-br from-primary/10 via-white to-gold/10 pt-20 pb-10 md:pt-32 md:pb-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-3xl mx-auto text-center">
-            <h1 className="text-3xl md:text-5xl font-bold text-gray-900 mb-6 uppercase">
-              Get in <span className="text-[#00b140]">Touch</span>
-            </h1>
-            <p className="text-base md:text-lg text-gray-600 leading-relaxed">
-              Have a question about our products? Want to place an order? Reach out via WhatsApp for the fastest response.
-            </p>
-          </div>
+    <div className="min-h-screen bg-black text-white selection:bg-[#529538] overflow-x-hidden">
+      
+      {/* ── HERO SECTION ── */}
+      <section className="relative pt-32 pb-16 overflow-hidden text-center">
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[500px] bg-[#529538]/10 blur-[130px] rounded-full -z-10" />
+        
+        <div className="container-custom">
+          <h1 
+            className="text-5xl md:text-8xl font-black italic uppercase tracking-tighter leading-none mb-6 opacity-0"
+            style={{ animation: "slideDown 0.8s cubic-bezier(0.25,0.46,0.45,0.94) forwards" }}
+          >
+            Get In <span className="text-[#529538]">Touch</span>
+          </h1>
+          <p 
+            className="text-gray-400 text-lg md:text-xl max-w-2xl mx-auto tracking-wide font-medium opacity-0"
+            style={{ animation: "fadeIn 1s ease-out 0.4s forwards" }}
+          >
+            Have questions about premium cosmetics or need product guidance? Our expert team is ready to assist you.
+          </p>
         </div>
       </section>
 
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 md:py-16">
-        {/* Contact Cards Grid - Fix for Mobile */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
-          {contactMethods.map((method, index) => {
-            const Icon = method.icon;
-            return (
-              <a
-                key={index}
-                href={method.href}
-                target={method.external ? "_blank" : undefined}
-                rel={method.external ? "noopener noreferrer" : undefined}
-                className="block group"
-              >
-                <Card className="h-full border-none shadow-sm hover:shadow-xl transition-all duration-300">
-                  <CardContent className="p-6 text-center">
-                    <div className={`inline-flex items-center justify-center w-14 h-14 md:w-16 md:h-16 ${method.color} rounded-full mb-4 group-hover:scale-110 transition-transform`}>
-                      <Icon className={`h-7 w-7 md:h-8 md:w-8 ${method.iconColor}`} />
-                    </div>
-                    <h3 className="text-lg font-semibold text-gray-900 mb-1">{method.title}</h3>
-                    <p className="text-[#00b140] font-medium mb-2 text-sm md:text-base">{method.value}</p>
-                    <p className="text-xs md:text-sm text-gray-500">{method.description}</p>
-                  </CardContent>
-                </Card>
-              </a>
-            );
-          })}
-        </div>
-
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12">
-          {/* Order Section */}
-          <Card className="overflow-hidden border-none shadow-md">
-            <div className="bg-[#25D366] p-6 md:p-8 text-white text-center">
-              <MessageCircle className="h-12 w-12 md:h-16 md:w-16 mx-auto mb-4" fill="white" />
-              <h2 className="text-2xl md:text-3xl font-bold mb-2 uppercase">Order on WhatsApp</h2>
-              <p className="text-sm md:text-base opacity-90 mb-6">
-                Direct Order Number: <strong>0324-2162485</strong>
-              </p>
-              <a href={WHATSAPP_ORDER_LINK} target="_blank" rel="noopener noreferrer">
-                <Button className="bg-white text-[#25D366] hover:bg-gray-100 font-bold px-10 py-6 text-lg rounded-full shadow-lg">
-                   Start Order
-                </Button>
-              </a>
+      {/* ── MAIN CONTACT CONTENT ── */}
+      <section className="container-custom pb-24">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+          
+          {/* Left Column: Premium Contact Cards */}
+          <div 
+            className="lg:col-span-5 space-y-6 opacity-0"
+            style={{ animation: "slideRight 0.8s ease-out 0.2s forwards" }}
+          >
+            <div className="inline-block px-4 py-2 bg-[#529538]/20 border border-[#529538]/40 rounded-full mb-2">
+               <span className="text-[#529538] text-xs font-black uppercase tracking-[4px]">Store Details</span>
             </div>
-            <CardContent className="p-6 bg-white">
-              <h3 className="font-semibold text-gray-900 mb-4">Easy Steps:</h3>
-              <ul className="space-y-3 text-sm text-gray-700">
-                <li className="flex items-center gap-2">✅ Click the button above</li>
-                <li className="flex items-center gap-2">✅ Share product details</li>
-                <li className="flex items-center gap-2">✅ Confirm your location</li>
-              </ul>
-            </CardContent>
-          </Card>
+            
+            {/* Address Card */}
+            <div className="group p-8 rounded-[30px] bg-zinc-900 border border-zinc-800 hover:border-[#529538]/50 transition-all duration-500 flex gap-6">
+              <div className="w-12 h-12 bg-black rounded-xl flex items-center justify-center border border-zinc-800 group-hover:bg-[#529538] group-hover:border-[#529538] transition-colors duration-500 shrink-0">
+                <MapPin className="h-5 w-5 text-[#529538] group-hover:text-white" />
+              </div>
+              <div>
+                <h3 className="text-sm font-black uppercase tracking-wider text-zinc-400 mb-2">Our Location</h3>
+                <p className="font-bold text-lg leading-snug">New AYAN Cosmetics</p>
+                <p className="text-zinc-400 text-sm mt-1">
+                  Shop No. G-16, Saima Shopping Mall, Main Rashid Minhas Road, Karachi, Pakistan
+                </p>
+              </div>
+            </div>
 
-          {/* Location & Phone */}
-          <div className="space-y-6">
-            <Card className="border-none shadow-sm">
-              <CardContent className="p-6 flex items-center gap-4">
-                <div className="p-3 bg-blue-50 rounded-full">
-                  <Phone className="h-6 w-6 text-blue-600" />
-                </div>
-                <div>
-                  <h3 className="font-semibold text-gray-900">Direct Inquiry</h3>
-                  <p className="text-blue-600 font-bold">0333-2304145</p>
-                </div>
-              </CardContent>
-            </Card>
+            {/* Phone Card */}
+            <div className="group p-8 rounded-[30px] bg-zinc-900 border border-zinc-800 hover:border-[#529538]/50 transition-all duration-500 flex gap-6">
+              <div className="w-12 h-12 bg-black rounded-xl flex items-center justify-center border border-zinc-800 group-hover:bg-[#529538] group-hover:border-[#529538] transition-colors duration-500 shrink-0">
+                <Phone className="h-5 w-5 text-[#529538] group-hover:text-white" />
+              </div>
+              <div>
+                <h3 className="text-sm font-black uppercase tracking-wider text-zinc-400 mb-2">Call Support</h3>
+                <a 
+                  href={`tel:${SHOP_CONTACT.phone}`} 
+                  className="font-black text-xl hover:text-[#529538] transition-colors tracking-tight block"
+                >
+                  {SHOP_CONTACT.phone}
+                </a>
+                <p className="text-zinc-500 text-xs mt-1">Available for direct inquiries</p>
+              </div>
+            </div>
 
-            <Card className="border-none shadow-sm">
-              <CardContent className="p-6 flex items-center gap-4">
-                <div className="p-3 bg-green-50 rounded-full">
-                  <MapPin className="h-6 w-6 text-[#00b140]" />
-                </div>
-                <div>
-                  <h3 className="font-semibold text-gray-900">Shop Address</h3>
-                  <address className="text-gray-600 not-italic text-sm">
-                    Shop NO-G-16, Saima Mall, Rashid Minhas Road, Karachi
-                  </address>
-                </div>
-              </CardContent>
-            </Card>
+            {/* Timings Card */}
+            <div className="group p-8 rounded-[30px] bg-zinc-900 border border-zinc-800 hover:border-[#529538]/50 transition-all duration-500 flex gap-6">
+              <div className="w-12 h-12 bg-black rounded-xl flex items-center justify-center border border-zinc-800 group-hover:bg-[#529538] group-hover:border-[#529538] transition-colors duration-500 shrink-0">
+                <Clock className="h-5 w-5 text-[#529538] group-hover:text-white" />
+              </div>
+              <div>
+                <h3 className="text-sm font-black uppercase tracking-wider text-zinc-400 mb-2">Store Hours</h3>
+                <p className="font-bold text-lg">11:00 AM — 11:00 PM</p>
+                <p className="text-zinc-500 text-xs mt-1">Monday to Sunday</p>
+              </div>
+            </div>
           </div>
+
+          {/* Right Column: Interactive Consultation Card & Actions */}
+          <div 
+            className="lg:col-span-7 opacity-0"
+            style={{ animation: "slideLeft 0.8s ease-out 0.4s forwards" }}
+          >
+            <div className="bg-zinc-900 border border-zinc-800 rounded-[40px] p-8 md:p-12 relative overflow-hidden h-full flex flex-col justify-between">
+              <div className="absolute top-0 right-0 w-80 h-80 bg-[#529538]/5 blur-[80px] rounded-full -z-10" />
+              
+              <div className="space-y-6">
+                <h2 className="text-3xl md:text-5xl font-black italic uppercase tracking-tighter leading-tight">
+                  Skip the Forms.<br />Chat <span className="text-[#529538]">Live</span> instantly.
+                </h2>
+                <p className="text-zinc-400 leading-relaxed">
+                  We believe in premium, direct assistance. Instead of waiting for email replies, connect straight with our beauty experts via WhatsApp or locate us immediately on Google Maps.
+                </p>
+
+                <div className="flex flex-wrap items-center gap-3 pt-4 border-t border-zinc-800 text-xs text-zinc-500">
+                  <div className="flex items-center gap-1.5">
+                    <ShieldCheck className="h-4 w-4 text-[#529538]" /> Verified Business Account
+                  </div>
+                  <span>•</span>
+                  <div>Fast response time</div>
+                </div>
+              </div>
+
+              <div className="flex flex-col sm:flex-row items-center gap-4 pt-12">
+                <a href={whatsappLink} target="_blank" rel="noopener noreferrer" className="w-full sm:w-auto">
+                  <Button className="w-full bg-[#529538] hover:bg-white hover:text-black text-white font-black uppercase tracking-widest h-16 px-10 rounded-full transition-all transform hover:scale-105 shadow-[0_0_30px_rgba(82,149,56,0.2)] text-xs">
+                    <MessageCircle className="mr-3 h-5 w-5 fill-current" />
+                    Launch WhatsApp Chat
+                  </Button>
+                </a>
+                
+                <a href={googleMapsUrl} target="_blank" rel="noopener noreferrer" className="w-full sm:w-auto">
+                  <Button variant="outline" className="w-full border-zinc-700 text-black hover:bg-white hover:text-black font-black uppercase tracking-[3px] h-16 px-8 rounded-full transition-all text-xs">
+                    Open In Google Maps
+                  </Button>
+                </a>
+              </div>
+            </div>
+          </div>
+
         </div>
       </section>
-      <TrustSignals variant="banner" />
+
+      {/* ── MAP EMBED PLACEHOLDER OR PRE-STYLED FOOTER ── */}
+      <section className="bg-zinc-950 border-t border-zinc-900 py-16 text-center">
+        <p className="text-xs font-black uppercase tracking-[6px] text-zinc-600 mb-2">New AYAN Cosmetics</p>
+        <p className="text-xs text-zinc-500">Saima Shopping Mall, Rashid Minhas Road, Karachi</p>
+      </section>
+
+      {/* ── STYLED TRANSITIONS ── */}
+      <style jsx global>{`
+        @keyframes fadeIn {
+          from { opacity: 0; transform: scale(0.98); }
+          to { opacity: 1; transform: scale(1); }
+        }
+        @keyframes slideDown {
+          from { opacity: 0; transform: translateY(-40px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes slideRight {
+          from { opacity: 0; transform: translateX(-50px); }
+          to { opacity: 1; transform: translateX(0); }
+        }
+        @keyframes slideLeft {
+          from { opacity: 0; transform: translateX(50px); }
+          to { opacity: 1; transform: translateX(0); }
+        }
+      `}</style>
     </div>
   );
 }

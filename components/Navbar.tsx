@@ -3,8 +3,7 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { Menu, X, ShoppingBag, Search, Phone, ShoppingCart } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Menu, X, ShoppingBag, Search, ShoppingCart } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useCart } from "@/lib/CartContext";
 
@@ -21,174 +20,116 @@ export default function Navbar() {
   const { totalItems, toggleCart } = useCart();
 
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
-    };
-
-    window.addEventListener("scroll", handleScroll);
+    const handleScroll = () => setIsScrolled(window.scrollY > 20);
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   return (
     <nav
       className={cn(
-        "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
-        // Dono colors ko #00B140 kar diya hai taake logo blend ho jaye
+        "fixed top-0 left-0 right-0 z-50 transition-all duration-500",
         isScrolled
-          ? "bg-[#00B140]/95 backdrop-blur-md shadow-lg py-2"
-          : "bg-[#00B140] py-4"
+          ? "bg-green-700/95 backdrop-blur-xl shadow-[0_1px_40px_rgba(0,0,0,0.4)] py-2"
+          : "bg-green-800 py-3"
       )}
     >
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16 md:h-20">
-          {/* Logo Section - Removed white box background and padding */}
-          <Link href="/" className="flex items-center group">
-            <div className="relative">
-              <Image
-                src="/images/products/logo.png"
-                alt="AYAN Cosmetics Logo"
-                width={160}
-                height={60}
-                className="h-12 md:h-16 w-auto object-contain"
-                priority
-              />
-            </div>
+        <div className="relative flex items-center justify-between h-16 md:h-20">
+
+          {/* ── LOGO ── */}
+          <Link href="/" className="flex items-center shrink-0 z-10">
+            <Image
+              src="/images/products/logo.png"
+              alt="AYAN Cosmetics"
+              width={160}
+              height={60}
+              className="h-10 md:h-12 lg:h-14 w-auto object-contain"
+              priority
+            />
           </Link>
 
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-8">
+          {/* ── DESKTOP NAV LINKS ── */}
+          {/* whitespace-nowrap adds fix for 'About Us' wrapping */}
+          <div className="hidden md:flex items-center gap-4 lg:gap-8 absolute left-1/2 -translate-x-1/2 whitespace-nowrap">
             {navLinks.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
-                className="text-sm font-bold text-white transition-colors hover:text-black/70"
+                className="relative text-[10px] lg:text-sm font-medium text-white/75 hover:text-white tracking-widest uppercase transition-colors duration-200 group py-1"
               >
                 {link.label}
+                <span className="absolute bottom-0 left-0 w-0 h-px bg-pink-300 group-hover:w-full transition-all duration-300 ease-out" />
               </Link>
             ))}
 
-            {/* Deals — highlighted button */}
-            <Link href="/deals" className="relative inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full text-sm font-bold text-white transition-all hover:scale-105 hover:brightness-110"
-              style={{ background: "linear-gradient(135deg, #ff3b3b 0%, #cc0000 100%)", boxShadow: "0 2px 14px rgba(220,0,0,0.45)" }}>
-              <span className="absolute inset-0 rounded-full animate-ping opacity-20 pointer-events-none" style={{ background: "#ff3b3b" }} />
-              🔥 Deals
+            {/* Deals pill - Compact on Tablet */}
+            <Link
+              href="/deals"
+              className="relative inline-flex items-center gap-1.5 px-3 lg:px-4 py-1.5 rounded-full text-[10px] lg:text-xs font-black uppercase tracking-widest text-white transition-all duration-200 hover:scale-105"
+              style={{
+                background: "linear-gradient(135deg, #ff3b3b 0%, #cc0000 100%)",
+                boxShadow: "0 2px 16px rgba(220,0,0,0.5)",
+              }}
+            >
+              🔥 <span className="hidden lg:inline">Deals</span>
             </Link>
           </div>
 
-          {/* Desktop Actions */}
-          <div className="hidden md:flex items-center space-x-4">
-            <a
-              href="tel:0333-2304145"
-              className="flex items-center gap-2 text-sm font-bold text-white hover:text-black/70 transition-colors"
-            >
-              <Phone className="h-4 w-4" />
-              <span>0333-2304145</span>
-            </a>
-            
+          {/* ── DESKTOP ACTIONS ── */}
+          <div className="hidden md:flex items-center gap-1 lg:gap-2 z-10">
+            {/* Search */}
             <Link href="/shop">
-              <Button
-                variant="ghost"
-                size="icon"
-                className="text-white hover:bg-white/20"
-              >
-                <Search className="h-5 w-5" />
-              </Button>
+              <button className="p-2 rounded-full text-white/60 hover:text-white hover:bg-white/8 transition-all">
+                <Search className="h-4 w-4" />
+              </button>
             </Link>
 
-            {/* Cart Button with Badge */}
+            {/* Cart */}
             <button
               onClick={toggleCart}
-              className="relative p-2 text-white hover:bg-white/20 rounded-full transition-colors"
-              aria-label="Open cart"
+              className="relative p-2 rounded-full text-white/60 hover:text-white hover:bg-white/8 transition-all"
             >
-              <ShoppingCart className="h-5 w-5" />
+              <ShoppingCart className="h-4 w-4" />
               {totalItems > 0 && (
-                <span className="absolute -top-1 -right-1 bg-[#e60012] text-white text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center">
+                <span className="absolute -top-0.5 -right-0.5 min-w-[16px] h-4 rounded-full bg-pink-500 text-white text-[9px] font-black flex items-center justify-center px-1">
                   {totalItems}
                 </span>
               )}
             </button>
 
-            <Link href="/shop">
-              <Button
-                className="bg-white text-[#00B140] hover:bg-black hover:text-white font-bold rounded-full gap-2 transition-all shadow-lg border-none"
-              >
-                <ShoppingBag className="h-4 w-4" />
-                Shop Now
-              </Button>
-            </Link>
-          </div>
-
-          {/* Mobile Menu Button */}
-          <button
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="md:hidden p-2 rounded-lg text-white hover:bg-white/10 transition-colors"
-            aria-label="Toggle menu"
-          >
-            {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-          </button>
-        </div>
-
-        {/* Mobile Menu */}
-        <div
-          className={cn(
-            "md:hidden overflow-hidden transition-all duration-300 bg-[#00B140] rounded-b-2xl shadow-2xl",
-            isMenuOpen ? "max-h-96 pb-6" : "max-h-0"
-          )}
-        >
-          <div className="flex flex-col space-y-2 pt-4 border-t border-white/20">
-            {navLinks.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                onClick={() => setIsMenuOpen(false)}
-                className="px-4 py-3 text-white font-bold hover:bg-white/10 rounded-lg transition-colors"
-              >
-                {link.label}
-              </Link>
-            ))}
-
-            {/* Deals — highlighted button (mobile) */}
-            <Link href="/deals" onClick={() => setIsMenuOpen(false)}
-              className="mx-4 py-3 rounded-xl text-center text-white font-bold transition-all hover:brightness-110"
-              style={{ background: "linear-gradient(135deg, #ff3b3b 0%, #cc0000 100%)", boxShadow: "0 2px 10px rgba(220,0,0,0.4)" }}>
-              🔥 Deals — Limited Time Offers
-            </Link>
-            
-            <div className="px-4 py-3 border-t border-white/10 mt-2">
-              <a href="tel:0333-2304145" className="flex items-center gap-2 text-white font-bold">
-                <Phone className="h-4 w-4" />
-                <span>0333-2304145</span>
-              </a>
-            </div>
-
-            {/* Mobile Cart Button */}
-            <div className="px-4 py-2">
-              <button
-                onClick={() => { toggleCart(); setIsMenuOpen(false); }}
-                className="w-full flex items-center justify-between px-4 py-3 bg-white/10 hover:bg-white/20 rounded-lg transition-colors text-white font-bold"
-              >
-                <span className="flex items-center gap-2">
-                  <ShoppingCart className="h-5 w-5" />
-                  Cart
-                </span>
-                {totalItems > 0 && (
-                  <span className="bg-[#e60012] text-white text-xs font-bold w-6 h-6 rounded-full flex items-center justify-center">
-                    {totalItems}
-                  </span>
-                )}
+            {/* Shop Now - More compact on Tablet */}
+            <Link href="/shop" className="ml-1 lg:ml-2">
+              <button className="flex items-center gap-2 px-3 lg:px-5 py-2 lg:py-2.5 rounded-full bg-white text-black text-[10px] lg:text-xs font-black uppercase tracking-widest hover:bg-pink-50 transition-all shadow-md whitespace-nowrap">
+                <ShoppingBag className="h-3 lg:h-3.5 w-3 lg:w-3.5" />
+                <span className="hidden sm:inline">Shop Now</span>
               </button>
-            </div>
-
-            <div className="pt-2 px-4">
-              <Link href="/shop" onClick={() => setIsMenuOpen(false)}>
-                <Button className="w-full bg-white text-[#00B140] hover:bg-black hover:text-white font-bold rounded-full gap-2 shadow-md border-none">
-                  <ShoppingBag className="h-4 w-4" />
-                  Shop Now
-                </Button>
-              </Link>
-            </div>
+            </Link>
           </div>
+
+          {/* ── MOBILE: CART + HAMBURGER ── */}
+          <div className="md:hidden flex items-center gap-1 z-10">
+            <button onClick={toggleCart} className="relative p-2 text-white/80"><ShoppingCart className="h-5 w-5" />{totalItems > 0 && <span className="absolute -top-0.5 -right-0.5 min-w-[16px] h-4 rounded-full bg-pink-500 text-white text-[9px] flex items-center justify-center">{totalItems}</span>}</button>
+            <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="p-2 text-white/80">
+              <div className="relative w-6 h-6">
+                <span className={cn("absolute w-6 h-0.5 bg-current transition-all", isMenuOpen ? "rotate-45" : "-translate-y-2")} />
+                <span className={cn("absolute w-6 h-0.5 bg-current transition-all", isMenuOpen ? "opacity-0" : "opacity-100")} />
+                <span className={cn("absolute w-6 h-0.5 bg-current transition-all", isMenuOpen ? "-rotate-45" : "translate-y-2")} />
+              </div>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {/* ── MOBILE MENU ── */}
+      <div className={cn("md:hidden overflow-hidden transition-all duration-500 bg-black/95", isMenuOpen ? "max-h-[520px]" : "max-h-0")}>
+        <div className="px-5 pt-4 pb-8 space-y-1 border-t border-white/8">
+          {navLinks.map((link) => (
+            <Link key={link.href} href={link.href} onClick={() => setIsMenuOpen(false)} className="block py-4 text-white/70 uppercase tracking-widest text-sm">{link.label}</Link>
+          ))}
+          <Link href="/deals" onClick={() => setIsMenuOpen(false)} className="block py-4 text-center bg-red-600 text-white font-black rounded-xl uppercase tracking-widest text-sm">🔥 Deals — Limited Time</Link>
+          <button onClick={() => { toggleCart(); setIsMenuOpen(false); }} className="w-full flex justify-between py-4 text-white/70 uppercase tracking-widest text-sm"><span className="flex gap-3"><ShoppingCart /> Cart</span>{totalItems > 0 && <span>{totalItems}</span>}</button>
+          <Link href="/shop" onClick={() => setIsMenuOpen(false)} className="block pt-2"><button className="w-full py-4 bg-white text-black font-black rounded-full uppercase tracking-widest text-xs">Shop Now</button></Link>
         </div>
       </div>
     </nav>
