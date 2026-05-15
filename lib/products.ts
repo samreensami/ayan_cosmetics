@@ -748,3 +748,4 @@ export const getRelatedProducts = (product: Product, limit = 4): Product[] =>
     .slice(0, limit);
 
 export const getProductReviews = (_productId: string): Review[] => [];
+
