@@ -30,12 +30,12 @@ export default function Navbar() {
       className={cn(
         "fixed top-0 left-0 right-0 z-50 transition-all duration-500",
         isScrolled
-          ? "bg-green-700/95 backdrop-blur-xl shadow-[0_1px_40px_rgba(0,0,0,0.4)] py-2"
-          : "bg-green-800 py-3"
+          ? "bg-green-700/95 backdrop-blur-xl shadow-[0_1px_40px_rgba(0,0,0,0.4)]"
+          : "bg-green-800"
       )}
     >
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="relative flex items-center justify-between h-16 md:h-20">
+        <div className="relative flex items-center justify-between h-14 md:h-14">
 
           {/* ── LOGO ── */}
           <Link href="/" className="flex items-center shrink-0 z-10">
@@ -44,7 +44,7 @@ export default function Navbar() {
               alt="AYAN Cosmetics"
               width={160}
               height={60}
-              className="h-10 md:h-12 lg:h-14 w-auto object-contain"
+              className="h-8 md:h-9 lg:h-10 w-auto object-contain"
               priority
             />
           </Link>

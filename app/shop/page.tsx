@@ -73,7 +73,7 @@ export default function ShopPage() {
   }, [searchQuery, filters]);
 
   return (
-    <div className="min-h-screen bg-black overflow-x-hidden">
+    <div className="min-h-screen bg-black overflow-x-hidden pt-20 md:pt-28">
       {/* ── HERO SECTION ── */}
       <section className="relative w-full h-[55vh] md:h-[65vh] overflow-hidden">
         <Image
@@ -83,22 +83,23 @@ export default function ShopPage() {
           priority
           className="object-cover object-top"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent opacity-80" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent opacity-80" />
         
-        <div className="absolute inset-0 flex items-center">
-          <div className="container mx-auto px-4">
+        {/* FIXED FOR CENTER ALIGNMENT: items-center aur justify-center se text bilkul center ho jayega */}
+        <div className="absolute inset-0 flex items-center justify-center text-center">
+          <div className="container mx-auto px-4 flex flex-col items-center justify-center">
             <h1 
-              className="text-6xl md:text-8xl font-black italic uppercase tracking-tighter text-white leading-[0.85] opacity-0 mb-4"
+              className="text-6xl md:text-8xl font-black italic uppercase tracking-tighter text-white leading-[0.85] opacity-0 mb-4 mx-auto"
               style={{ 
-                animation: "slideRight 0.8s cubic-bezier(0.25,0.46,0.45,0.94) 0.2s forwards"
+                animation: "slideUpCenter 0.8s cubic-bezier(0.25,0.46,0.45,0.94) 0.2s forwards"
               }}
             >
               The <span className="text-[#529538]">Bold</span> <br /> 
               Standard
             </h1>
             <p 
-              className="text-white max-w-md text-[10px] md:text-xs font-black uppercase tracking-[6px] opacity-0"
-              style={{ animation: "slideRight 0.8s cubic-bezier(0.25,0.46,0.45,0.94) 0.4s forwards" }}
+              className="text-white max-w-md text-[10px] md:text-xs font-black uppercase tracking-[6px] opacity-0 mx-auto"
+              style={{ animation: "slideUpCenter 0.8s cubic-bezier(0.25,0.46,0.45,0.94) 0.4s forwards" }}
             >
               Premium Beauty Collection
             </p>
@@ -170,9 +171,10 @@ export default function ShopPage() {
 
       {/* ── ANIMATIONS ── */}
       <style jsx global>{`
-        @keyframes slideRight {
-          from { opacity: 0; transform: translateX(-40px); }
-          to { opacity: 1; transform: translateX(0); }
+        /* UPDATED ANIMATION: Center mein smooth slide up effect ke liye */
+        @keyframes slideUpCenter {
+          from { opacity: 0; transform: translateY(40px); }
+          to { opacity: 1; transform: translateY(0); }
         }
         @keyframes fadeIn {
           from { opacity: 0; transform: translateY(20px); }
