@@ -6,7 +6,7 @@ import ShopGallery from "@/components/ShopGallery";
 
 export default function HomePage() {
   return (
-    <div className="pt-20 md:pt-28 bg-black">
+    <div className="pt-14 bg-green-800">
       <HeroWrapper />
       <TrustSignals />
       <CategoryGrid />

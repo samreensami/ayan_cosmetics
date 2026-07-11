@@ -73,9 +73,9 @@ export default function ShopPage() {
   }, [searchQuery, filters]);
 
   return (
-    <div className="min-h-screen bg-black overflow-x-hidden pt-20 md:pt-28">
+    <div className="min-h-screen bg-black overflow-x-hidden">
       {/* ── HERO SECTION ── */}
-      <section className="relative w-full h-[55vh] md:h-[65vh] overflow-hidden">
+      <section className="relative w-full h-[55vh] md:h-[65vh] overflow-hidden pt-14 bg-green-800">
         <Image
           src="/images/products/shop3.png"
           alt="AYAN Cosmetics"

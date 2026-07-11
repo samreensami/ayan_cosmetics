@@ -2320,6 +2320,10 @@ html {
   padding-top: 2rem;
 }
 
+.pt-14 {
+  padding-top: 3.5rem;
+}
+
 .text-center {
   text-align: center;
 }
