@@ -522,6 +522,10 @@ html {
   top: 0;
 }
 
+.top-1 {
+  top: .25rem;
+}
+
 .top-1\/2 {
   top: 50%;
 }
@@ -532,6 +536,10 @@ html {
 
 .top-4 {
   top: 1rem;
+}
+
+.top-5 {
+  top: 1.25rem;
 }
 
 .top-8 {
@@ -740,6 +748,10 @@ html {
   display: grid;
 }
 
+.contents {
+  display: contents;
+}
+
 .hidden {
   display: none;
 }
@@ -876,6 +888,10 @@ html {
   height: 600px;
 }
 
+.h-\[70vh\] {
+  height: 70vh;
+}
+
 .h-\[72vh\] {
   height: 72vh;
 }
@@ -910,6 +926,10 @@ html {
 
 .max-h-\[640px\] {
   max-height: 640px;
+}
+
+.max-h-\[720px\] {
+  max-height: 720px;
 }
 
 .min-h-\[4px\] {
@@ -1012,6 +1032,10 @@ html {
   width: 20rem;
 }
 
+.w-9 {
+  width: 2.25rem;
+}
+
 .w-96 {
   width: 24rem;
 }
@@ -1096,6 +1120,10 @@ html {
   max-width: 28rem;
 }
 
+.max-w-sm {
+  max-width: 24rem;
+}
+
 .max-w-xl {
   max-width: 36rem;
 }
@@ -1127,11 +1155,6 @@ html {
 
 .-translate-y-1\/2 {
   --tw-translate-y: -50%;
-  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
-}
-
-.-translate-y-2 {
-  --tw-translate-y: -.5rem;
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
 
@@ -1281,6 +1304,10 @@ html {
 
 .items-stretch {
   align-items: stretch;
+}
+
+.justify-start {
+  justify-content: flex-start;
 }
 
 .justify-center {
@@ -1653,6 +1680,10 @@ html {
   border-color: rgb(239 68 68 / var(--tw-border-opacity, 1));
 }
 
+.border-red-500\/70 {
+  border-color: #ef4444b3;
+}
+
 .border-transparent {
   border-color: #0000;
 }
@@ -1958,6 +1989,10 @@ html {
   background-color: #18181b80;
 }
 
+.bg-zinc-900\/60 {
+  background-color: #18181b99;
+}
+
 .bg-zinc-900\/70 {
   background-color: #18181bb3;
 }
@@ -2168,6 +2203,10 @@ html {
   padding: .25rem;
 }
 
+.p-1\.5 {
+  padding: .375rem;
+}
+
 .p-10 {
   padding: 2.5rem;
 }
@@ -2326,6 +2365,10 @@ html {
   padding-bottom: 4rem;
 }
 
+.pb-2 {
+  padding-bottom: .5rem;
+}
+
 .pb-20 {
   padding-bottom: 5rem;
 }
@@ -2358,6 +2401,10 @@ html {
   padding-right: .5rem;
 }
 
+.pr-3 {
+  padding-right: .75rem;
+}
+
 .pt-0 {
   padding-top: 0;
 }
@@ -2368,6 +2415,10 @@ html {
 
 .pt-12 {
   padding-top: 3rem;
+}
+
+.pt-14 {
+  padding-top: 3.5rem;
 }
 
 .pt-2 {
@@ -2400,10 +2451,6 @@ html {
 
 .pt-8 {
   padding-top: 2rem;
-}
-
-.pt-14 {
-  padding-top: 3.5rem;
 }
 
 .text-center {
@@ -2740,6 +2787,11 @@ html {
   color: #00b14033;
 }
 
+.text-red-400 {
+  --tw-text-opacity: 1;
+  color: rgb(248 113 113 / var(--tw-text-opacity, 1));
+}
+
 .text-red-600 {
   --tw-text-opacity: 1;
   color: rgb(220 38 38 / var(--tw-text-opacity, 1));
@@ -2905,8 +2957,20 @@ html {
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
 
+.shadow-\[0_24px_80px_rgba\(0\,0\,0\,0\.85\)\] {
+  --tw-shadow: 0 24px 80px #000000d9;
+  --tw-shadow-colored: 0 24px 80px var(--tw-shadow-color);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+}
+
 .shadow-\[0_4px_20px_rgba\(82\,149\,56\,0\.2\)\] {
   --tw-shadow: 0 4px 20px #52953833;
+  --tw-shadow-colored: 0 4px 20px var(--tw-shadow-color);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+}
+
+.shadow-\[0_4px_20px_rgba\(82\,149\,56\,0\.4\)\] {
+  --tw-shadow: 0 4px 20px #52953866;
   --tw-shadow-colored: 0 4px 20px var(--tw-shadow-color);
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
@@ -3335,6 +3399,10 @@ html {
   border-color: #ec489959;
 }
 
+.hover\:border-pink-500\/40:hover {
+  border-color: #ec489966;
+}
+
 .hover\:border-transparent:hover {
   border-color: #0000;
 }
@@ -3645,6 +3713,10 @@ html {
 
 .disabled\:opacity-30:disabled {
   opacity: .3;
+}
+
+.disabled\:opacity-40:disabled {
+  opacity: .4;
 }
 
 .disabled\:opacity-50:disabled {
@@ -3968,6 +4040,10 @@ html {
     align-items: center;
   }
 
+  .md\:justify-center {
+    justify-content: center;
+  }
+
   .md\:justify-between {
     justify-content: space-between;
   }
@@ -3982,6 +4058,10 @@ html {
 
   .md\:gap-12 {
     gap: 3rem;
+  }
+
+  .md\:gap-6 {
+    gap: 1.5rem;
   }
 
   .md\:object-right-top {
@@ -4030,10 +4110,6 @@ html {
 
   .md\:pt-24 {
     padding-top: 6rem;
-  }
-
-  .md\:pt-28 {
-    padding-top: 7rem;
   }
 
   .md\:text-left {

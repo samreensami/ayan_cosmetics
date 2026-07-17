@@ -4,6 +4,7 @@ import React, { useState, useRef, useEffect } from "react";
 import { X, Send, BotMessageSquare } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { getBotResponse, ChatMessage, INITIAL_QUICK_REPLIES } from "@/lib/chatbot";
+import { buildWhatsAppLink } from "@/lib/whatsapp";
 
 export default function AyanAIChat() {
   const [isOpen, setIsOpen] = useState(false);
@@ -58,7 +59,10 @@ export default function AyanAIChat() {
     const msg =
       customText ||
       "Assalam-o-Alaikum AYAN Cosmetics! Main Ayan AI chatbot ke zariye contact kar rahi/raha hoon. Ordering mein help chahiye.";
-    window.open(`https://wa.me/923332304345?text=${encodeURIComponent(msg)}`, "_blank");
+    // Guard for SSR + open in a new tab safely (noopener/noreferrer prevents
+    // the opened tab from accessing window.opener).
+    if (typeof window === "undefined") return;
+    window.open(buildWhatsAppLink(msg), "_blank", "noopener,noreferrer");
   };
 
   const formatText = (raw: string) =>

@@ -30,7 +30,8 @@ export default function ProductCard({ product }: { product: Product }) {
       
       {/* IMAGE SECTION */}
       <div className="relative aspect-[3/4] w-full bg-[#f3f3f3] overflow-hidden">
-        <Link href={`/shop/${product.slug}`} className="block w-full h-full">
+        {/* FIX: Immediate parent (Link) par "relative" class lagayi hai taake fill warning khatam ho */}
+        <Link href={`/shop/${product.slug}`} className="relative block w-full h-full">
           {!imageError ? (
             <Image
               src={product.image}

@@ -50,7 +50,6 @@ export default function Navbar() {
           </Link>
 
           {/* ── DESKTOP NAV LINKS ── */}
-          {/* whitespace-nowrap adds fix for 'About Us' wrapping */}
           <div className="hidden md:flex items-center gap-4 lg:gap-8 absolute left-1/2 -translate-x-1/2 whitespace-nowrap">
             {navLinks.map((link) => (
               <Link
@@ -63,7 +62,7 @@ export default function Navbar() {
               </Link>
             ))}
 
-            {/* Deals pill - Compact on Tablet */}
+            {/* Deals pill */}
             <Link
               href="/deals"
               className="relative inline-flex items-center gap-1.5 px-3 lg:px-4 py-1.5 rounded-full text-[10px] lg:text-xs font-black uppercase tracking-widest text-white transition-all duration-200 hover:scale-105"
@@ -98,7 +97,7 @@ export default function Navbar() {
               )}
             </button>
 
-            {/* Shop Now - More compact on Tablet */}
+            {/* Shop Now */}
             <Link href="/shop" className="ml-1 lg:ml-2">
               <button className="flex items-center gap-2 px-3 lg:px-5 py-2 lg:py-2.5 rounded-full bg-white text-black text-[10px] lg:text-xs font-black uppercase tracking-widest hover:bg-pink-50 transition-all shadow-md whitespace-nowrap">
                 <ShoppingBag className="h-3 lg:h-3.5 w-3 lg:w-3.5" />
@@ -107,17 +106,52 @@ export default function Navbar() {
             </Link>
           </div>
 
-          {/* ── MOBILE: CART + HAMBURGER ── */}
+          {/* ── MOBILE: CART + HAMBURGER (PERFECTLY ALIGNED) ── */}
           <div className="md:hidden flex items-center gap-1 z-10">
-            <button onClick={toggleCart} className="relative p-2 text-white/80"><ShoppingCart className="h-5 w-5" />{totalItems > 0 && <span className="absolute -top-0.5 -right-0.5 min-w-[16px] h-4 rounded-full bg-pink-500 text-white text-[9px] flex items-center justify-center">{totalItems}</span>}</button>
-            <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="p-2 text-white/80">
+            {/* Cart Button */}
+            <button 
+              onClick={toggleCart} 
+              className="relative p-2 text-white/80 flex items-center justify-center"
+            >
+              <ShoppingCart className="h-5 w-5" />
+              {totalItems > 0 && (
+                <span className="absolute -top-0.5 -right-0.5 min-w-[16px] h-4 rounded-full bg-pink-500 text-white text-[9px] flex items-center justify-center font-black">
+                  {totalItems}
+                </span>
+              )}
+            </button>
+
+            {/* Hamburger Button */}
+            <button 
+              onClick={() => setIsMenuOpen(!isMenuOpen)} 
+              className="p-2 text-white/80 flex items-center justify-center"
+            >
               <div className="relative w-6 h-6">
-                <span className={cn("absolute w-6 h-0.5 bg-current transition-all", isMenuOpen ? "rotate-45" : "-translate-y-2")} />
-                <span className={cn("absolute w-6 h-0.5 bg-current transition-all", isMenuOpen ? "opacity-0" : "opacity-100")} />
-                <span className={cn("absolute w-6 h-0.5 bg-current transition-all", isMenuOpen ? "-rotate-45" : "translate-y-2")} />
+                {/* Top line */}
+                <span 
+                  className={cn(
+                    "absolute left-0 w-6 h-0.5 bg-current transition-all duration-300", 
+                    isMenuOpen ? "top-3 rotate-45" : "top-1"
+                  )} 
+                />
+                {/* Middle line */}
+                <span 
+                  className={cn(
+                    "absolute left-0 top-3 w-6 h-0.5 bg-current transition-all duration-300", 
+                    isMenuOpen ? "opacity-0" : "opacity-100"
+                  )} 
+                />
+                {/* Bottom line */}
+                <span 
+                  className={cn(
+                    "absolute left-0 w-6 h-0.5 bg-current transition-all duration-300", 
+                    isMenuOpen ? "top-3 -rotate-45" : "top-5"
+                  )} 
+                />
               </div>
             </button>
           </div>
+
         </div>
       </div>
 

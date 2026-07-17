@@ -10,6 +10,16 @@ import ProductCard from "@/components/ProductCard";
 import ProductFilters, { FilterState } from "@/components/ProductFilters";
 import { products, Concern } from "@/lib/products";
 
+// Aapki product inventory ke hisab se exact main navigation headings
+const SHOP_CATEGORIES = [
+  { id: "", label: "ALL PRODUCTS" },
+  { id: "Makeup", label: "MAKEUP" },
+  { id: "Skincare", label: "SKINCARE" },
+  { id: "Hair Care", label: "HAIR CARE" },
+  { id: "Electronic Devices", label: "DEVICES & TOOLS" },
+  { id: "Perfumes", label: "PERFUMES" }
+];
+
 export default function ShopPage() {
   const searchParams = useSearchParams();
   const [searchQuery, setSearchQuery] = useState("");
@@ -38,6 +48,14 @@ export default function ShopPage() {
     }
   }, [searchParams]);
 
+  // Heading Click Handler (Tab Navigation)
+  const handleCategoryTabClick = (categoryName: string) => {
+    setFilters((prev) => ({
+      ...prev,
+      category: categoryName,
+    }));
+  };
+
   const filteredProducts = useMemo(() => {
     let result = [...products];
 
@@ -52,9 +70,9 @@ export default function ShopPage() {
       );
     }
 
-    // Category Filter
+    // Category Filter (Donon sidebars aur quick tabs se sync)
     if (filters.category && filters.category !== "") {
-      result = result.filter((p) => p.category === filters.category);
+      result = result.filter((p) => p.category.toLowerCase() === filters.category.toLowerCase());
     }
 
     // Brand Filter
@@ -75,7 +93,7 @@ export default function ShopPage() {
   return (
     <div className="min-h-screen bg-black overflow-x-hidden">
       {/* ── HERO SECTION ── */}
-      <section className="relative w-full h-[55vh] md:h-[65vh] overflow-hidden pt-14 bg-green-800">
+      <section className="relative w-full h-[55vh] md:h-[65vh] overflow-hidden bg-green-800">
         <Image
           src="/images/products/shop3.png"
           alt="AYAN Cosmetics"
@@ -85,7 +103,6 @@ export default function ShopPage() {
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent opacity-80" />
         
-        {/* FIXED FOR CENTER ALIGNMENT: items-center aur justify-center se text bilkul center ho jayega */}
         <div className="absolute inset-0 flex items-center justify-center text-center">
           <div className="container mx-auto px-4 flex flex-col items-center justify-center">
             <h1 
@@ -110,6 +127,26 @@ export default function ShopPage() {
       {/* ── SHOP AREA ── */}
       <section className="max-w-[1400px] mx-auto px-4 py-12">
         
+        {/* INTERACTIVE CATEGORY HEADINGS TAB BAR */}
+        <div className="w-full border-b border-zinc-800 mb-10 overflow-x-auto no-scrollbar whitespace-nowrap flex gap-2 md:gap-6 pb-2 justify-start md:justify-center">
+          {SHOP_CATEGORIES.map((tab) => {
+            const isActive = filters.category.toLowerCase() === tab.id.toLowerCase();
+            return (
+              <button
+                key={tab.id}
+                onClick={() => handleCategoryTabClick(tab.id)}
+                className={`px-6 py-3 text-xs md:text-sm font-black tracking-widest uppercase rounded-full transition-all duration-300 ${
+                  isActive 
+                    ? "bg-[#529538] text-white shadow-[0_4px_20px_rgba(82,149,56,0.4)]" 
+                    : "text-zinc-400 hover:text-white bg-zinc-900/60 hover:bg-zinc-900 border border-zinc-800"
+                }`}
+              >
+                {tab.label}
+              </button>
+            );
+          })}
+        </div>
+
         {/* Search & Stats Bar */}
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-10">
           <div className="relative w-full max-w-xl">
@@ -171,7 +208,14 @@ export default function ShopPage() {
 
       {/* ── ANIMATIONS ── */}
       <style jsx global>{`
-        /* UPDATED ANIMATION: Center mein smooth slide up effect ke liye */
+        /* Custom layout styling */
+        .no-scrollbar::-webkit-scrollbar {
+          display: none;
+        }
+        .no-scrollbar {
+          -ms-overflow-style: none;
+          scrollbar-width: none;
+        }
         @keyframes slideUpCenter {
           from { opacity: 0; transform: translateY(40px); }
           to { opacity: 1; transform: translateY(0); }

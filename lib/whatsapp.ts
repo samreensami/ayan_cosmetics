@@ -39,6 +39,15 @@ export function generateGeneralWhatsAppLink(): string {
 }
 
 /**
+ * Build a WhatsApp link with a custom message (Uses CONTACT_NUMBER by default).
+ * @param message - The message text (will be URL-encoded)
+ * @param phone   - Optional override for the destination number
+ */
+export function buildWhatsAppLink(message: string, phone: string = CONTACT_NUMBER): string {
+  return `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
+}
+
+/**
  * Generate a WhatsApp link for product inquiry (Uses CONTACT_NUMBER)
  */
 export function generateInquiryLink(productName: string): string {
