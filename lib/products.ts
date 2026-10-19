@@ -13,6 +13,7 @@ export type Concern =
   | "Anti-Aging"
   | "All Skin Types"
   | "Fragrance"
+  | "All Hair Types"
   | "Beauty Box";
 
 export interface Review {
@@ -1528,6 +1529,36 @@ export const products: Product[] = [
     "inStock": true,
     "rating": 4.7,
     "reviewCount": 24
+  },
+  {
+    id: "remington-styler-sleek-ceramic-straightener-rms-9680",
+    slug: "remington-styler-sleek-ceramic-straightener-rms-9680",
+    name: "Remington Styler Sleek Ceramic Hair Straightener (Rms-9680)",
+    brand: "Remington Styler",
+    category: "Electronic Devices",
+    price: 3800,
+    rating: 4.8,
+    reviewCount: 19,
+    inStock: true,
+    isNew: true,
+    image: "/images/products/remington-styler-sleek-ceramic-straightener-rms-9680.jfif",
+    shortDescription: "An ultra-thin hair straightener with smooth ceramic plates heating up to 750°F for effortless styling.",
+    concern: ["All Hair Types"]
+  },
+  {
+    id: "remington-styler-pro-luxe-s-9600",
+    slug: "remington-styler-pro-luxe-s-9600",
+    name: "Remington Styler Pro Luxe Hair Straightener (S-9600)",
+    brand: "Remington Styler",
+    category: "Electronic Devices",
+    price: 4200,
+    rating: 4.8,
+    reviewCount: 15,
+    inStock: true,
+    isNew: true,
+    image: "/images/products/remington-styler-pro-luxe-s-9600.jfif",
+    shortDescription: "Pro Luxe hair straightener featuring electro-magnetic plates and keratin protection technology.",
+    concern: ["All Hair Types"]
   }
 ];
 
