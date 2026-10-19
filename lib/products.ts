@@ -1223,7 +1223,7 @@ export const products: Product[] = [
     reviewCount: 22,
     inStock: true,
     isNew: true,
-    image: "/images/products/rivaj-fantasy-3-in-1-palette.jfif",
+    image: "/images/products/rivaj-fantasy-3-in-1-palette.jpeg",
     shortDescription: "A multi-functional 3-in-1 palette featuring blush, contour, and highlight shades.",
     concern: ["All Skin Types"]
   },
@@ -1238,7 +1238,7 @@ export const products: Product[] = [
     reviewCount: 15,
     inStock: true,
     isNew: true,
-    image: "/images/products/rivaj-fantasy-contour-palette.jfif",
+    image: "/images/products/rivaj-fantasy-contour-palette.jpeg",
     shortDescription: "A versatile 4-shade contour palette for sculpting, defining, and highlighting facial features.",
     concern: ["All Skin Types"]
   },
@@ -1253,7 +1253,7 @@ export const products: Product[] = [
     reviewCount: 16,
     inStock: true,
     isNew: true,
-    image: "/images/products/rivaj-eyebrow-palette-4-in-1.jfif",
+    image: "/images/products/rivaj-eyebrow-palette-4-in-1.jpeg",
     shortDescription: "A complete 4-in-1 brow palette with primer and natural powder shades for perfectly shaped brows.",
     concern: ["All Skin Types"]
   },
@@ -1268,7 +1268,7 @@ export const products: Product[] = [
     reviewCount: 20,
     inStock: true,
     isNew: true,
-    image: "/images/products/rivaj-fantacy-eyeshadow-9-in-1.jfif",
+    image: "/images/products/rivaj-fantacy-eyeshadow-9-in-1.jpeg",
     shortDescription: "A vibrant 9-in-1 eyeshadow palette featuring highly pigmented matte and shimmer shades.",
    
     concern: ["All Skin Types"]
@@ -1284,7 +1284,7 @@ export const products: Product[] = [
     reviewCount: 25,
     inStock: true,
     isNew: true,
-    image: "/images/products/rivaj-hd-flawless-eyeshadow-palette-18-in-1.jfif",
+    image: "/images/products/rivaj-hd-flawless-eyeshadow-palette-18-in-1.jpeg",
     shortDescription: "An ultra-pigmented 18-in-1 eyeshadow palette featuring a blend of rich mattes and shimmers.",
     concern: ["All Skin Types"]
   },
@@ -1299,7 +1299,7 @@ export const products: Product[] = [
     reviewCount: 19,
     inStock: true,
     isNew: true,
-    image: "/images/products/rivaj-starlit-sparkle-glitter-palette-9-in-1.jfif",
+    image: "/images/products/rivaj-starlit-sparkle-glitter-palette-9-in-1.jpeg",
     shortDescription: "A dazzling 9-in-1 glitter palette packed with intense shimmer and sparkle shades.",
     concern: ["All Skin Types"]
   },
@@ -1329,7 +1329,7 @@ export const products: Product[] = [
     reviewCount: 24,
     inStock: true,
     isNew: true,
-    image: "/images/products/rivaj-makhmali-eyeshadow-kit-32-in-1.jfif",
+    image: "/images/products/rivaj-makhmali-eyeshadow-kit-32-in-1.jpeg",
     shortDescription: "A luxurious 32-in-1 velvet-touch eyeshadow palette with rich, highly pigmented shades.",
     concern: ["All Skin Types"]
   },
@@ -1344,7 +1344,7 @@ export const products: Product[] = [
     reviewCount: 32,
     inStock: true,
     isNew: true,
-    image: "/images/products/rivaj-classy-lipstick.jfif",
+    image: "/images/products/rivaj-classy-lipstick.jpeg",
     shortDescription: "A smooth, highly pigmented lipstick offering vibrant color payoff and comfortable long wear.",
     concern: ["All Skin Types"]
   },
@@ -1359,7 +1359,7 @@ export const products: Product[] = [
     reviewCount: 30,
     inStock: true,
     isNew: true,
-    image: "/images/products/rivaj-color-fusion-lipstick.jfif",
+    image: "/images/products/rivaj-color-fusion-lipstick.jpeg",
     shortDescription: "A rich, hydrating lipstick with intense color payoff and a comfortable smooth finish.",
     concern: ["All Skin Types"]
   },
@@ -1374,7 +1374,7 @@ export const products: Product[] = [
     reviewCount: 35,
     inStock: true,
     isNew: true,
-    image: "/images/products/rivaj-pure-matte-lipstick.jfif",
+    image: "/images/products/rivaj-pure-matte-lipstick.jpeg",
     shortDescription: "A comfortable pure matte lipstick delivering bold, velvety color payoff with long-lasting wear.",
     concern: ["All Skin Types"]
   },
@@ -1389,7 +1389,7 @@ export const products: Product[] = [
     reviewCount: 38,
     inStock: true,
     isNew: true,
-    image: "/images/products/rivaj-lipstick-pencil.jfif",
+    image: "/images/products/rivaj-lipstick-pencil.jpeg",
     shortDescription: "A precision lipstick pencil offering smooth application, high color intensity, and long-lasting definition.",
     concern: ["All Skin Types"]
   },
@@ -1404,7 +1404,7 @@ export const products: Product[] = [
     reviewCount: 42,
     inStock: true,
     isNew: true,
-    image: "/images/products/rivaj-lip-and-eye-pencil.jfif",
+    image: "/images/products/rivaj-lip-and-eye-pencil.jpeg",
     shortDescription: "A dual-purpose waterproof pencil for defining both lips and eyes with precision and long-lasting wear.",
     concern: ["All Skin Types"]
   },
@@ -1419,7 +1419,7 @@ export const products: Product[] = [
     reviewCount: 36,
     inStock: true,
     isNew: true,
-    image: "/images/products/rivaj-ultra-matte-lipstick.jfif",
+    image: "/images/products/rivaj-ultra-matte-lipstick.jpeg",
     shortDescription: "An ultra-matte lipstick providing intense color payoff and a comfortable long-lasting finish.",
     concern: ["All Skin Types"]
   },
@@ -1434,7 +1434,7 @@ export const products: Product[] = [
     reviewCount: 31,
     inStock: true,
     isNew: true,
-    image: "/images/products/rivaj-powder-matte-lip-gloss.jfif",
+    image: "/images/products/rivaj-powder-matte-lip-gloss.jpeg",
     shortDescription: "A lightweight liquid lip gloss delivering a smooth, velvety powder-matte finish.",
     concern: ["All Skin Types"]
   },
@@ -1449,7 +1449,7 @@ export const products: Product[] = [
     reviewCount: 29,
     inStock: true,
     isNew: true,
-    image: "/images/products/rivaj-all-day-intense-color-lip-gloss.jfif",
+    image: "/images/products/rivaj-all-day-intense-color-lip-gloss.jpeg",
     shortDescription: "A long-lasting liquid lip gloss delivering high-impact, intense color and comfortable shine.",
     concern: ["All Skin Types"]
   },
@@ -1464,7 +1464,7 @@ export const products: Product[] = [
     reviewCount: 34,
     inStock: true,
     isNew: true,
-    image: "/images/products/rivaj-lip-tint.jfif",
+    image: "/images/products/rivaj-lip-tint.jpeg",
     shortDescription: "A lightweight, long-lasting lip tint that provides a natural flush of color with a smooth feel.",
     concern: ["All Skin Types"]
   },
@@ -1479,7 +1479,7 @@ export const products: Product[] = [
     reviewCount: 33,
     inStock: true,
     isNew: true,
-    image: "/images/products/rivaj-quick-dry-lip-gloss.jfif",
+    image: "/images/products/rivaj-quick-dry-lip-gloss.jpeg",
     shortDescription: "A fast-drying liquid lip gloss offering intense color payoff and a comfortable matte-shine finish.",
     concern: ["All Skin Types"]
   },
@@ -1494,7 +1494,7 @@ export const products: Product[] = [
     reviewCount: 37,
     inStock: true,
     isNew: true,
-    image: "/images/products/rivaj-diamond-shine-lip-gloss.jfif",
+    image: "/images/products/rivaj-diamond-shine-lip-gloss.jpeg",
     shortDescription: "A high-shine lip gloss infused with 3D glitter effect for brilliant, sparkling lips.",
     concern: ["All Skin Types"]
   },
@@ -1509,7 +1509,7 @@ export const products: Product[] = [
     reviewCount: 45,
     inStock: true,
     isNew: true,
-    image: "/images/products/rivaj-fashion-fit-nail-color.jfif",
+    image: "/images/products/rivaj-fashion-fit-nail-color.jpeg",
     shortDescription: "A long-lasting, vibrant nail polish featuring a smooth application and glossy high-shine finish.",
     concern: ["All Skin Types"]
   },
@@ -1541,7 +1541,7 @@ export const products: Product[] = [
     reviewCount: 19,
     inStock: true,
     isNew: true,
-    image: "/images/products/remington-styler-sleek-ceramic-straightener-rms-9680.jfif",
+    image: "/images/products/remington-styler-sleek-ceramic-straightener-rms-9680.jpeg",
     shortDescription: "An ultra-thin hair straightener with smooth ceramic plates heating up to 750°F for effortless styling.",
     concern: ["All Hair Types"]
   },
@@ -1556,7 +1556,7 @@ export const products: Product[] = [
     reviewCount: 15,
     inStock: true,
     isNew: true,
-    image: "/images/products/remington-styler-pro-luxe-s-9600.jfif",
+    image: "/images/products/remington-styler-pro-luxe-s-9600.jpeg",
     shortDescription: "Pro Luxe hair straightener featuring electro-magnetic plates and keratin protection technology.",
     concern: ["All Hair Types"]
   }
