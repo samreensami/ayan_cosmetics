@@ -1100,56 +1100,6 @@ export const products: Product[] = [
     "reviewCount": 85
   },
   {
-    "id": "h2",
-    "slug": "bridal-glow-bundle",
-    "name": "Bridal Glow Bundle",
-    "brand": "AYAN Cosmetics",
-    "category": "Bundles",
-    "price": 0,
-    "image": "/images/products/h2.jpeg",
-    "shortDescription": "Everything you need for a radiant bridal look.",
-    "concern": [
-      "All Skin Types"
-    ],
-    "isNew": true,
-    "inStock": true,
-    "rating": 4.9,
-    "reviewCount": 40
-  },
-  {
-    "id": "h3",
-    "slug": "night-out-bundle",
-    "name": "Night Out Bundle",
-    "brand": "AYAN Cosmetics",
-    "category": "Bundles",
-    "price": 0,
-    "image": "/images/products/h3.jpeg",
-    "shortDescription": "Bold and glam picks for a stunning evening look.",
-    "concern": [
-      "All Skin Types"
-    ],
-    "inStock": true,
-    "rating": 4.7,
-    "reviewCount": 30
-  },
-  {
-    "id": "h4",
-    "slug": "skincare-starter-bundle",
-    "name": "Skincare Starter Bundle",
-    "brand": "AYAN Cosmetics",
-    "category": "Bundles",
-    "price": 0,
-    "image": "/images/products/h4.jpeg",
-    "shortDescription": "Kick-start your skincare routine with AYAN essentials.",
-    "concern": [
-      "All Skin Types",
-      "Dry Skin"
-    ],
-    "inStock": true,
-    "rating": 4.6,
-    "reviewCount": 22
-  },
-  {
     "id": "deal1",
     "slug": "luxury-full-glam-deal",
     "name": "Luxury Full Glam Deal",
@@ -1424,7 +1374,7 @@ export const products: Product[] = [
     "brand": "Rivaj",
     "category": "Makeup",
     "price": 0,
-    "image": "/images/products/rivaj-sexy-curve-mascara.jpeg", // Extension check kar ke lagayein
+    "image": "/images/products/rivaj-sexy-curve-mascara.jpeg",
     "shortDescription": "Specially designed to prevent clumping and keep lashes smooth. Features a volume-boosting brush to instantly thicken and grow lashes.",
     "concern": [
       "All Skin Types"
@@ -1458,7 +1408,7 @@ export const products: Product[] = [
     "brand": "Rivaj",
     "category": "Makeup",
     "price": 0,
-    "image": "/images/products/rivaj-black-dense-mascara.jpeg", // Extension check kar ke lagayein
+    "image": "/images/products/rivaj-black-dense-mascara.jpeg", 
     "shortDescription": "Features a tapered mascara wand that captures tiny corners and lower lashes to build volume from root to tip for a full-lash look.",
     "concern": [
       "All Skin Types"
@@ -1773,7 +1723,7 @@ export const products: Product[] = [
     reviewCount: 25,
     inStock: true,
     isNew: true,
-    image: "/images/products/rivaj-hd-flawless-eyeshadow-palette-18-in-1.jpeg",
+    image: "/images/products/rivaj-HD-flawless-eyeshadow-palette-18-in-1.jpeg",
     shortDescription: "An ultra-pigmented 18-in-1 eyeshadow palette featuring a blend of rich mattes and shimmers.",
     concern: ["All Skin Types"]
   },
