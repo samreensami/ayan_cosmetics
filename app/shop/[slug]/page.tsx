@@ -100,7 +100,7 @@ export default async function ProductDetailPage({
 
       {/* Product Section */}
       <section className="container-custom py-8 md:py-12">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
+        <div className="grid grid-cols-2 lg:grid-cols-2 gap-8 lg:gap-12">
           {/* Product Images */}
           <div className="space-y-4">
             {/* Main Image - Uses ProductImage client component for error handling */}
@@ -294,7 +294,7 @@ export default async function ProductDetailPage({
           <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-8">
             You May Also Like
           </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {relatedProducts.map((relatedProduct) => (
               <ProductCard key={relatedProduct.id} product={relatedProduct} />
             ))}

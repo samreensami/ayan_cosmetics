@@ -83,7 +83,7 @@ export default function DealsPage() {
           <span className="w-2 h-2 rounded-full bg-[#529538]" /> Single Product Price Drops
         </h2>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {dealItems.filter(p => !p.isComboDeal).map((product) => {
             const savings = (product.actualPrice || 0) - product.price;
             

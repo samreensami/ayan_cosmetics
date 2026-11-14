@@ -118,7 +118,7 @@ export default function ProductFilters({
         </div>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         <div>
           <label className="block text-sm font-bold text-gray-700 mb-2">Category</label>
           <Select value={filters.category} onValueChange={(value) => updateFilter("category", value)}>

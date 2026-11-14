@@ -34,7 +34,7 @@ export default function ContactPage() {
 
       {/* ── MAIN CONTACT CONTENT ── */}
       <section className="container-custom pb-24">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+        <div className="grid grid-cols-2 lg:grid-cols-22 gap-12 items-start">
           
           {/* Left Column: Premium Contact Cards */}
           <div 

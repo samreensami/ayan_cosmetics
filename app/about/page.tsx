@@ -57,7 +57,7 @@ export default function AboutPage() {
 
       {/* ── OWNER SECTION ── */}
       <section className="container-custom py-24">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+        <div className="grid grid-cols-2 lg:grid-cols-2 gap-16 items-center">
           <div 
             className="relative group opacity-0"
             style={{ animation: "slideRight 0.8s ease-out 0.2s forwards" }}
@@ -107,7 +107,7 @@ export default function AboutPage() {
            <h2 className="text-3xl font-black uppercase tracking-widest text-white">Our Core Values</h2>
         </div>
         <div className="container-custom">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-10">
             {shopValues.map((value, index) => {
               const Icon = value.icon;
               return (
@@ -136,7 +136,7 @@ export default function AboutPage() {
         >
           <div className="absolute top-0 right-0 w-96 h-96 bg-[#529538]/5 blur-[100px] rounded-full" />
           
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+          <div className="grid grid-cols-2 lg:grid-cols-2 gap-16 items-center">
             <div>
               <h2 className="text-4xl md:text-5xl font-black italic uppercase tracking-tighter mb-10">Experience It <br /> In-Store</h2>
               <div className="space-y-10">
