@@ -55,7 +55,7 @@ export default function Footer() {
             <span className="flex items-center rounded-full px-1.5 py-0.5 dark:bg-[#FBF8F3]">
               <Image src="/images/products/logo.png" alt="" width={110} height={42} className="h-9 w-auto" />
             </span>
-            <span className="font-display text-2xl">Ayan</span>
+            <span className="font-display text-2xl">AYAN <span className="italic">Cosmetics</span></span>
           </Link>
           <p className="mt-4 max-w-xs text-sm leading-relaxed text-muted-foreground">
             Genuine cosmetics, skincare and fragrances from our shop in Saima Mall, Karachi.

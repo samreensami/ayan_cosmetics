@@ -52,10 +52,10 @@ export default function Hero() {
 
   return (
     <section className="relative overflow-hidden pt-16" aria-labelledby="hero-title">
-      <div className="container-custom grid items-center gap-y-6 pb-14 pt-4 md:min-h-[calc(100svh-4rem)] md:grid-cols-12 md:gap-x-10 md:pb-16 md:pt-0">
+      <div className="container-custom grid items-center gap-y-6 pb-14 pt-6 md:grid-cols-12 md:gap-x-12 md:py-16 lg:py-20">
         {/* ── Vanity-mirror arch with the 3D scene ── */}
         <motion.div
-          className="relative order-1 mx-auto aspect-[4/5] w-full max-w-[340px] md:order-2 md:col-span-6 md:max-w-none md:aspect-[5/6] lg:col-span-6"
+          className="relative order-1 mx-auto aspect-[4/5] w-full max-w-[280px] md:order-2 md:col-span-5 md:max-w-[400px] lg:max-w-[440px]"
           initial={reduceMotion ? false : { opacity: 0, scale: 0.96 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 1.2, ease }}
@@ -76,7 +76,7 @@ export default function Hero() {
                 alt="Glowing, dewy skin — AYAN Glass Skin Collection"
                 fill
                 priority
-                sizes="(max-width: 768px) 340px, 50vw"
+                sizes="(max-width: 768px) 280px, 440px"
                 className="object-cover object-[70%_center]"
               />
             ) : (
@@ -89,14 +89,14 @@ export default function Hero() {
         </motion.div>
 
         {/* ── Copy ── */}
-        <div className="order-2 md:order-1 md:col-span-6 lg:col-span-6">
+        <div className="order-2 md:order-1 md:col-span-7">
           <motion.p {...rise(0.15)} className="mb-5 text-sm text-muted-foreground">
             Glass Skin Collection, now in store
           </motion.p>
 
           <h1
             id="hero-title"
-            className="font-display text-[2.75rem] leading-[0.98] sm:text-6xl lg:text-[5.25rem] text-balance"
+            className="font-display text-[2.5rem] leading-[1] sm:text-5xl lg:text-[4.25rem] text-balance"
           >
             <motion.span {...rise(0.25)} className="block">
               Dewy skin,

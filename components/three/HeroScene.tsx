@@ -169,14 +169,6 @@ function Lipstick({ colors }: { colors: SceneColors }) {
   );
 }
 
-function DewDrop({ position, scale }: { position: [number, number, number]; scale: number }) {
-  return (
-    <mesh position={position} scale={[scale, scale * 1.08, scale]}>
-      <sphereGeometry args={[1, 32, 32]} />
-      <meshPhysicalMaterial color="#ffffff" transmission={1} thickness={0.4} roughness={0} ior={1.33} transparent />
-    </mesh>
-  );
-}
 
 /* ───────────────────────── Rig: pointer + scroll response ───────────────────────── */
 
@@ -220,7 +212,7 @@ function Scene({ colors, still }: Required<HeroSceneProps>) {
       <directionalLight position={[-4, 2, -2]} intensity={0.6} color={colors.metal} />
 
       <Rig still={still}>
-        <group scale={0.92} position={[0, -0.3, 0]}>
+        <group scale={0.84} position={[0, -0.2, 0]}>
         <Float {...floatProps}>
           <group position={[-0.42, -1.15, 0]} rotation={[0, 0.4, 0.06]}>
             <SerumBottle colors={colors} />
@@ -233,11 +225,6 @@ function Scene({ colors, still }: Required<HeroSceneProps>) {
           </group>
         </Float>
 
-        <Float {...floatProps} speed={still ? 0 : 2}>
-          <DewDrop position={[0.6, 0.8, 0.2]} scale={0.045} />
-          <DewDrop position={[-1.05, 0.25, 0.4]} scale={0.035} />
-          <DewDrop position={[1.05, -0.1, -0.2]} scale={0.03} />
-        </Float>
         </group>
       </Rig>
 
@@ -245,7 +232,7 @@ function Scene({ colors, still }: Required<HeroSceneProps>) {
         <Sparkles count={28} scale={[4, 3.2, 2]} size={2.2} speed={0.25} opacity={0.55} color={colors.glow} />
       )}
 
-      <ContactShadows position={[0, -1.36, 0]} opacity={0.38} scale={6} blur={2.6} far={2.5} color={colors.shadow} />
+      <ContactShadows position={[0, -1.2, 0]} opacity={0.38} scale={6} blur={2.6} far={2.5} color={colors.shadow} />
 
       {/* Procedural studio — gives glass & metal something to reflect, no network fetch */}
       <Environment resolution={256} frames={1}>

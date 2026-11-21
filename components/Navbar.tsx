@@ -27,13 +27,12 @@ function Logo() {
           alt=""
           width={96}
           height={36}
-          className="h-7 w-auto md:h-8"
+          className="h-6 w-auto sm:h-7 md:h-8"
           priority
         />
       </span>
-      <span className="font-display text-xl md:text-2xl leading-none tracking-tight">
-        Ayan
-        <span className="sr-only"> Cosmetics</span>
+      <span className="font-display text-lg leading-none tracking-tight sm:text-xl md:text-2xl">
+        AYAN <span className="italic">Cosmetics</span>
       </span>
     </Link>
   );
