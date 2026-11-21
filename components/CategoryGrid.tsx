@@ -8,15 +8,24 @@ import {
   Eye, ShoppingBag, Layers, Scissors,
 } from "lucide-react";
 
-const categories = [
-  { name: "Lipstick",       slug: "Lipstick",       icon: Heart       },
-  { name: "Foundation",     slug: "Foundation",     icon: Droplets    },
-  { name: "Skincare",       slug: "Skincare",       icon: Sparkles    },
-  { name: "Perfumes",       slug: "Perfume",        icon: SprayCan    },
-  { name: "Eye Makeup",     slug: "Eyeshadow",      icon: Eye         },
-  { name: "Cosmetic Bags",  slug: "Cosmetic+Bags",  icon: ShoppingBag },
-  { name: "Mascara",        slug: "Mascara",        icon: Layers      },
-  { name: "Haircare",       slug: "Haircare",       icon: Scissors    },
+import type { LucideIcon } from "lucide-react";
+
+interface CategoryTile {
+  name: string;
+  /** Shop URL — uses a real `category` from lib/products.ts or a `q` keyword search */
+  href: string;
+  icon: LucideIcon;
+}
+
+const categories: CategoryTile[] = [
+  { name: "Lipstick",     href: "/shop?q=lip",              icon: Heart       },
+  { name: "Foundation",   href: "/shop?q=foundation",       icon: Droplets    },
+  { name: "Skincare",     href: "/shop?category=Skincare",  icon: Sparkles    },
+  { name: "Perfumes",     href: "/shop?category=Perfumes",  icon: SprayCan    },
+  { name: "Eye Makeup",   href: "/shop?q=eye",              icon: Eye         },
+  { name: "Beauty Boxes", href: "/shop?category=Bundles",   icon: ShoppingBag },
+  { name: "Mascara",      href: "/shop?q=mascara",          icon: Layers      },
+  { name: "Haircare",     href: "/shop?category=Hair%20Care", icon: Scissors  },
 ];
 
 const row1 = [...categories.slice(0, 4), ...categories.slice(0, 4)];
@@ -76,11 +85,11 @@ export default function CategoryGrid() {
   );
 }
 
-function CategoryCard({ category }: { category: any }) {
+function CategoryCard({ category }: { category: CategoryTile }) {
   const Icon = category.icon;
   return (
     <Link
-      href={`/shop?category=${category.slug}`}
+      href={category.href}
       className="
         flex flex-col items-center justify-center gap-4
         w-[200px] h-[160px] rounded-xl border border-white/20

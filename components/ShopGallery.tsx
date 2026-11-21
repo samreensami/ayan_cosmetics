@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { X, ChevronLeft, ChevronRight } from "lucide-react";
 import { motion } from "framer-motion";
@@ -8,22 +8,22 @@ import { motion } from "framer-motion";
 const galleryImages = [
   {
     src: "/images/products/box1.png",
-    alt: "Shop Interior",
+    alt: "Inside the AYAN Cosmetics shop at Saima Mall, Karachi",
     caption: "Experience the vibrant and welcoming atmosphere of our main shop, where beauty meets elegance",
   },
   {
     src: "/images/products/box2.jpg",
-    alt: "Makeup Display",
+    alt: "Branded makeup display at AYAN Cosmetics",
     caption: "A wide range of beauty products for every need",
   },
   {
     src: "/images/products/box3.jpg",
-    alt: "Fragrance Display",
+    alt: "Perfume and fragrance display at AYAN Cosmetics",
     caption: "Exclusive fragrances for every occasion",
   },
   {
     src: "/images/products/box4.jpg",
-    alt: "Makeup Display",
+    alt: "Makeup counter at the AYAN Cosmetics shop",
     caption: "Organized and elegant storage solutions",
   },
 ];
@@ -35,13 +35,21 @@ export default function ShopGallery() {
   const openLightbox = (index: number) => {
     setCurrentIndex(index);
     setLightboxOpen(true);
-    document.body.style.overflow = "hidden";
   };
 
   const closeLightbox = () => {
     setLightboxOpen(false);
-    document.body.style.overflow = "auto";
   };
+
+  // Lock page scroll while the lightbox is open.
+  useEffect(() => {
+    if (!lightboxOpen) return;
+    const previous = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = previous;
+    };
+  }, [lightboxOpen]);
 
   const navigate = (direction: "next" | "prev") => {
     if (direction === "next") {
@@ -67,7 +75,7 @@ export default function ShopGallery() {
     <section className="py-24 relative overflow-hidden bg-black">
       {/* Background Decoration */}
       <div className="absolute top-0 left-0 w-full h-full opacity-10 pointer-events-none">
-         <Image src="/images/products/shopbg.png" fill className="object-cover" alt="bg" />
+         <Image src="/images/products/shopbg.png" fill className="object-cover" alt="" aria-hidden="true" />
       </div>
 
       <div className="container-custom relative z-10">
@@ -159,7 +167,7 @@ export default function ShopGallery() {
             <div className="mt-8 text-center">
                 <p className="text-[#529538] font-black uppercase tracking-[0.4em] text-sm mb-2">Ayan Store Karachi</p>
                 <p className="text-white text-2xl font-light tracking-wide max-w-3xl mx-auto italic">
-                "{galleryImages[currentIndex].caption}"
+                &ldquo;{galleryImages[currentIndex].caption}&rdquo;
                 </p>
             </div>
           </motion.div>

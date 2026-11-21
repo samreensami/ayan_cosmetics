@@ -206,7 +206,10 @@ export default function ProductSlider({ products }: { products: Product[] }) {
   const handleTouchEnd = (e: React.TouchEvent) => {
     if (touchStartX.current === null) return;
     const delta = touchStartX.current - e.changedTouches[0].clientX;
-    if (Math.abs(delta) > 50) delta > 0 ? goNext() : goPrev();
+    if (Math.abs(delta) > 50) {
+      if (delta > 0) goNext();
+      else goPrev();
+    }
     touchStartX.current = null;
   };
 

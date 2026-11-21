@@ -13,7 +13,8 @@ interface FeaturedProductsProps {
 }
 
 export default function FeaturedProducts({
-  title = "Featured Products",
+  // Reserved for the Phase 2 redesign (section heading).
+  title: _title = "Featured Products",
   limit = 8,
   showViewAll = true,
 }: FeaturedProductsProps) {

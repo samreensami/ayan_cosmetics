@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { Menu, X, ShoppingBag, Search, ShoppingCart } from "lucide-react";
+import { ShoppingBag, Search, ShoppingCart } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useCart } from "@/lib/CartContext";
 
@@ -78,15 +78,18 @@ export default function Navbar() {
           {/* ── DESKTOP ACTIONS ── */}
           <div className="hidden md:flex items-center gap-1 lg:gap-2 z-10">
             {/* Search */}
-            <Link href="/shop">
-              <button className="p-2 rounded-full text-white/60 hover:text-white hover:bg-white/8 transition-all">
-                <Search className="h-4 w-4" />
-              </button>
+            <Link
+              href="/shop"
+              aria-label="Search products"
+              className="p-2 rounded-full text-white/60 hover:text-white hover:bg-white/8 transition-all"
+            >
+              <Search className="h-4 w-4" aria-hidden="true" />
             </Link>
 
             {/* Cart */}
             <button
               onClick={toggleCart}
+              aria-label={`Open cart (${totalItems} items)`}
               className="relative p-2 rounded-full text-white/60 hover:text-white hover:bg-white/8 transition-all"
             >
               <ShoppingCart className="h-4 w-4" />
@@ -98,19 +101,21 @@ export default function Navbar() {
             </button>
 
             {/* Shop Now */}
-            <Link href="/shop" className="ml-1 lg:ml-2">
-              <button className="flex items-center gap-2 px-3 lg:px-5 py-2 lg:py-2.5 rounded-full bg-white text-black text-[10px] lg:text-xs font-black uppercase tracking-widest hover:bg-pink-50 transition-all shadow-md whitespace-nowrap">
-                <ShoppingBag className="h-3 lg:h-3.5 w-3 lg:w-3.5" />
-                <span className="hidden sm:inline">Shop Now</span>
-              </button>
+            <Link
+              href="/shop"
+              className="ml-1 lg:ml-2 flex items-center gap-2 px-3 lg:px-5 py-2 lg:py-2.5 rounded-full bg-white text-black text-[10px] lg:text-xs font-black uppercase tracking-widest hover:bg-pink-50 transition-all shadow-md whitespace-nowrap"
+            >
+              <ShoppingBag className="h-3 lg:h-3.5 w-3 lg:w-3.5" aria-hidden="true" />
+              <span className="hidden sm:inline">Shop Now</span>
             </Link>
           </div>
 
           {/* ── MOBILE: CART + HAMBURGER (PERFECTLY ALIGNED) ── */}
           <div className="md:hidden flex items-center gap-1 z-10">
             {/* Cart Button */}
-            <button 
-              onClick={toggleCart} 
+            <button
+              onClick={toggleCart}
+              aria-label={`Open cart (${totalItems} items)`}
               className="relative p-2 text-white/80 flex items-center justify-center"
             >
               <ShoppingCart className="h-5 w-5" />
@@ -122,8 +127,10 @@ export default function Navbar() {
             </button>
 
             {/* Hamburger Button */}
-            <button 
-              onClick={() => setIsMenuOpen(!isMenuOpen)} 
+            <button
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+              aria-label={isMenuOpen ? "Close menu" : "Open menu"}
+              aria-expanded={isMenuOpen}
               className="p-2 text-white/80 flex items-center justify-center"
             >
               <div className="relative w-6 h-6">
@@ -163,7 +170,7 @@ export default function Navbar() {
           ))}
           <Link href="/deals" onClick={() => setIsMenuOpen(false)} className="block py-4 text-center bg-red-600 text-white font-black rounded-xl uppercase tracking-widest text-sm">🔥 Deals — Limited Time</Link>
           <button onClick={() => { toggleCart(); setIsMenuOpen(false); }} className="w-full flex justify-between py-4 text-white/70 uppercase tracking-widest text-sm"><span className="flex gap-3"><ShoppingCart /> Cart</span>{totalItems > 0 && <span>{totalItems}</span>}</button>
-          <Link href="/shop" onClick={() => setIsMenuOpen(false)} className="block pt-2"><button className="w-full py-4 bg-white text-black font-black rounded-full uppercase tracking-widest text-xs">Shop Now</button></Link>
+          <Link href="/shop" onClick={() => setIsMenuOpen(false)} className="mt-2 block w-full py-4 text-center bg-white text-black font-black rounded-full uppercase tracking-widest text-xs">Shop Now</Link>
         </div>
       </div>
     </nav>

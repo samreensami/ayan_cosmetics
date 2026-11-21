@@ -30,7 +30,7 @@ export default function AyanAIChat() {
     if (!textToSend.trim()) return;
 
     const userMsg: ChatMessage = {
-      id: `user-${Date.now()}`,
+      id: `user-${crypto.randomUUID()}`,
       role: "user",
       text: textToSend,
     };
@@ -45,7 +45,7 @@ export default function AyanAIChat() {
       setMessages((prev) => [
         ...prev,
         {
-          id: `bot-${Date.now()}`,
+          id: `bot-${crypto.randomUUID()}`,
           role: "bot",
           text: response.text,
           quickReplies: response.quickReplies,

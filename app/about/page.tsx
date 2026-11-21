@@ -2,11 +2,10 @@
 
 import React from "react";
 import Image from "next/image";
-import { MapPin, Phone, MessageCircle, Clock, Star, Award, ShieldCheck, Zap } from "lucide-react";
+import { MapPin, Phone, MessageCircle, Award, ShieldCheck, Zap } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import TrustSignals from "@/components/TrustSignals";
 import { generateGeneralWhatsAppLink, SHOP_CONTACT } from "@/lib/whatsapp";
-import { cn } from "@/lib/utils";
 
 const shopValues = [
   {

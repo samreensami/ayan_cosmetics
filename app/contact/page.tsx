@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { MapPin, Phone, MessageCircle, Mail, Clock, ShieldCheck } from "lucide-react";
+import { MapPin, Phone, MessageCircle, Clock, ShieldCheck } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { SHOP_CONTACT, generateGeneralWhatsAppLink } from "@/lib/whatsapp";
 

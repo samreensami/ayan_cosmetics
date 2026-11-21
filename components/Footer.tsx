@@ -11,16 +11,17 @@ import { SHOP_CONTACT } from "@/lib/whatsapp";
 const footerLinks = {
   shop: [
     { href: "/shop", label: "All Products" },
-    { href: "/shop?category=Lipstick", label: "Lipstick" },
-    { href: "/shop?category=Foundation", label: "Foundation" },
+    { href: "/shop?category=Makeup", label: "Makeup" },
     { href: "/shop?category=Skincare", label: "Skincare" },
-    { href: "/shop?category=Perfume", label: "Perfumes" },
-    { href: "/shop?category=Cosmetic+Bags", label: "Cosmetic Bags" },
+    { href: "/shop?category=Perfumes", label: "Perfumes" },
+    { href: "/shop?category=Hair%20Care", label: "Hair Care" },
+    { href: "/shop?category=Bundles", label: "Beauty Boxes" },
   ],
   support: [
     { href: "/about", label: "About Us" },
     { href: "/contact", label: "Contact" },
-    { href: "/shop", label: "Shop by Concern" },
+    { href: "/shop?concern=Glass%20Skin%20Glow", label: "Shop by Concern: Glass Skin" },
+    { href: "/shop?concern=Acne%20Prone", label: "Shop by Concern: Acne" },
   ],
 };
 

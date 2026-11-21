@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useMemo, useEffect } from "react";
+import React, { Suspense, useState, useMemo } from "react";
 import Image from "next/image";
 import { useSearchParams } from "next/navigation";
 import { Search } from "lucide-react";
@@ -20,9 +20,26 @@ const SHOP_CATEGORIES = [
   { id: "Perfumes", label: "PERFUMES" }
 ];
 
+/**
+ * Re-mount the shop content whenever the URL query changes (category tiles, footer
+ * links, ?q= searches) so filters re-initialise from the URL without a sync effect.
+ */
 export default function ShopPage() {
+  return (
+    <Suspense fallback={null}>
+      <ShopPageKeyed />
+    </Suspense>
+  );
+}
+
+function ShopPageKeyed() {
   const searchParams = useSearchParams();
-  const [searchQuery, setSearchQuery] = useState("");
+  return <ShopContent key={searchParams.toString()} />;
+}
+
+function ShopContent() {
+  const searchParams = useSearchParams();
+  const [searchQuery, setSearchQuery] = useState(() => searchParams.get("q") ?? "");
 
   // Initialize filters from URL params
   const [filters, setFilters] = useState<FilterState>(() => {
@@ -37,16 +54,6 @@ export default function ShopPage() {
     };
   });
 
-  // Sync state if URL changes externally
-  useEffect(() => {
-    const categoryParam = searchParams.get("category");
-    if (categoryParam) {
-      setFilters((prev) => ({
-        ...prev,
-        category: categoryParam === "all" ? "" : categoryParam.replace("+", " "),
-      }));
-    }
-  }, [searchParams]);
 
   // Heading Click Handler (Tab Navigation)
   const handleCategoryTabClick = (categoryName: string) => {
