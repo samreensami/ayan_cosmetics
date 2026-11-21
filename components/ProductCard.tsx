@@ -3,10 +3,10 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { MessageCircle, ShoppingCart, Check, Star } from "lucide-react";
+import { Check, MessageCircle, Plus } from "lucide-react";
 import { Product } from "@/lib/products";
 import { useCart } from "@/lib/CartContext";
-import { generateWhatsAppLink } from "@/lib/whatsapp"; 
+import { generateWhatsAppLink } from "@/lib/whatsapp";
 import { cn } from "@/lib/utils";
 
 export default function ProductCard({ product }: { product: Product }) {
@@ -16,8 +16,8 @@ export default function ProductCard({ product }: { product: Product }) {
 
   if (!product || !product.id) return null;
 
-  // Price 0 pass ho rahi hai kyunki prices hide rakhni hain
-  const orderViaWhatsApp = generateWhatsAppLink(product.name, 0);
+  // Prices are wired in Phase 4 (see SPEC.md); until then the WhatsApp message omits price.
+  const orderViaWhatsApp = generateWhatsAppLink(product.name);
 
   const handleAddToCart = () => {
     addToCart(product);
@@ -25,91 +25,85 @@ export default function ProductCard({ product }: { product: Product }) {
     setTimeout(() => setJustAdded(false), 1500);
   };
 
+  const badge = product.isNew ? "New in" : product.isBestSeller ? "Bestseller" : null;
+
   return (
-    <article className="group relative flex flex-col h-full bg-white border border-gray-200 overflow-hidden transition-all duration-300 hover:border-black rounded-none">
-      
-      {/* IMAGE SECTION */}
-      <div className="relative aspect-[3/4] w-full bg-[#f3f3f3] overflow-hidden">
-        {/* FIX: Immediate parent (Link) par "relative" class lagayi hai taake fill warning khatam ho */}
-        <Link href={`/shop/${product.slug}`} className="relative block w-full h-full">
-          {!imageError ? (
-            <Image
-              src={product.image}
-              alt={product.name}
-              fill
-              className="object-cover transition-transform duration-1000 group-hover:scale-105"
-              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-              onError={() => setImageError(true)}
-              priority={product.isBestSeller} 
-            />
-          ) : (
-            <div className="absolute inset-0 bg-gray-200 flex items-center justify-center text-5xl">💄</div>
-          )}
-        </Link>
-
-        {/* Status Badges */}
-        <div className="absolute top-0 right-0 p-2 z-20 flex flex-col items-end">
-          {product.isNew && (
-            <span className="bg-black text-white text-[10px] font-bold uppercase px-3 py-1 mb-1 tracking-tighter">
-              Just In
-            </span>
-          )}
-          {product.isBestSeller && (
-            <span className="bg-[#D4AF37] text-white text-[10px] font-bold uppercase px-3 py-1 tracking-tighter">
-              Must Have
-            </span>
-          )}
-        </div>
-      </div>
-
-      {/* CONTENT SECTION */}
-      <div className="p-4 flex flex-col flex-1 bg-white">
-        <div className="flex flex-col items-center text-center space-y-1 mb-4">
-          <span className="text-[11px] font-bold text-gray-400 uppercase tracking-[0.2em]">
-            {product.brand || "AYAN COSMETICS"}
+    <article className="group flex h-full flex-col">
+      {/* Image — neutral frame, never tinted by theme */}
+      <Link
+        href={`/shop/${product.slug}`}
+        className="product-frame relative block aspect-[4/5] overflow-hidden rounded-2xl"
+        aria-label={product.name}
+      >
+        {!imageError ? (
+          <Image
+            src={product.image}
+            alt=""
+            fill
+            sizes="(max-width: 640px) 50vw, (max-width: 1024px) 50vw, 25vw"
+            className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04]"
+            onError={() => setImageError(true)}
+          />
+        ) : (
+          <span className="absolute inset-0 flex items-center justify-center text-sm text-neutral-500">
+            Photo coming soon
           </span>
+        )}
 
-          <Link href={`/shop/${product.slug}`}>
-            <h3 className="text-lg md:text-xl font-black text-black uppercase leading-none tracking-tighter group-hover:underline decoration-2 underline-offset-4">
-              {product.name}
-            </h3>
+        {badge && (
+          <span className="absolute left-3 top-3 rounded-full bg-white/90 px-2.5 py-1 text-[11px] font-medium text-neutral-900 backdrop-blur">
+            {badge}
+          </span>
+        )}
+        {!product.inStock && (
+          <span className="absolute inset-x-3 bottom-3 rounded-full bg-neutral-900/80 py-1.5 text-center text-xs text-white">
+            Out of stock
+          </span>
+        )}
+      </Link>
+
+      {/* Text */}
+      <div className="mt-3 flex flex-1 flex-col">
+        <p className="text-xs text-muted-foreground">{product.brand || "AYAN Cosmetics"}</p>
+        <h3 className="mt-1 line-clamp-2 font-sans text-sm font-medium leading-snug md:text-[15px]">
+          <Link href={`/shop/${product.slug}`} className="hover:underline underline-offset-4">
+            {product.name}
           </Link>
+        </h3>
 
-          {/* Star Rating */}
-          <div className="flex items-center gap-0.5 pt-1">
-            {[...Array(5)].map((_, i) => (
-              <Star 
-                key={i} 
-                size={10} 
-                className="fill-black text-black"
-              />
-            ))}
-          </div>
-        </div>
-
-        {/* ACTION BUTTONS */}
-        <div className="mt-auto flex flex-col gap-2">
+        {/* Actions */}
+        <div className="mt-auto flex items-center gap-2 pt-4">
           <button
+            type="button"
             onClick={handleAddToCart}
             disabled={!product.inStock}
             className={cn(
-              "w-full h-12 flex items-center justify-center gap-2 font-black uppercase text-xs tracking-tighter transition-all border-2",
-              justAdded 
-                ? "bg-green-600 border-green-600 text-white" 
-                : "bg-black border-black text-white hover:bg-transparent hover:text-black"
+              "inline-flex h-10 flex-1 items-center justify-center gap-1.5 rounded-full text-xs font-medium transition-colors md:text-sm",
+              justAdded
+                ? "bg-primary/15 text-primary"
+                : "bg-primary text-primary-foreground hover:opacity-90",
+              "disabled:cursor-not-allowed disabled:opacity-40"
             )}
           >
-            {justAdded ? <Check size={18} /> : <><ShoppingCart size={18} /> Add to Bag</>}
+            {justAdded ? (
+              <>
+                <Check className="h-4 w-4" aria-hidden="true" /> Added
+              </>
+            ) : (
+              <>
+                <Plus className="h-4 w-4" aria-hidden="true" /> Add to bag
+              </>
+            )}
           </button>
-          
+
           <a
             href={orderViaWhatsApp}
             target="_blank"
             rel="noopener noreferrer"
-            className="w-full h-12 flex items-center justify-center gap-2 border-2 border-green-500 text-green-600 font-black uppercase text-xs tracking-tighter hover:bg-green-500 hover:text-white transition-all"
+            aria-label={`Order ${product.name} on WhatsApp`}
+            className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-border text-foreground transition-colors hover:border-whatsapp hover:bg-whatsapp hover:text-white"
           >
-            <MessageCircle size={18} />
-            Order on WhatsApp
+            <MessageCircle className="h-4 w-4" aria-hidden="true" />
           </a>
         </div>
       </div>
@@ -117,16 +111,13 @@ export default function ProductCard({ product }: { product: Product }) {
   );
 }
 
-{/* CRITICAL BUILD FIX: Vercel isi function ko na paa kar deploy cancel kar raha tha */}
 export function ProductCardSkeleton() {
   return (
-    <div className="animate-pulse flex flex-col bg-gray-100 h-[450px] w-full border border-gray-200">
-      <div className="bg-gray-200 aspect-[3/4] w-full" />
-      <div className="p-4 space-y-3">
-        <div className="h-4 bg-gray-200 w-1/3 mx-auto" />
-        <div className="h-6 bg-gray-200 w-3/4 mx-auto" />
-        <div className="h-12 bg-gray-200 w-full mt-4" />
-      </div>
+    <div className="flex animate-pulse flex-col">
+      <div className="aspect-[4/5] w-full rounded-2xl bg-secondary" />
+      <div className="mt-3 h-3 w-1/3 rounded bg-secondary" />
+      <div className="mt-2 h-4 w-3/4 rounded bg-secondary" />
+      <div className="mt-4 h-10 w-full rounded-full bg-secondary" />
     </div>
   );
 }

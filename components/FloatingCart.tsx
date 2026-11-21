@@ -1,14 +1,29 @@
 "use client";
 
-import React from "react";
-import { X, Plus, Minus, ShoppingCart, Trash2 } from "lucide-react";
-import { useCart } from "@/lib/CartContext";
-// Yahan humne purana WHATSAPP_NUMBER hata kar ORDER_NUMBER import kiya hai
-import { ORDER_NUMBER } from "@/lib/whatsapp";
+import React, { useEffect } from "react";
 import Image from "next/image";
+import { X, Plus, Minus, ShoppingBag, Trash2 } from "lucide-react";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import { useCart } from "@/lib/CartContext";
+import { ORDER_NUMBER } from "@/lib/whatsapp";
 
 export default function FloatingCart() {
   const { items, isOpen, toggleCart, closeCart, updateQuantity, removeFromCart } = useCart();
+  const reduceMotion = useReducedMotion();
+  const totalQty = items.reduce((sum, item) => sum + item.quantity, 0);
+
+  // Lock scroll + Escape to close while the drawer is open.
+  useEffect(() => {
+    if (!isOpen) return;
+    const previous = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    const onKey = (e: KeyboardEvent) => e.key === "Escape" && closeCart();
+    window.addEventListener("keydown", onKey);
+    return () => {
+      document.body.style.overflow = previous;
+      window.removeEventListener("keydown", onKey);
+    };
+  }, [isOpen, closeCart]);
 
   const handleCheckout = () => {
     if (items.length === 0) return;
@@ -21,102 +36,138 @@ export default function FloatingCart() {
     message += `───────────────\n`;
     message += `Please confirm prices and availability. Thank you!`;
 
-    const encoded = encodeURIComponent(message);
-    // Yahan ORDER_NUMBER use ho raha hai jo export ho chuka hai
-    window.open(`https://wa.me/${ORDER_NUMBER}?text=${encoded}`, "_blank");
+    window.open(`https://wa.me/${ORDER_NUMBER}?text=${encodeURIComponent(message)}`, "_blank");
   };
-
-  if (items.length === 0 && !isOpen) return null;
 
   return (
     <>
-      {/* Floating Cart Button */}
+      {/* Floating bag button (mobile thumb zone) */}
       {!isOpen && items.length > 0 && (
         <button
+          type="button"
           onClick={toggleCart}
-          className="fixed bottom-6 right-6 z-50 bg-[#00b140] text-white p-4 rounded-full shadow-2xl hover:bg-[#009936] transition-all hover:scale-110"
-          aria-label="Open cart"
+          className="fixed bottom-24 right-5 z-40 flex h-14 w-14 items-center justify-center rounded-full bg-primary text-primary-foreground shadow-soft transition-transform hover:scale-105"
+          aria-label={`Open bag (${totalQty} items)`}
         >
-          <ShoppingCart className="h-6 w-6" />
-          <span className="absolute -top-1 -right-1 bg-[#e60012] text-white text-xs font-bold w-5 h-5 rounded-full flex items-center justify-center">
-            {items.reduce((sum, item) => sum + item.quantity, 0)}
+          <ShoppingBag className="h-6 w-6" aria-hidden="true" />
+          <span className="absolute -right-1 -top-1 flex h-5 min-w-5 items-center justify-center rounded-full bg-foreground px-1 text-[11px] font-semibold text-background">
+            {totalQty}
           </span>
         </button>
       )}
 
-      {/* Cart Drawer */}
-      {isOpen && (
-        <>
-          {/* Backdrop */}
-          <div className="fixed inset-0 bg-black/50 z-40" onClick={closeCart} />
+      <AnimatePresence>
+        {isOpen && (
+          <>
+            <motion.div
+              className="fixed inset-0 z-40 bg-black/40"
+              onClick={closeCart}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+            />
 
-          {/* Drawer */}
-          <div className="fixed right-0 top-0 h-full w-full max-w-md bg-white shadow-2xl z-50 flex flex-col">
-            {/* Header */}
-            <div className="flex items-center justify-between p-6 border-b border-[#00b140]/20">
-              <h2 className="text-xl font-bold text-gray-900">Shopping Cart ({items.length})</h2>
-              <button onClick={closeCart} className="p-2 hover:bg-gray-100 rounded-full">
-                <X className="h-5 w-5" />
-              </button>
-            </div>
-
-            {/* Cart Items */}
-            <div className="flex-1 overflow-y-auto p-6 space-y-4">
-              {items.map((item) => (
-                <div key={item.product.id} className="flex gap-4 p-4 bg-[#f7fff9] rounded-xl border border-[#00b140]/20">
-                  {/* Product Image */}
-                  <div className="relative w-20 h-20 rounded-lg overflow-hidden flex-shrink-0 bg-gray-100">
-                    <Image src={item.product.image} alt={item.product.name} fill className="object-cover" />
-                  </div>
-
-                  {/* Product Details */}
-                  <div className="flex-1 min-w-0">
-                    <h3 className="font-semibold text-gray-900 text-sm truncate">{item.product.name}</h3>
-
-                    {/* Quantity Controls */}
-                    <div className="flex items-center gap-3 mt-2">
-                      <button
-                        onClick={() => updateQuantity(item.product.id, item.quantity - 1)}
-                        className="p-1 hover:bg-white rounded transition-colors"
-                      >
-                        <Minus className="h-4 w-4" />
-                      </button>
-                      <span className="font-bold text-sm w-6 text-center">{item.quantity}</span>
-                      <button
-                        onClick={() => updateQuantity(item.product.id, item.quantity + 1)}
-                        className="p-1 hover:bg-white rounded transition-colors"
-                      >
-                        <Plus className="h-4 w-4" />
-                      </button>
-                      <button
-                        onClick={() => removeFromCart(item.product.id)}
-                        className="ml-auto p-1 text-[#e60012] hover:bg-white rounded transition-colors"
-                      >
-                        <Trash2 className="h-4 w-4" />
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            {/* Footer */}
-            {items.length > 0 && (
-              <div className="p-6 border-t border-[#00b140]/20 space-y-4 bg-white">
-                <div className="flex items-center justify-between">
-                  <span className="text-sm font-medium text-gray-600">Prices will be confirmed on WhatsApp</span>
-                </div>
+            <motion.aside
+              role="dialog"
+              aria-modal="true"
+              aria-labelledby="cart-title"
+              className="fixed right-0 top-0 z-50 flex h-full w-full max-w-md flex-col bg-background shadow-soft"
+              initial={reduceMotion ? { opacity: 0 } : { x: "100%" }}
+              animate={reduceMotion ? { opacity: 1 } : { x: 0 }}
+              exit={reduceMotion ? { opacity: 0 } : { x: "100%" }}
+              transition={{ type: "tween", duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+            >
+              <div className="flex items-center justify-between border-b border-border px-6 py-5">
+                <h2 id="cart-title" className="font-display text-2xl">
+                  Your bag {items.length > 0 && <span className="text-muted-foreground">({totalQty})</span>}
+                </h2>
                 <button
-                  onClick={handleCheckout}
-                  className="w-full bg-[#00b140] text-white font-black py-4 rounded-xl hover:bg-[#009936] transition-all shadow-lg uppercase tracking-widest text-sm"
+                  type="button"
+                  onClick={closeCart}
+                  aria-label="Close bag"
+                  className="rounded-full p-2 hover:bg-secondary"
                 >
-                  Checkout via WhatsApp 💬
+                  <X className="h-5 w-5" />
                 </button>
               </div>
-            )}
-          </div>
-        </>
-      )}
+
+              {items.length === 0 ? (
+                <div className="flex flex-1 flex-col items-center justify-center gap-3 px-6 text-center">
+                  <p className="font-display text-xl">Your bag is empty</p>
+                  <p className="text-sm text-muted-foreground">Add products from the shop, then order in one WhatsApp message.</p>
+                  <button
+                    type="button"
+                    onClick={closeCart}
+                    className="mt-3 rounded-full border border-border px-6 py-2.5 text-sm hover:bg-secondary"
+                  >
+                    Keep shopping
+                  </button>
+                </div>
+              ) : (
+                <ul className="flex-1 divide-y divide-border overflow-y-auto px-6">
+                  {items.map((item) => (
+                    <li key={item.product.id} className="flex gap-4 py-5">
+                      <div className="product-frame relative h-20 w-16 shrink-0 overflow-hidden rounded-xl">
+                        <Image src={item.product.image} alt="" fill sizes="64px" className="object-cover" />
+                      </div>
+
+                      <div className="min-w-0 flex-1">
+                        <p className="text-xs text-muted-foreground">{item.product.brand}</p>
+                        <h3 className="line-clamp-2 font-sans text-sm font-medium">{item.product.name}</h3>
+
+                        <div className="mt-3 flex items-center gap-2">
+                          <div className="flex items-center rounded-full border border-border">
+                            <button
+                              type="button"
+                              onClick={() => updateQuantity(item.product.id, item.quantity - 1)}
+                              aria-label={`Decrease quantity of ${item.product.name}`}
+                              className="p-2 hover:text-primary"
+                            >
+                              <Minus className="h-3.5 w-3.5" />
+                            </button>
+                            <span className="w-6 text-center text-sm tabular-nums" aria-live="polite">
+                              {item.quantity}
+                            </span>
+                            <button
+                              type="button"
+                              onClick={() => updateQuantity(item.product.id, item.quantity + 1)}
+                              aria-label={`Increase quantity of ${item.product.name}`}
+                              className="p-2 hover:text-primary"
+                            >
+                              <Plus className="h-3.5 w-3.5" />
+                            </button>
+                          </div>
+                          <button
+                            type="button"
+                            onClick={() => removeFromCart(item.product.id)}
+                            aria-label={`Remove ${item.product.name}`}
+                            className="ml-auto rounded-full p-2 text-muted-foreground hover:text-destructive"
+                          >
+                            <Trash2 className="h-4 w-4" />
+                          </button>
+                        </div>
+                      </div>
+                    </li>
+                  ))}
+                </ul>
+              )}
+
+              {items.length > 0 && (
+                <div className="space-y-3 border-t border-border px-6 py-5">
+                  <p className="text-sm text-muted-foreground">Prices and delivery are confirmed on WhatsApp.</p>
+                  <button
+                    type="button"
+                    onClick={handleCheckout}
+                    className="flex h-12 w-full items-center justify-center rounded-full bg-whatsapp text-sm font-medium text-white transition-colors hover:bg-whatsapp-dark"
+                  >
+                    Send order on WhatsApp
+                  </button>
+                </div>
+              )}
+            </motion.aside>
+          </>
+        )}
+      </AnimatePresence>
     </>
   );
 }

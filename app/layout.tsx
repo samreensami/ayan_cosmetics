@@ -1,5 +1,5 @@
-import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import type { Metadata, Viewport } from "next";
+import { Bodoni_Moda, Inter } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -8,12 +8,25 @@ import CookieConsent from "@/components/CookieConsent";
 import { CartProvider } from "@/lib/CartContext";
 import FloatingCart from "@/components/FloatingCart";
 import AyanAIChat from "@/components/AyanAIChat";
+import ThemeProvider from "@/components/ThemeProvider";
 
 const inter = Inter({
   subsets: ["latin"],
   display: "swap",
   variable: "--font-inter",
 });
+
+// Display face for headings — fashion-magazine Didone, used only at large sizes.
+const bodoni = Bodoni_Moda({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-display",
+  style: ["normal", "italic"],
+});
+
+export const viewport: Viewport = {
+  themeColor: "#FBF8F3",
+};
 
 export const metadata: Metadata = {
   title: {
@@ -52,17 +65,25 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={inter.variable} suppressHydrationWarning>
-      <body className={`${inter.className} bg-white`} suppressHydrationWarning>
-        <CartProvider>
-          <Navbar />
-          <main className="min-h-screen">{children}</main>
-          <Footer />
-          <WhatsAppButton />
-          <CookieConsent />
-          <FloatingCart />
-          <AyanAIChat />
-        </CartProvider>
+    <html
+      lang="en"
+      className={`${inter.variable} ${bodoni.variable}`}
+      suppressHydrationWarning
+    >
+      <body className="font-sans" suppressHydrationWarning>
+        <ThemeProvider>
+          <CartProvider>
+            <Navbar />
+            <main id="main" className="min-h-screen">
+              {children}
+            </main>
+            <Footer />
+            <WhatsAppButton />
+            <CookieConsent />
+            <FloatingCart />
+            <AyanAIChat />
+          </CartProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

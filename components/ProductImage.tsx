@@ -3,7 +3,6 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import { ImageIcon } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
 
 /**
  * ProductImage Component
@@ -30,16 +29,16 @@ export default function ProductImage({
   const [imageError, setImageError] = useState(false);
 
   return (
-    <div className="relative aspect-square rounded-2xl overflow-hidden bg-gray-100">
+    <div className="product-frame relative aspect-[4/5] overflow-hidden rounded-3xl">
       {imageError ? (
         // Fallback placeholder when image fails to load
-        <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-gray-100 to-gold/10 flex flex-col items-center justify-center">
-          <ImageIcon className="h-20 w-20 text-gray-300 mb-4" />
-          <span className="text-sm text-gray-400 text-center px-4 max-w-[200px]">
+        <div className="absolute inset-0 flex flex-col items-center justify-center">
+          <ImageIcon className="mb-4 h-16 w-16 text-neutral-300" />
+          <span className="max-w-[220px] px-4 text-center text-sm text-neutral-500">
             {alt}
           </span>
-          <span className="text-xs text-gray-300 mt-2">
-            (Image coming soon)
+          <span className="mt-2 text-xs text-neutral-400">
+            Photo coming soon
           </span>
         </div>
       ) : (
@@ -58,8 +57,12 @@ export default function ProductImage({
 
       {/* Badges */}
       <div className="absolute top-4 left-4 flex flex-col gap-2">
-        {isNew && <Badge variant="new">New Arrival</Badge>}
-        {isBestSeller && <Badge variant="bestseller">Best Seller</Badge>}
+        {isNew && (
+          <span className="rounded-full bg-white/90 px-3 py-1 text-xs font-medium text-neutral-900">New in</span>
+        )}
+        {isBestSeller && (
+          <span className="rounded-full bg-white/90 px-3 py-1 text-xs font-medium text-neutral-900">Bestseller</span>
+        )}
       </div>
     </div>
   );
@@ -87,13 +90,15 @@ export function ProductThumbnail({
 
   return (
     <button
+      type="button"
       onClick={onClick}
-      className={`relative w-20 h-20 rounded-lg overflow-hidden bg-gray-100 flex-shrink-0 border-2 transition-colors ${
-        isActive ? "border-primary" : "border-transparent hover:border-gray-300"
+      aria-label={`View photo ${index + 1}`}
+      className={`product-frame relative h-24 w-20 shrink-0 overflow-hidden rounded-xl border-2 transition-colors ${
+        isActive ? "border-foreground" : "border-transparent hover:border-border"
       }`}
     >
       {imageError ? (
-        <div className="w-full h-full bg-gradient-to-br from-primary/10 to-gold/10 flex items-center justify-center text-xs text-gray-400">
+        <div className="flex h-full w-full items-center justify-center text-xs text-neutral-500">
           {index + 1}
         </div>
       ) : (

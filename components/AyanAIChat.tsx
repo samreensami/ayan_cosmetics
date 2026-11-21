@@ -69,7 +69,7 @@ export default function AyanAIChat() {
     raw.split("\n").map((line, i) => {
       const parts = line.split(/\*\*(.*?)\*\*/g).map((chunk, j) =>
         j % 2 === 1 ? (
-          <strong key={j} className="font-black text-pink-400">
+          <strong key={j} className="font-semibold text-primary">
             {chunk}
           </strong>
         ) : (
@@ -97,15 +97,15 @@ export default function AyanAIChat() {
             whileHover={{ scale: 1.08 }}
             whileTap={{ scale: 0.92 }}
             onClick={() => setIsOpen(true)}
-            className="relative w-16 h-16 rounded-full bg-[#00b140] flex items-center justify-center shadow-[0_8px_32px_rgba(0,177,64,0.45)] group cursor-pointer"
+            className="relative w-16 h-16 rounded-full bg-primary flex items-center justify-center shadow-[0_8px_32px_rgba(0,177,64,0.45)] group cursor-pointer"
             aria-label="Open Ayan AI chat"
           >
-            <span className="absolute inset-0 rounded-full bg-[#00b140] animate-ping opacity-30" />
-            <span className="absolute -inset-1.5 rounded-full border border-[#00b140]/40 animate-pulse" />
-            <BotMessageSquare className="w-7 h-7 text-white relative z-10" strokeWidth={1.8} />
+            <span className="absolute inset-0 rounded-full bg-primary animate-ping opacity-30" />
+            <span className="absolute -inset-1.5 rounded-full border border-primary/40 animate-pulse" />
+            <BotMessageSquare className="w-7 h-7 text-foreground relative z-10" strokeWidth={1.8} />
 
             {/* tooltip — appears to the right */}
-            <span className="pointer-events-none absolute left-[calc(100%+14px)] top-1/2 -translate-y-1/2 bg-black border border-zinc-800 text-white text-[9px] uppercase tracking-[0.2em] font-black px-3 py-1.5 rounded-xl whitespace-nowrap shadow-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+            <span className="pointer-events-none absolute left-[calc(100%+14px)] top-1/2 -translate-y-1/2 bg-background border border-border text-foreground text-[9px] font-semibold px-3 py-1.5 rounded-xl whitespace-nowrap shadow-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300">
               Ayan AI ✨
             </span>
           </motion.button>
@@ -120,20 +120,20 @@ export default function AyanAIChat() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 28, scale: 0.93 }}
             transition={{ type: "spring", damping: 26, stiffness: 320 }}
-            className="w-[92vw] sm:w-[440px] h-[72vh] max-h-[640px] bg-zinc-950 border border-zinc-800 rounded-[28px] overflow-hidden flex flex-col shadow-[0_24px_80px_rgba(0,0,0,0.85),0_0_50px_rgba(236,72,153,0.07)] origin-bottom-left"
+            className="w-[92vw] sm:w-[440px] h-[72vh] max-h-[640px] bg-card border border-border rounded-[28px] overflow-hidden flex flex-col shadow-[0_24px_80px_rgba(0,0,0,0.85),0_0_50px_rgba(236,72,153,0.07)] origin-bottom-left"
           >
             {/* ── HEADER ── */}
-            <div className="px-5 py-4 bg-black border-b border-zinc-800/70 flex items-center justify-between shrink-0">
+            <div className="px-5 py-4 bg-background border-b border-border flex items-center justify-between shrink-0">
               <div className="flex items-center gap-3">
-                <div className="relative w-10 h-10 rounded-full bg-zinc-900 border border-zinc-700 flex items-center justify-center">
+                <div className="relative w-10 h-10 rounded-full bg-card border border-border flex items-center justify-center">
                   <span className="text-[15px]">💄</span>
-                  <span className="absolute bottom-0 right-0 w-2.5 h-2.5 rounded-full bg-pink-500 border-2 border-black animate-pulse" />
+                  <span className="absolute bottom-0 right-0 w-2.5 h-2.5 rounded-full bg-primary border-2 border-border animate-pulse" />
                 </div>
                 <div>
-                  <p className="text-[11px] font-black uppercase tracking-[0.15em] text-white leading-none mb-0.5">
+                  <p className="text-[11px] font-semibold text-foreground leading-none mb-0.5">
                     Ayan AI
                   </p>
-                  <p className="text-[9px] font-bold uppercase tracking-widest text-pink-400/75 leading-none">
+                  <p className="text-[9px] font-bold text-primary/75 leading-none">
                     Luxury Beauty Consultant
                   </p>
                 </div>
@@ -142,13 +142,13 @@ export default function AyanAIChat() {
               <div className="flex items-center gap-1">
                 <button
                   onClick={() => openWhatsApp()}
-                  className="text-[9px] font-black uppercase tracking-widest text-zinc-500 hover:text-pink-400 transition-colors px-2.5 py-1.5 rounded-lg hover:bg-white/5"
+                  className="text-[9px] font-semibold text-muted-foreground hover:text-primary transition-colors px-2.5 py-1.5 rounded-lg hover:bg-foreground/5"
                 >
                   Live Help
                 </button>
                 <button
                   onClick={() => setIsOpen(false)}
-                  className="w-7 h-7 rounded-full bg-zinc-900 border border-zinc-800 flex items-center justify-center text-zinc-500 hover:text-white hover:border-zinc-600 transition-all"
+                  className="w-7 h-7 rounded-full bg-card border border-border flex items-center justify-center text-muted-foreground hover:text-background hover:border-border transition-all"
                   aria-label="Close chat"
                 >
                   <X size={13} />
@@ -161,13 +161,13 @@ export default function AyanAIChat() {
               {messages.map((msg) => (
                 <div
                   key={msg.id}
-                  className={`flex flex-col ${msg.role === "user" ? "items-end" : "items-start"}`}
+                  className={`flex flex-col${msg.role === "user" ? "items-end" : "items-start"}`}
                 >
                   <div
-                    className={`max-w-[88%] rounded-2xl px-4 py-3 text-[12px] leading-[1.65] ${
+                    className={`max-w-[88%] rounded-2xl px-4 py-3 text-[12px] leading-[1.65]${
                       msg.role === "user"
-                        ? "bg-pink-500 text-white font-semibold rounded-br-[4px]"
-                        : "bg-zinc-900 text-zinc-200 border border-zinc-800/80 rounded-bl-[4px]"
+                        ? "bg-primary text-primary-foreground font-semibold rounded-br-[4px]"
+                        : "bg-card text-muted-foreground border border-border rounded-bl-[4px]"
                     }`}
                   >
                     {formatText(msg.text)}
@@ -175,7 +175,7 @@ export default function AyanAIChat() {
                     {msg.whatsappCTA && msg.role === "bot" && (
                       <button
                         onClick={() => openWhatsApp()}
-                        className="mt-3 w-full flex items-center justify-center gap-2 py-2.5 rounded-xl bg-black/50 hover:bg-pink-500/12 border border-zinc-700/80 hover:border-pink-500/35 text-[10px] font-black uppercase tracking-widest text-zinc-400 hover:text-pink-300 transition-all duration-300"
+                        className="mt-3 w-full flex items-center justify-center gap-2 py-2.5 rounded-xl bg-secondary hover:bg-primary/10 border border-border hover:border-primary/35 text-[10px] font-semibold text-muted-foreground hover:text-primary transition-all duration-300"
                       >
                         <span>💬</span> Order via WhatsApp
                       </button>
@@ -188,7 +188,7 @@ export default function AyanAIChat() {
                         <button
                           key={idx}
                           onClick={() => handleSendMessage(reply)}
-                          className="text-[10px] font-bold text-zinc-400 hover:text-pink-300 bg-zinc-900/70 hover:bg-zinc-900 border border-zinc-800 hover:border-pink-500/30 px-3 py-1.5 rounded-full transition-all duration-200 cursor-pointer"
+                          className="text-[10px] font-bold text-muted-foreground hover:text-primary bg-card/70 hover:bg-card border border-border hover:border-primary/30 px-3 py-1.5 rounded-full transition-all duration-200 cursor-pointer"
                         >
                           {reply}
                         </button>
@@ -201,11 +201,11 @@ export default function AyanAIChat() {
               {/* Typing indicator */}
               {isTyping && (
                 <div className="flex items-start">
-                  <div className="bg-zinc-900 border border-zinc-800/80 rounded-2xl rounded-bl-[4px] px-4 py-3 flex items-center gap-1.5">
+                  <div className="bg-card border border-border rounded-2xl rounded-bl-[4px] px-4 py-3 flex items-center gap-1.5">
                     {[0, 150, 300].map((delay) => (
                       <span
                         key={delay}
-                        className="w-1.5 h-1.5 rounded-full bg-pink-400 animate-bounce"
+                        className="w-1.5 h-1.5 rounded-full bg-primary animate-bounce"
                         style={{ animationDelay: `${delay}ms` }}
                       />
                     ))}
@@ -222,19 +222,19 @@ export default function AyanAIChat() {
                 e.preventDefault();
                 handleSendMessage(inputValue);
               }}
-              className="px-4 py-3 bg-black border-t border-zinc-800/70 flex items-center gap-2 shrink-0"
+              className="px-4 py-3 bg-background border-t border-border flex items-center gap-2 shrink-0"
             >
               <input
                 type="text"
                 value={inputValue}
                 onChange={(e) => setInputValue(e.target.value)}
                 placeholder="Ask about shades, products, delivery..."
-                className="flex-1 bg-zinc-900 border border-zinc-800 focus:border-pink-500/50 text-white placeholder-zinc-600 text-xs rounded-full h-11 px-4 focus:outline-none transition-all font-medium"
+                className="flex-1 bg-card border border-border focus:border-primary/50 text-foreground placeholder-background text-xs rounded-full h-11 px-4 focus:outline-none transition-all font-medium"
               />
               <button
                 type="submit"
                 disabled={!inputValue.trim()}
-                className="w-11 h-11 rounded-full bg-pink-500 disabled:bg-zinc-800 disabled:opacity-30 text-white flex items-center justify-center transition-all hover:bg-pink-400 active:scale-95 shrink-0"
+                className="w-11 h-11 rounded-full bg-primary disabled:bg-card disabled:opacity-30 text-primary-foreground flex items-center justify-center transition-all hover:bg-primary active:scale-95 shrink-0"
                 aria-label="Send message"
               >
                 <Send size={14} className="stroke-[2.5]" />

@@ -53,7 +53,7 @@ export default function CookieConsent() {
       }}
     >
       <div className="max-w-4xl mx-auto">
-        <div className="bg-white rounded-xl shadow-xl border border-gray-100 p-4 md:p-5">
+        <div className="bg-card rounded-xl shadow-xl border border-border p-4 md:p-5">
           <div className="flex flex-col md:flex-row items-start md:items-center gap-4">
             {/* Icon and Text */}
             <div className="flex items-start gap-3 flex-1">
@@ -61,10 +61,10 @@ export default function CookieConsent() {
                 <Cookie className="h-5 w-5 text-primary" />
               </div>
               <div>
-                <h3 className="font-medium text-gray-900 mb-1">
+                <h3 className="font-medium text-foreground mb-1">
                   We use cookies
                 </h3>
-                <p className="text-sm text-gray-600 leading-relaxed">
+                <p className="text-sm text-muted-foreground leading-relaxed">
                   We use cookies to enhance your browsing experience and analyze
                   our traffic. By clicking &quot;Accept All&quot;, you consent to our use
                   of cookies.
@@ -93,10 +93,10 @@ export default function CookieConsent() {
               {/* Close button */}
               <button
                 onClick={() => setShowBanner(false)}
-                className="p-1 hover:bg-gray-100 rounded-full transition-colors"
+                className="p-1 hover:bg-secondary rounded-full transition-colors"
                 aria-label="Close cookie banner"
               >
-                <X className="h-5 w-5 text-gray-400" />
+                <X className="h-5 w-5 text-muted-foreground" />
               </button>
             </div>
           </div>

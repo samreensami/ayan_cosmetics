@@ -6,12 +6,12 @@ import ShopGallery from "@/components/ShopGallery";
 
 export default function HomePage() {
   return (
-    <div className="pt-14 bg-green-800">
+    <>
       <HeroWrapper />
       <TrustSignals />
       <CategoryGrid />
-      <FeaturedProducts title="Featured Products" limit={8} showViewAll />
+      <FeaturedProducts title="New in and bestsellers" limit={8} showViewAll />
       <ShopGallery />
-    </div>
+    </>
   );
 }

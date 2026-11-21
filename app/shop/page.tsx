@@ -1,7 +1,6 @@
 "use client";
 
 import React, { Suspense, useState, useMemo } from "react";
-import Image from "next/image";
 import { useSearchParams } from "next/navigation";
 import { Search } from "lucide-react";
 
@@ -10,14 +9,15 @@ import ProductCard from "@/components/ProductCard";
 import ProductFilters, { FilterState } from "@/components/ProductFilters";
 import { products, Concern } from "@/lib/products";
 
-// Aapki product inventory ke hisab se exact main navigation headings
+// Tabs map 1:1 to `Category` values in lib/products.ts
 const SHOP_CATEGORIES = [
-  { id: "", label: "ALL PRODUCTS" },
-  { id: "Makeup", label: "MAKEUP" },
-  { id: "Skincare", label: "SKINCARE" },
-  { id: "Hair Care", label: "HAIR CARE" },
-  { id: "Electronic Devices", label: "DEVICES & TOOLS" },
-  { id: "Perfumes", label: "PERFUMES" }
+  { id: "", label: "All" },
+  { id: "Makeup", label: "Makeup" },
+  { id: "Skincare", label: "Skincare" },
+  { id: "Hair Care", label: "Hair care" },
+  { id: "Perfumes", label: "Perfumes" },
+  { id: "Bundles", label: "Beauty boxes" },
+  { id: "Electronic Devices", label: "Devices & tools" },
 ];
 
 /**
@@ -98,54 +98,51 @@ function ShopContent() {
   }, [searchQuery, filters]);
 
   return (
-    <div className="min-h-screen bg-black overflow-x-hidden">
-      {/* ── HERO SECTION ── */}
-      <section className="relative w-full h-[55vh] md:h-[65vh] overflow-hidden bg-green-800">
-        <Image
-          src="/images/products/shop3.png"
-          alt="AYAN Cosmetics"
-          fill
-          priority
-          className="object-cover object-top"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent opacity-80" />
-        
-        <div className="absolute inset-0 flex items-center justify-center text-center">
-          <div className="container mx-auto px-4 flex flex-col items-center justify-center">
-            <h1 
-              className="text-6xl md:text-8xl font-black italic uppercase tracking-tighter text-white leading-[0.85] opacity-0 mb-4 mx-auto"
-              style={{ 
-                animation: "slideUpCenter 0.8s cubic-bezier(0.25,0.46,0.45,0.94) 0.2s forwards"
-              }}
-            >
-              The <span className="text-[#529538]">Bold</span> <br /> 
-              Standard
-            </h1>
-            <p 
-              className="text-white max-w-md text-[10px] md:text-xs font-black uppercase tracking-[6px] opacity-0 mx-auto"
-              style={{ animation: "slideUpCenter 0.8s cubic-bezier(0.25,0.46,0.45,0.94) 0.4s forwards" }}
-            >
-              Premium Beauty Collection
+    <div className="pt-16">
+      {/* ── Header ── */}
+      <section className="border-b border-border">
+        <div className="container-custom grid gap-6 py-10 md:grid-cols-12 md:items-end md:py-16">
+          <div className="md:col-span-7">
+            <h1 className="font-display text-5xl leading-[1] md:text-7xl">The shop</h1>
+            <p className="mt-4 max-w-md text-muted-foreground">
+              Every product is original and sourced from authorised distributors. Order with cash on delivery, or
+              pick up from our counter in Saima Mall.
             </p>
+          </div>
+          <div className="relative md:col-span-5">
+            <Search className="pointer-events-none absolute left-5 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" aria-hidden="true" />
+            <Input
+              type="search"
+              aria-label="Search products"
+              placeholder="Search products, brands…"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="h-12 rounded-full border-border bg-card pl-12 text-sm"
+            />
           </div>
         </div>
       </section>
 
-      {/* ── SHOP AREA ── */}
-      <section className="max-w-[1400px] mx-auto px-4 py-12">
-        
-        {/* INTERACTIVE CATEGORY HEADINGS TAB BAR */}
-        <div className="w-full border-b border-zinc-800 mb-10 overflow-x-auto no-scrollbar whitespace-nowrap flex gap-2 md:gap-6 pb-2 justify-start md:justify-center">
+      <section className="container-custom py-8 md:py-12">
+        {/* Category tabs */}
+        <div
+          role="tablist"
+          aria-label="Product categories"
+          className="no-scrollbar -mx-4 mb-8 flex gap-2 overflow-x-auto px-4 md:mx-0 md:px-0"
+        >
           {SHOP_CATEGORIES.map((tab) => {
             const isActive = filters.category.toLowerCase() === tab.id.toLowerCase();
             return (
               <button
-                key={tab.id}
+                key={tab.id || "all"}
+                type="button"
+                role="tab"
+                aria-selected={isActive}
                 onClick={() => handleCategoryTabClick(tab.id)}
-                className={`px-6 py-3 text-xs md:text-sm font-black tracking-widest uppercase rounded-full transition-all duration-300 ${
-                  isActive 
-                    ? "bg-[#529538] text-white shadow-[0_4px_20px_rgba(82,149,56,0.4)]" 
-                    : "text-zinc-400 hover:text-white bg-zinc-900/60 hover:bg-zinc-900 border border-zinc-800"
+                className={`shrink-0 rounded-full px-5 py-2.5 text-sm transition-colors ${
+                  isActive
+                    ? "bg-foreground text-background"
+                    : "border border-border text-muted-foreground hover:border-foreground/40 hover:text-foreground"
                 }`}
               >
                 {tab.label}
@@ -154,84 +151,47 @@ function ShopContent() {
           })}
         </div>
 
-        {/* Search & Stats Bar */}
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-10">
-          <div className="relative w-full max-w-xl">
-            <Search className="absolute left-6 top-1/2 -translate-y-1/2 h-5 w-5 text-[#529538]" />
-            <Input
-              type="search"
-              placeholder="SEARCH PRODUCTS..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="pl-16 h-14 bg-zinc-900 border-zinc-800 text-white rounded-full uppercase font-black text-[10px] tracking-widest focus:ring-1 focus:ring-[#529538] transition-all"
-            />
-          </div>
-          <div className="flex items-center gap-4 px-6 border-l border-zinc-800">
-            <span className="text-[#529538] text-4xl font-black leading-none">{filteredProducts.length}</span>
-            <span className="text-zinc-500 text-[10px] uppercase font-bold tracking-[3px] leading-tight">Products<br/>Found</span>
-          </div>
+        <div className="mb-10 rounded-3xl border border-border bg-card p-5 md:p-8">
+          <ProductFilters
+            filters={filters}
+            updateAction={setFilters}
+            totalProducts={products.length}
+            filteredCount={filteredProducts.length}
+          />
         </div>
 
-        {/* Filters Wrapper */}
-        <div className="mb-12 bg-zinc-900/40 border border-zinc-800/50 rounded-[30px] p-6 md:p-10 backdrop-blur-md">
-           <ProductFilters
-              filters={filters}
-              updateAction={setFilters}
-              totalProducts={products.length}
-              filteredCount={filteredProducts.length}
-            />
-        </div>
+        <p className="mb-6 text-sm text-muted-foreground" aria-live="polite">
+          {filteredProducts.length} {filteredProducts.length === 1 ? "product" : "products"}
+          {searchQuery.trim() && <> for &ldquo;{searchQuery.trim()}&rdquo;</>}
+        </p>
 
-        {/* Product Grid */}
-        <div className="w-full">
-          {filteredProducts.length > 0 ? (
-            <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-10">
-              {filteredProducts.map((product, index) => (
-                <div
-                  key={product.id}
-                  className="opacity-0 transition-transform duration-500 hover:-translate-y-2"
-                  style={{ animation: `fadeIn 0.6s ease ${index * 0.05}s forwards` }}
-                >
-                  <ProductCard product={product} />
-                </div>
-              ))}
-            </div>
-          ) : (
-            <div className="text-center py-32 bg-zinc-900/20 rounded-[40px] border border-dashed border-zinc-800">
-              <h3 className="text-xl font-bold text-white uppercase italic tracking-widest">No Results Found</h3>
-              <button 
-                onClick={() => {
-                    setSearchQuery("");
-                    setFilters({ category: "", brand: "", concerns: [], sortBy: "featured" });
-                }} 
-                className="mt-6 px-10 py-4 bg-[#529538] text-white font-black uppercase text-[10px] tracking-widest rounded-full hover:bg-white hover:text-black transition-all"
-              >
-                Reset Filters
-              </button>
-            </div>
-          )}
-        </div>
+        {filteredProducts.length > 0 ? (
+          <ul className="grid grid-cols-2 gap-x-3 gap-y-10 md:gap-x-6 lg:grid-cols-3 xl:grid-cols-4">
+            {filteredProducts.map((product) => (
+              <li key={product.id}>
+                <ProductCard product={product} />
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <div className="rounded-3xl border border-dashed border-border py-24 text-center">
+            <p className="font-display text-2xl">Nothing matches these filters</p>
+            <p className="mt-2 text-sm text-muted-foreground">
+              Try a different search, or message us on WhatsApp and we&apos;ll check stock for you.
+            </p>
+            <button
+              type="button"
+              onClick={() => {
+                setSearchQuery("");
+                setFilters({ category: "", brand: "", concerns: [], sortBy: "featured" });
+              }}
+              className="mt-6 rounded-full bg-primary px-8 py-3 text-sm font-medium text-primary-foreground hover:opacity-90"
+            >
+              Clear filters
+            </button>
+          </div>
+        )}
       </section>
-
-      {/* ── ANIMATIONS ── */}
-      <style jsx global>{`
-        /* Custom layout styling */
-        .no-scrollbar::-webkit-scrollbar {
-          display: none;
-        }
-        .no-scrollbar {
-          -ms-overflow-style: none;
-          scrollbar-width: none;
-        }
-        @keyframes slideUpCenter {
-          from { opacity: 0; transform: translateY(40px); }
-          to { opacity: 1; transform: translateY(0); }
-        }
-        @keyframes fadeIn {
-          from { opacity: 0; transform: translateY(20px); }
-          to { opacity: 1; transform: translateY(0); }
-        }
-      `}</style>
     </div>
   );
 }

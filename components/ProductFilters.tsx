@@ -82,24 +82,24 @@ export default function ProductFilters({
   };
 
   return (
-    <div className="space-y-6 p-6 bg-[#f7fff9] rounded-2xl border border-[#00b140]/20">
+    <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <SlidersHorizontal className="h-5 w-5 text-[#00b140]" />
-          <span className="font-bold text-gray-900">Filters</span>
-          <span className="text-sm text-gray-500 font-medium">
+          <SlidersHorizontal className="h-5 w-5 text-primary" />
+          <span className="font-bold text-foreground">Filters</span>
+          <span className="text-sm text-muted-foreground font-medium">
             ({filteredCount} of {totalProducts} products)
           </span>
         </div>
         {hasActiveFilters && (
-          <Button variant="ghost" size="sm" onClick={clearFilters} className="text-[#e60012] hover:bg-red-50">
+          <Button variant="ghost" size="sm" onClick={clearFilters} className="text-destructive hover:bg-destructive">
             Clear All
           </Button>
         )}
       </div>
 
       <div>
-        <h3 className="font-bold text-gray-900 mb-3">Shop by Concern</h3>
+        <h3 className="font-bold text-foreground mb-3">Shop by Concern</h3>
         <div className="flex flex-wrap gap-2">
           {concernOptions.map(({ value, label }) => (
             <button
@@ -108,8 +108,8 @@ export default function ProductFilters({
               className={cn(
                 "px-4 py-2 rounded-full text-xs font-bold border transition-all shadow-sm",
                 filters.concerns.includes(value)
-                  ? "bg-[#00b140] text-white border-[#00b140]"
-                  : "bg-white text-gray-700 border-[#00b140]/30 hover:border-[#00b140] hover:text-[#00b140]"
+                  ? "bg-primary text-primary-foreground border-primary"
+                  : "bg-card text-foreground border-primary/30 hover:border-primary hover:text-primary"
               )}
             >
               {label}
@@ -120,9 +120,9 @@ export default function ProductFilters({
 
       <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         <div>
-          <label className="block text-sm font-bold text-gray-700 mb-2">Category</label>
+          <label className="block text-sm font-bold text-foreground mb-2">Category</label>
           <Select value={filters.category} onValueChange={(value) => updateFilter("category", value)}>
-            <SelectTrigger className="bg-white border-[#00b140]/30">
+            <SelectTrigger className="bg-card border-primary/30">
               <SelectValue placeholder="All Categories" />
             </SelectTrigger>
             <SelectContent>
@@ -135,9 +135,9 @@ export default function ProductFilters({
         </div>
 
         <div>
-          <label className="block text-sm font-bold text-gray-700 mb-2">Brand</label>
+          <label className="block text-sm font-bold text-foreground mb-2">Brand</label>
           <Select value={filters.brand} onValueChange={(value) => updateFilter("brand", value)}>
-            <SelectTrigger className="bg-white border-[#00b140]/30">
+            <SelectTrigger className="bg-card border-primary/30">
               <SelectValue placeholder="All Brands" />
             </SelectTrigger>
             <SelectContent>
@@ -150,9 +150,9 @@ export default function ProductFilters({
         </div>
 
         <div>
-          <label className="block text-sm font-bold text-gray-700 mb-2">Sort By</label>
+          <label className="block text-sm font-bold text-foreground mb-2">Sort By</label>
           <Select value={filters.sortBy} onValueChange={(value) => updateFilter("sortBy", value)}>
-            <SelectTrigger className="bg-white border-[#00b140]/30">
+            <SelectTrigger className="bg-card border-primary/30">
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
@@ -165,15 +165,15 @@ export default function ProductFilters({
       </div>
 
       {hasActiveFilters && (
-        <div className="flex flex-wrap gap-2 pt-4 border-t border-[#00b140]/10">
+        <div className="flex flex-wrap gap-2 pt-4 border-t border-primary/10">
           {filters.category && filters.category !== "all" && (
-            <Badge className="bg-[#00b140] text-white gap-1">
+            <Badge className="bg-primary text-primary-foreground gap-1">
               {filters.category}
               <button onClick={() => updateFilter("category", "")} className="ml-1"><X className="h-3 w-3" /></button>
             </Badge>
           )}
           {filters.brand && filters.brand !== "all" && (
-            <Badge className="bg-[#FFD700] text-black gap-1">
+            <Badge className="bg-gold text-foreground gap-1">
               {filters.brand}
               <button onClick={() => updateFilter("brand", "")} className="ml-1"><X className="h-3 w-3" /></button>
             </Badge>

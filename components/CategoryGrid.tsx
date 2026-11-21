@@ -1,110 +1,70 @@
-"use client";
-
-import React from "react";
+import Image from "next/image";
 import Link from "next/link";
-import { motion } from "framer-motion";
-import {
-  Heart, Droplets, Sparkles, SprayCan,
-  Eye, ShoppingBag, Layers, Scissors,
-} from "lucide-react";
-
-import type { LucideIcon } from "lucide-react";
+import { products, type Product } from "@/lib/products";
 
 interface CategoryTile {
   name: string;
   /** Shop URL — uses a real `category` from lib/products.ts or a `q` keyword search */
   href: string;
-  icon: LucideIcon;
+  /** How to pick the cover photo from the catalogue */
+  match: (p: Product) => boolean;
 }
 
+const byName = (kw: string) => (p: Product) => p.name.toLowerCase().includes(kw);
+const byCategory = (c: Product["category"]) => (p: Product) => p.category === c;
+
 const categories: CategoryTile[] = [
-  { name: "Lipstick",     href: "/shop?q=lip",              icon: Heart       },
-  { name: "Foundation",   href: "/shop?q=foundation",       icon: Droplets    },
-  { name: "Skincare",     href: "/shop?category=Skincare",  icon: Sparkles    },
-  { name: "Perfumes",     href: "/shop?category=Perfumes",  icon: SprayCan    },
-  { name: "Eye Makeup",   href: "/shop?q=eye",              icon: Eye         },
-  { name: "Beauty Boxes", href: "/shop?category=Bundles",   icon: ShoppingBag },
-  { name: "Mascara",      href: "/shop?q=mascara",          icon: Layers      },
-  { name: "Haircare",     href: "/shop?category=Hair%20Care", icon: Scissors  },
+  { name: "Lipstick", href: "/shop?q=lip", match: byName("lipstick") },
+  { name: "Foundation", href: "/shop?q=foundation", match: byName("foundation") },
+  { name: "Skincare", href: "/shop?category=Skincare", match: byCategory("Skincare") },
+  { name: "Eye makeup", href: "/shop?q=eye", match: byName("eyeshadow") },
+  { name: "Mascara", href: "/shop?q=mascara", match: byName("mascara") },
+  { name: "Perfumes", href: "/shop?category=Perfumes", match: byCategory("Perfumes") },
+  { name: "Hair care", href: "/shop?category=Hair%20Care", match: byCategory("Hair Care") },
+  { name: "Beauty boxes", href: "/shop?category=Bundles", match: byCategory("Bundles") },
 ];
 
-const row1 = [...categories.slice(0, 4), ...categories.slice(0, 4)];
-const row2 = [...categories.slice(4, 8), ...categories.slice(4, 8)];
+function coverFor(tile: CategoryTile): Product | undefined {
+  return products.find((p) => tile.match(p) && p.inStock && p.image) ?? products.find(tile.match);
+}
 
 export default function CategoryGrid() {
   return (
-    <section className="py-20 bg-[#529538] overflow-hidden border-t border-white/10"> 
+    <section className="py-16 md:py-24" aria-labelledby="categories-title">
       <div className="container-custom">
-        {/* Section Header */}
-        <div className="text-center mb-16">
-          <h2 className="text-4xl font-bold text-white mb-4 tracking-tight uppercase">
-            Shop by Category
+        <div className="mb-8 flex items-end justify-between gap-6 md:mb-12">
+          <h2 id="categories-title" className="section-title">
+            Shop by category
           </h2>
-          <div className="h-1 w-24 bg-white/30 mx-auto rounded-full"></div>
-        </div>
-
-        <div className="flex flex-col gap-10">
-          {/* Row 1: Right to Left */}
-          <div className="flex overflow-hidden">
-            <motion.div 
-              className="flex gap-6 whitespace-nowrap"
-              animate={{ x: ["0%", "-50%"] }}
-              transition={{ ease: "linear", duration: 15, repeat: Infinity }}
-            >
-              {row1.map((category, index) => (
-                <CategoryCard key={`row1-${index}`} category={category} />
-              ))}
-            </motion.div>
-          </div>
-
-          {/* Row 2: Left to Right */}
-          <div className="flex overflow-hidden">
-            <motion.div 
-              className="flex gap-6 whitespace-nowrap"
-              animate={{ x: ["-50%", "0%"] }}
-              transition={{ ease: "linear", duration: 15, repeat: Infinity }}
-            >
-              {row2.map((category, index) => (
-                <CategoryCard key={`row2-${index}`} category={category} />
-              ))}
-            </motion.div>
-          </div>
-        </div>
-
-        {/* View All Button */}
-        <div className="text-center mt-16">
-          <Link
-            href="/shop"
-            className="px-10 py-3 bg-white text-[#529538] font-bold uppercase tracking-widest hover:bg-black hover:text-white transition-all duration-300 inline-block rounded-none shadow-lg"
-          >
-            View All Collection
+          <Link href="/shop" className="shrink-0 text-sm underline underline-offset-4 hover:text-primary">
+            View all products
           </Link>
         </div>
+
+        <ul className="no-scrollbar -mx-4 flex snap-x snap-mandatory scroll-px-4 gap-3 overflow-x-auto px-4 md:mx-0 md:grid md:grid-cols-4 md:gap-5 md:overflow-visible md:px-0">
+          {categories.map((tile) => {
+            const cover = coverFor(tile);
+            return (
+              <li key={tile.name} className="w-[42%] shrink-0 snap-start sm:w-[30%] md:w-auto">
+                <Link href={tile.href} className="group block">
+                  <div className="product-frame relative aspect-[4/5] overflow-hidden rounded-2xl">
+                    {cover && (
+                      <Image
+                        src={cover.image}
+                        alt=""
+                        fill
+                        sizes="(max-width: 768px) 42vw, 25vw"
+                        className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04]"
+                      />
+                    )}
+                  </div>
+                  <p className="mt-3 font-display text-lg md:text-xl">{tile.name}</p>
+                </Link>
+              </li>
+            );
+          })}
+        </ul>
       </div>
     </section>
-  );
-}
-
-function CategoryCard({ category }: { category: CategoryTile }) {
-  const Icon = category.icon;
-  return (
-    <Link
-      href={category.href}
-      className="
-        flex flex-col items-center justify-center gap-4
-        w-[200px] h-[160px] rounded-xl border border-white/20
-        bg-white/10 backdrop-blur-md
-        hover:bg-white hover:scale-105
-        transition-all duration-500 group
-      "
-    >
-      <Icon
-        className="h-10 w-10 text-white group-hover:text-[#529538] transition-colors duration-300"
-        strokeWidth={1.2}
-      />
-      <span className="text-xs font-bold tracking-[0.2em] uppercase text-white group-hover:text-[#529538] transition-colors duration-300">
-        {category.name}
-      </span>
-    </Link>
   );
 }

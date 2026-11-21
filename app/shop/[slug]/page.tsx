@@ -2,8 +2,6 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import { Metadata } from "next";
 import { MessageCircle, ArrowLeft, CheckCircle, Truck, Shield } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 import StarRating from "@/components/StarRating";
 import ReviewSection from "@/components/ReviewSection";
 import ProductCard from "@/components/ProductCard";
@@ -84,200 +82,138 @@ export default async function ProductDetailPage({
   const whatsappLink = generateWhatsAppLink(product.name);
 
   return (
-    <div className="min-h-screen bg-white">
-      {/* Breadcrumb */}
-      <div className="bg-gray-50 pt-20 md:pt-24 pb-4">
-        <div className="container-custom">
-          <Link
-            href="/shop"
-            className="inline-flex items-center gap-2 text-gray-600 hover:text-primary transition-colors"
-          >
-            <ArrowLeft className="h-4 w-4" />
-            Back to Shop
-          </Link>
-        </div>
-      </div>
+    <div className="pt-16">
+      <nav aria-label="Breadcrumb" className="container-custom pt-6 text-sm text-muted-foreground">
+        <Link href="/shop" className="inline-flex items-center gap-2 hover:text-foreground">
+          <ArrowLeft className="h-4 w-4" aria-hidden="true" />
+          Back to shop
+        </Link>
+      </nav>
 
-      {/* Product Section */}
-      <section className="container-custom py-8 md:py-12">
-        <div className="grid grid-cols-2 lg:grid-cols-2 gap-8 lg:gap-12">
-          {/* Product Images */}
-          <div className="space-y-4">
-            {/* Main Image - Uses ProductImage client component for error handling */}
-            <ProductImage
-              src={product.image}
-              alt={product.name}
-              isNew={product.isNew}
-              isBestSeller={product.isBestSeller}
-              priority
-            />
-
-            {/* Thumbnail Gallery */}
-            {product.images && product.images.length > 1 && (
-              <div className="flex gap-3 overflow-x-auto no-scrollbar">
-                {product.images.map((img, index) => (
-                  <ProductThumbnail
-                    key={index}
-                    src={img}
-                    alt={product.name}
-                    index={index}
-                    isActive={index === 0}
-                  />
-                ))}
-              </div>
-            )}
-          </div>
-
-          {/* Product Details */}
-          <div className="flex flex-col">
-            {/* Brand */}
-            <p className="text-sm text-gray-500 uppercase tracking-wider mb-2">
-              {product.brand}
-            </p>
-
-            {/* Product Name */}
-            <h1 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4">
-              {product.name}
-            </h1>
-
-            {/* Rating */}
-            <div className="mb-6">
-              <StarRating
-                rating={product.rating}
-                reviewCount={product.reviewCount}
-                size="md"
-              />
-            </div>
-
-            {/* Short Description */}
-            <p className="text-gray-600 leading-relaxed mb-6">
-              {product.shortDescription}
-            </p>
-
-            {/* Concerns/Tags */}
-            <div className="flex flex-wrap gap-2 mb-6">
-              {product.concern.map((concern) => (
-                <Badge key={concern} variant="category">
-                  {concern}
-                </Badge>
+      {/* Product */}
+      <section className="container-custom grid gap-8 py-8 md:grid-cols-2 md:gap-12 md:py-12 lg:gap-20">
+        <div className="space-y-4 md:sticky md:top-24 md:self-start">
+          <ProductImage
+            src={product.image}
+            alt={product.name}
+            isNew={product.isNew}
+            isBestSeller={product.isBestSeller}
+            priority
+          />
+          {product.images && product.images.length > 1 && (
+            <div className="no-scrollbar flex gap-3 overflow-x-auto">
+              {product.images.map((img, index) => (
+                <ProductThumbnail key={index} src={img} alt={product.name} index={index} isActive={index === 0} />
               ))}
             </div>
+          )}
+        </div>
 
-            {/* Stock Status */}
-            <div className="flex items-center gap-2 mb-6">
-              {product.inStock ? (
-                <>
-                  <CheckCircle className="h-5 w-5 text-green-500" />
-                  <span className="text-green-600 font-medium">In Stock</span>
-                </>
-              ) : (
-                <>
-                  <div className="h-5 w-5 rounded-full border-2 border-red-500" />
-                  <span className="text-red-600 font-medium">Out of Stock</span>
-                </>
-              )}
-            </div>
+        <div className="flex flex-col">
+          <p className="text-sm text-muted-foreground">{product.brand}</p>
+          <h1 className="mt-2 font-display text-3xl leading-tight md:text-5xl text-balance">{product.name}</h1>
 
-            {/* WhatsApp Order Button - Large and Prominent */}
-            <a
-              href={whatsappLink}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="block mb-6"
-            >
-              <Button
-                variant="whatsapp"
-                size="xl"
-                className="w-full gap-3 text-lg"
-                disabled={!product.inStock}
-              >
-                <MessageCircle className="h-6 w-6" />
-                Order on WhatsApp
-              </Button>
-            </a>
-
-            {/* Trust Badges */}
-            <div className="grid grid-cols-2 gap-4 p-4 bg-gray-50 rounded-xl">
-              <div className="flex items-center gap-3">
-                <Truck className="h-5 w-5 text-primary" />
-                <span className="text-sm text-gray-600">
-                  Cash on Delivery
-                </span>
-              </div>
-              <div className="flex items-center gap-3">
-                <Shield className="h-5 w-5 text-primary" />
-                <span className="text-sm text-gray-600">100% Genuine</span>
-              </div>
-            </div>
-
-            {/* Full Description */}
-            {product.fullDescription && (
-              <div className="mt-8 pt-8 border-t border-gray-100">
-                <h2 className="text-lg font-semibold text-gray-900 mb-3">
-                  Description
-                </h2>
-                <p className="text-gray-600 leading-relaxed">
-                  {product.fullDescription}
-                </p>
-              </div>
-            )}
-
-            {/* Key Ingredients */}
-            {product.keyIngredients && product.keyIngredients.length > 0 && (
-              <div className="mt-6">
-                <h2 className="text-lg font-semibold text-gray-900 mb-3">
-                  Key Ingredients
-                </h2>
-                <ul className="flex flex-wrap gap-2">
-                  {product.keyIngredients.map((ingredient, index) => (
-                    <li
-                      key={index}
-                      className="px-3 py-1 bg-green-50 text-green-700 text-sm rounded-full"
-                    >
-                      {ingredient}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            )}
-
-            {/* How to Use */}
-            {product.howToUse && (
-              <div className="mt-6">
-                <h2 className="text-lg font-semibold text-gray-900 mb-3">
-                  How to Use
-                </h2>
-                <p className="text-gray-600 leading-relaxed">
-                  {product.howToUse}
-                </p>
-              </div>
-            )}
-
-            {/* Benefits */}
-            {product.benefits && product.benefits.length > 0 && (
-              <div className="mt-6">
-                <h2 className="text-lg font-semibold text-gray-900 mb-3">
-                  Benefits
-                </h2>
-                <ul className="grid grid-cols-2 gap-2">
-                  {product.benefits.map((benefit, index) => (
-                    <li
-                      key={index}
-                      className="flex items-center gap-2 text-gray-600"
-                    >
-                      <CheckCircle className="h-4 w-4 text-primary flex-shrink-0" />
-                      <span className="text-sm">{benefit}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            )}
+          <div className="mt-4">
+            <StarRating rating={product.rating} reviewCount={product.reviewCount} size="md" />
           </div>
+
+          <p className="mt-6 leading-relaxed text-muted-foreground">{product.shortDescription}</p>
+
+          {product.concern.length > 0 && (
+            <ul className="mt-6 flex flex-wrap gap-2" aria-label="Good for">
+              {product.concern.map((concern) => (
+                <li key={concern}>
+                  <Link
+                    href={`/shop?concern=${encodeURIComponent(concern)}`}
+                    className="inline-block rounded-full border border-border px-3 py-1 text-xs hover:border-foreground/40"
+                  >
+                    {concern}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          )}
+
+          <p className="mt-6 flex items-center gap-2 text-sm">
+            {product.inStock ? (
+              <>
+                <CheckCircle className="h-4 w-4 text-primary" aria-hidden="true" />
+                In stock, dispatched same day in Karachi
+              </>
+            ) : (
+              <>
+                <span className="h-2 w-2 rounded-full bg-destructive" aria-hidden="true" />
+                Out of stock — ask us on WhatsApp for the restock date
+              </>
+            )}
+          </p>
+
+          <a
+            href={whatsappLink}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-disabled={!product.inStock}
+            className="mt-8 flex h-14 w-full items-center justify-center gap-3 rounded-full bg-whatsapp text-base font-medium text-white transition-colors hover:bg-whatsapp-dark"
+          >
+            <MessageCircle className="h-5 w-5" aria-hidden="true" />
+            Order on WhatsApp
+          </a>
+
+          <ul className="mt-6 grid grid-cols-2 gap-4 border-y border-border py-5 text-sm">
+            <li className="flex items-center gap-3">
+              <Truck className="h-5 w-5 text-primary" strokeWidth={1.5} aria-hidden="true" />
+              Cash on delivery
+            </li>
+            <li className="flex items-center gap-3">
+              <Shield className="h-5 w-5 text-primary" strokeWidth={1.5} aria-hidden="true" />
+              100% genuine
+            </li>
+          </ul>
+
+          {product.fullDescription && (
+            <div className="mt-8">
+              <h2 className="font-display text-2xl">Description</h2>
+              <p className="mt-3 leading-relaxed text-muted-foreground">{product.fullDescription}</p>
+            </div>
+          )}
+
+          {product.keyIngredients && product.keyIngredients.length > 0 && (
+            <div className="mt-8">
+              <h2 className="font-display text-2xl">Key ingredients</h2>
+              <ul className="mt-3 flex flex-wrap gap-2">
+                {product.keyIngredients.map((ingredient, index) => (
+                  <li key={index} className="rounded-full bg-secondary px-3 py-1 text-sm">
+                    {ingredient}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+
+          {product.howToUse && (
+            <div className="mt-8">
+              <h2 className="font-display text-2xl">How to use</h2>
+              <p className="mt-3 leading-relaxed text-muted-foreground">{product.howToUse}</p>
+            </div>
+          )}
+
+          {product.benefits && product.benefits.length > 0 && (
+            <div className="mt-8">
+              <h2 className="font-display text-2xl">Benefits</h2>
+              <ul className="mt-3 grid gap-2 sm:grid-cols-2">
+                {product.benefits.map((benefit, index) => (
+                  <li key={index} className="flex items-start gap-2 text-sm text-muted-foreground">
+                    <CheckCircle className="mt-0.5 h-4 w-4 shrink-0 text-primary" aria-hidden="true" />
+                    {benefit}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
         </div>
       </section>
 
-      {/* Reviews Section */}
-      <section className="bg-gray-50">
+      <section className="bg-secondary/50">
         <div className="container-custom">
           <ReviewSection
             reviews={reviews}
@@ -288,17 +224,16 @@ export default async function ProductDetailPage({
         </div>
       </section>
 
-      {/* Related Products */}
       {relatedProducts.length > 0 && (
-        <section className="container-custom py-12 md:py-16">
-          <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-8">
-            You May Also Like
-          </h2>
-          <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <section className="container-custom py-16 md:py-20">
+          <h2 className="section-title mb-8">You may also like</h2>
+          <ul className="grid grid-cols-2 gap-x-3 gap-y-10 md:gap-x-6 lg:grid-cols-4">
             {relatedProducts.map((relatedProduct) => (
-              <ProductCard key={relatedProduct.id} product={relatedProduct} />
+              <li key={relatedProduct.id}>
+                <ProductCard product={relatedProduct} />
+              </li>
             ))}
-          </div>
+          </ul>
         </section>
       )}
     </div>

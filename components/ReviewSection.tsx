@@ -50,7 +50,7 @@ export default function ReviewSection({
     <section className="py-8 md:py-12">
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-8">
         <div>
-          <h2 className="text-2xl font-bold text-gray-900 mb-2">
+          <h2 className="text-2xl font-bold text-foreground mb-2">
             Customer Reviews
           </h2>
           <div className="flex items-center gap-3">
@@ -59,7 +59,7 @@ export default function ReviewSection({
               showCount={false}
               size="md"
             />
-            <span className="text-gray-600">
+            <span className="text-muted-foreground">
               {averageRating.toFixed(1)} out of 5 ({totalReviews} reviews)
             </span>
           </div>
@@ -74,9 +74,9 @@ export default function ReviewSection({
       </div>
 
       {submitted && (
-        <div className="mb-6 p-4 bg-green-50 border border-green-200 rounded-lg flex items-center gap-3">
-          <CheckCircle className="h-5 w-5 text-green-600" />
-          <p className="text-green-700">
+        <div className="mb-6 p-4 bg-secondary border border-primary rounded-lg flex items-center gap-3">
+          <CheckCircle className="h-5 w-5 text-primary" />
+          <p className="text-primary">
             Thank you for your review! It will be displayed after moderation.
           </p>
         </div>
@@ -92,7 +92,7 @@ export default function ReviewSection({
               <div>
                 <label
                   htmlFor="reviewer-name"
-                  className="block text-sm font-medium text-gray-700 mb-2"
+                  className="block text-sm font-medium text-foreground mb-2"
                 >
                   Your Name
                 </label>
@@ -110,7 +110,7 @@ export default function ReviewSection({
 
               {/* FIXED: Prop name changed from onChange to onRatingChange */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-sm font-medium text-foreground mb-2">
                   Your Rating
                 </label>
                 <InteractiveStarRating
@@ -118,7 +118,7 @@ export default function ReviewSection({
   updateAction={(rating: number) => setFormData({ ...formData, rating })}
 />
                 {formData.rating === 0 && (
-                  <p className="text-sm text-gray-500 mt-1">
+                  <p className="text-sm text-muted-foreground mt-1">
                     Click on a star to rate
                   </p>
                 )}
@@ -127,7 +127,7 @@ export default function ReviewSection({
               <div>
                 <label
                   htmlFor="review-comment"
-                  className="block text-sm font-medium text-gray-700 mb-2"
+                  className="block text-sm font-medium text-foreground mb-2"
                 >
                   Your Review
                 </label>
@@ -158,29 +158,29 @@ export default function ReviewSection({
       <div className="space-y-6">
         {reviews.length > 0 ? (
           reviews.map((review) => (
-            <Card key={review.id} className="border-gray-100">
+            <Card key={review.id} className="border-border">
               <CardContent className="pt-6">
                 <div className="flex items-start gap-4">
                   <div className="flex-shrink-0">
-                    <div className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center">
-                      <User className="h-5 w-5 text-gray-400" />
+                    <div className="w-10 h-10 rounded-full bg-secondary flex items-center justify-center">
+                      <User className="h-5 w-5 text-muted-foreground" />
                     </div>
                   </div>
 
                   <div className="flex-1">
                     <div className="flex flex-col md:flex-row md:items-center gap-2 mb-2">
                       <div className="flex items-center gap-2">
-                        <span className="font-medium text-gray-900">
+                        <span className="font-medium text-foreground">
                           {review.userName}
                         </span>
                         {review.verified && (
-                          <span className="inline-flex items-center gap-1 text-xs text-green-600 bg-green-50 px-2 py-0.5 rounded-full">
+                          <span className="inline-flex items-center gap-1 text-xs text-primary bg-secondary px-2 py-0.5 rounded-full">
                             <CheckCircle className="h-3 w-3" />
                             Verified Purchase
                           </span>
                         )}
                       </div>
-                      <span className="text-sm text-gray-500">
+                      <span className="text-sm text-muted-foreground">
                         {formatDate(review.date)}
                       </span>
                     </div>
@@ -192,7 +192,7 @@ export default function ReviewSection({
                       className="mb-2"
                     />
 
-                    <p className="text-gray-600 leading-relaxed">
+                    <p className="text-muted-foreground leading-relaxed">
                       {review.comment}
                     </p>
                   </div>
@@ -201,8 +201,8 @@ export default function ReviewSection({
             </Card>
           ))
         ) : (
-          <div className="text-center py-12 bg-gray-50 rounded-lg">
-            <p className="text-gray-500 mb-4">
+          <div className="text-center py-12 bg-secondary rounded-lg">
+            <p className="text-muted-foreground mb-4">
               No reviews yet. Be the first to review this product!
             </p>
             <Button onClick={() => setShowForm(true)}>Write a Review</Button>

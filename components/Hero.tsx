@@ -1,136 +1,134 @@
 "use client";
 
-import { useState } from "react";
-import { motion } from "framer-motion";
-import Link from "next/link";
+import dynamic from "next/dynamic";
 import Image from "next/image";
-import { ShoppingBag, MessageCircle } from "lucide-react";
+import Link from "next/link";
+import { useSyncExternalStore } from "react";
+import { useTheme } from "next-themes";
+import { motion, useReducedMotion } from "framer-motion";
+import { MessageCircle } from "lucide-react";
 import { generateGeneralWhatsAppLink } from "@/lib/whatsapp";
+import { DEFAULT_THEME, THEME_META, isThemeName } from "@/lib/themes";
 
-// Shared luxury fade-in-left animation factory
-const fadeLeft = (delay = 0) => ({
-  initial: { opacity: 0, x: -50 },
-  animate: { opacity: 1, x: 0 },
-  transition: {
-    duration: 0.95,
-    ease: [0.25, 0.46, 0.45, 0.94] as [number, number, number, number],
-    delay,
-  },
+// WebGL scene is client-only and never blocks first paint — the headline is the LCP.
+const HeroScene = dynamic(() => import("@/components/three/HeroScene"), {
+  ssr: false,
+  loading: () => null,
 });
 
+const subscribeNoop = () => () => {};
+
+function detectWebGL(): boolean {
+  try {
+    const canvas = document.createElement("canvas");
+    return !!(canvas.getContext("webgl2") || canvas.getContext("webgl"));
+  } catch {
+    return false;
+  }
+}
+
+/** null on the server / first render, then true|false after hydration */
+function useWebGLSupport(): boolean | null {
+  return useSyncExternalStore(subscribeNoop, detectWebGL, () => null);
+}
+
+const ease = [0.22, 1, 0.36, 1] as const;
+
 export default function Hero() {
-  const [imgError, setImgError] = useState(false);
+  const { resolvedTheme } = useTheme();
+  const reduceMotion = useReducedMotion() ?? false;
+  const webgl = useWebGLSupport();
+  const theme = isThemeName(resolvedTheme) ? resolvedTheme : DEFAULT_THEME;
+  const colors = THEME_META[theme].scene;
+
+  const rise = (delay: number) =>
+    reduceMotion
+      ? {}
+      : {
+          initial: { opacity: 0, y: 24 },
+          animate: { opacity: 1, y: 0 },
+          transition: { duration: 0.9, ease, delay },
+        };
 
   return (
-    <section className="relative h-screen w-full overflow-hidden bg-black">
+    <section className="relative overflow-hidden pt-16" aria-labelledby="hero-title">
+      <div className="container-custom grid items-center gap-y-6 pb-14 pt-4 md:min-h-[calc(100svh-4rem)] md:grid-cols-12 md:gap-x-10 md:pb-16 md:pt-0">
+        {/* ── Vanity-mirror arch with the 3D scene ── */}
+        <motion.div
+          className="relative order-1 mx-auto aspect-[4/5] w-full max-w-[340px] md:order-2 md:col-span-6 md:max-w-none md:aspect-[5/6] lg:col-span-6"
+          initial={reduceMotion ? false : { opacity: 0, scale: 0.96 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 1.2, ease }}
+        >
+          <div className="absolute inset-0 overflow-hidden rounded-t-full border border-border bg-secondary">
+            {/* soft light pooling inside the arch */}
+            <div
+              className="absolute inset-0"
+              style={{
+                background:
+                  "radial-gradient(60% 45% at 50% 38%, hsl(var(--rose) / 0.55), transparent 70%), radial-gradient(50% 30% at 50% 100%, hsl(var(--gold) / 0.25), transparent 70%)",
+              }}
+            />
 
-      {/* ── Background Image ── */}
-      {!imgError ? (
-        <Image
-          src="/images/products/hero1.png"
-          alt="AYAN Cosmetics – Dewy Glow Collection"
-          fill
-          priority
-          sizes="100vw"
-          className="object-cover object-center md:object-right-top"
-          onError={() => setImgError(true)}
-        />
-      ) : (
-        <div className="absolute inset-0 bg-gradient-to-br from-[#001a00] via-[#003d00] to-[#00b140]" />
-      )}
+            {webgl === false ? (
+              <Image
+                src="/images/products/hero1.png"
+                alt="Glowing, dewy skin — AYAN Glass Skin Collection"
+                fill
+                priority
+                sizes="(max-width: 768px) 340px, 50vw"
+                className="object-cover object-[70%_center]"
+              />
+            ) : (
+              webgl && <HeroScene colors={colors} still={reduceMotion} />
+            )}
+          </div>
 
-      {/* ── Overlays ── */}
-      {/* Left-heavy gradient so right side (girl's face) stays clear */}
-      <div className="absolute inset-0 bg-gradient-to-r from-black/75 via-black/40 to-black/10 z-10" />
-      {/* Bottom fade */}
-      <div className="absolute bottom-0 left-0 right-0 h-28 bg-gradient-to-t from-black/70 to-transparent z-10" />
+          {/* Mirror rim */}
+          <div className="pointer-events-none absolute -inset-2 rounded-t-full border border-gold/40" aria-hidden="true" />
+        </motion.div>
 
-      {/* ── Content Grid ── */}
-      {/*
-        Desktop: 2-col grid. Text lives in col-1 (left ~45%).
-        Right col is intentionally empty — the girl's face shows there.
-        Mobile: single column, centered.
-      */}
-      <div className="relative z-20 h-full w-full grid grid-cols-1 md:grid-cols-[48%_52%]">
-
-        {/* LEFT COLUMN — Text Block */}
-        <div className="flex flex-col justify-center px-6 sm:px-8 md:pl-8 lg:pl-12
-                        items-center text-center
-                        md:items-start md:text-left">
-
-          {/* Tag line */}
-          <motion.p
-            {...fadeLeft(0.1)}
-            className="text-[#00b140] tracking-[0.35em] text-[10px] sm:text-xs md:text-sm
-                       font-bold uppercase mb-4 md:mb-5"
-          >
-            Karachi&apos;s Premium Beauty Store
+        {/* ── Copy ── */}
+        <div className="order-2 md:order-1 md:col-span-6 lg:col-span-6">
+          <motion.p {...rise(0.15)} className="mb-5 text-sm text-muted-foreground">
+            Glass Skin Collection, now in store
           </motion.p>
 
-          {/* Main headline */}
-          <motion.h1
-            {...fadeLeft(0.3)}
-            className="text-white font-black uppercase leading-[0.88] tracking-tighter
-                       text-[2.4rem] sm:text-6xl md:text-7xl lg:text-[5.5rem]"
+          <h1
+            id="hero-title"
+            className="font-display text-[2.75rem] leading-[0.98] sm:text-6xl lg:text-[5.25rem] text-balance"
           >
-            THE SECRET TO
-            <br />
-            <span className="text-[#00b140]">KARACHI&apos;S</span>
-            <br />
-            BEST DEWY
-            <br />
-            GLOW
-          </motion.h1>
+            <motion.span {...rise(0.25)} className="block">
+              Dewy skin,
+            </motion.span>
+            <motion.span {...rise(0.4)} className="block italic">
+              genuine brands.
+            </motion.span>
+          </h1>
 
-          {/* Sub-headline */}
-          <motion.p
-            {...fadeLeft(0.55)}
-            className="text-gray-300 mt-5 md:mt-6 max-w-xs md:max-w-sm
-                       text-sm sm:text-base md:text-lg italic font-light"
-          >
-            Experience the AYAN Glass Skin Collection.
+          <motion.p {...rise(0.6)} className="mt-6 max-w-[34rem] text-base leading-relaxed text-muted-foreground md:text-lg">
+            Korean serums, everyday makeup and fragrances from our counter in Saima Mall.
+            Same-day dispatch across Karachi, and you pay cash when it arrives.
           </motion.p>
 
-          {/* Buttons — move with text block */}
-          <motion.div
-            {...fadeLeft(0.75)}
-            className="flex flex-col sm:flex-row gap-3 sm:gap-4 mt-8 md:mt-10
-                       w-full sm:w-auto"
-          >
-            <Link href="/shop" className="w-full sm:w-auto">
-              <button
-                className="w-full sm:w-auto flex items-center justify-center gap-2
-                           px-8 py-4 text-sm sm:text-base font-bold rounded-none
-                           bg-black text-white border-2 border-black
-                           hover:bg-[#00b140] hover:border-[#00b140]
-                           transition-colors duration-300"
-              >
-                <ShoppingBag size={17} />
-                Shop Now
-              </button>
+          <motion.div {...rise(0.75)} className="mt-9 flex flex-col gap-3 sm:flex-row">
+            <Link
+              href="/shop"
+              className="inline-flex h-12 items-center justify-center rounded-full bg-primary px-8 text-sm font-medium text-primary-foreground transition-opacity hover:opacity-90"
+            >
+              Shop the collection
             </Link>
-
             <a
               href={generateGeneralWhatsAppLink()}
               target="_blank"
               rel="noopener noreferrer"
-              className="w-full sm:w-auto"
+              className="inline-flex h-12 items-center justify-center gap-2 rounded-full border border-foreground/20 px-8 text-sm font-medium transition-colors hover:border-foreground/50"
             >
-              <button
-                className="w-full sm:w-auto flex items-center justify-center gap-2
-                           px-8 py-4 text-sm sm:text-base font-bold rounded-none
-                           bg-transparent text-white border-2 border-white
-                           hover:bg-white hover:text-black
-                           transition-colors duration-300"
-              >
-                <MessageCircle size={17} />
-                WhatsApp Us
-              </button>
+              <MessageCircle className="h-4 w-4" aria-hidden="true" />
+              Ask us on WhatsApp
             </a>
           </motion.div>
         </div>
-
-        {/* RIGHT COLUMN — intentionally empty, shows the model/girl */}
       </div>
     </section>
   );

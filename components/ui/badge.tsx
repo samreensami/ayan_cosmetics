@@ -20,17 +20,17 @@ const badgeVariants = cva(
           "border-transparent bg-destructive text-destructive-foreground hover:bg-destructive/80",
         outline: "text-foreground",
         // New arrival badge - Green
-        new: "border-transparent bg-primary text-white",
+        new: "border-transparent bg-primary text-primary-foreground",
         // Best seller badge - Gold
-        bestseller: "border-transparent bg-gold text-black",
+        bestseller: "border-transparent bg-gold text-foreground",
         // Category badge
         category:
           "border-primary/30 bg-primary/10 text-primary hover:bg-primary/20",
         // Concern filter badge
         concern:
-          "border-gray-300 bg-gray-100 text-gray-700 hover:bg-gray-200 cursor-pointer",
+          "border-border bg-secondary text-foreground hover:bg-muted cursor-pointer",
         // Sale badge
-        sale: "border-transparent bg-red-500 text-white",
+        sale: "border-transparent bg-destructive text-foreground",
       },
     },
     defaultVariants: {
