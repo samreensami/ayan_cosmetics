@@ -3,15 +3,19 @@ import TrustSignals from "@/components/TrustSignals";
 import CategoryGrid from "@/components/CategoryGrid";
 import FeaturedProducts from "@/components/FeaturedProducts";
 import ShopGallery from "@/components/ShopGallery";
+import RibbonInterlude from "@/components/RibbonInterlude";
+import HomeStage from "@/components/HomeStage";
 
 export default function HomePage() {
   return (
-    <div className="pt-14 bg-green-800">
+    <>
+      <HomeStage />
       <HeroWrapper />
       <TrustSignals />
+      <RibbonInterlude />
       <CategoryGrid />
-      <FeaturedProducts title="Featured Products" limit={8} showViewAll />
+      <FeaturedProducts title="New in and bestsellers" limit={8} showViewAll />
       <ShopGallery />
-    </div>
+    </>
   );
 }

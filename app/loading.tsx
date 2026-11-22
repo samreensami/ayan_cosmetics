@@ -7,7 +7,7 @@
 
 export default function Loading() {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-white">
+    <div className="min-h-screen flex items-center justify-center bg-card">
       <div className="text-center">
         {/* Animated Logo */}
         <div className="mb-6">
@@ -15,7 +15,7 @@ export default function Loading() {
             <span className="text-3xl font-bold text-primary animate-pulse">
               AYAN
             </span>
-            <span className="text-xs tracking-[0.3em] text-gray-400">
+            <span className="text-xs text-muted-foreground">
               COSMETICS
             </span>
           </div>
@@ -28,7 +28,7 @@ export default function Loading() {
         </div>
 
         {/* Loading Text */}
-        <p className="mt-4 text-gray-500 text-sm">Loading...</p>
+        <p className="mt-4 text-muted-foreground text-sm">Loading...</p>
       </div>
     </div>
   );

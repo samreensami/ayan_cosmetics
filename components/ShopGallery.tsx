@@ -1,170 +1,191 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import Image from "next/image";
-import { X, ChevronLeft, ChevronRight } from "lucide-react";
-import { motion } from "framer-motion";
+import Link from "next/link";
+import { X, ChevronLeft, ChevronRight, MapPin } from "lucide-react";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import LabelHeading from "@/components/LabelHeading";
 
+// In-store photos of the vanity cases on display (all 4:3, so cards use 4:3 — no cropping).
 const galleryImages = [
   {
     src: "/images/products/box1.png",
-    alt: "Shop Interior",
-    caption: "Experience the vibrant and welcoming atmosphere of our main shop, where beauty meets elegance",
+    alt: "Holographic rose-gold vanity case on display at AYAN Cosmetics",
+    caption: "Holographic vanity case",
   },
   {
     src: "/images/products/box2.jpg",
-    alt: "Makeup Display",
-    caption: "A wide range of beauty products for every need",
+    alt: "Clear acrylic vanity case with silver trim at AYAN Cosmetics",
+    caption: "Clear acrylic vanity case",
   },
   {
     src: "/images/products/box3.jpg",
-    alt: "Fragrance Display",
-    caption: "Exclusive fragrances for every occasion",
+    alt: "Classic brown vanity case with silver lock at AYAN Cosmetics",
+    caption: "Classic brown vanity case",
   },
   {
     src: "/images/products/box4.jpg",
-    alt: "Makeup Display",
-    caption: "Organized and elegant storage solutions",
+    alt: "Red diamond-pattern vanity case with combination lock at AYAN Cosmetics",
+    caption: "Red diamond vanity case",
   },
 ];
+
+const MAPS_URL =
+  "https://www.google.com/maps/search/?api=1&query=Saima+Shopping+Mall+Rashid+Minhas+Road+Karachi";
 
 export default function ShopGallery() {
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const reduceMotion = useReducedMotion();
 
   const openLightbox = (index: number) => {
     setCurrentIndex(index);
     setLightboxOpen(true);
+  };
+
+  const closeLightbox = useCallback(() => setLightboxOpen(false), []);
+
+  const navigate = useCallback((direction: "next" | "prev") => {
+    setCurrentIndex((prev) =>
+      direction === "next"
+        ? (prev + 1) % galleryImages.length
+        : (prev - 1 + galleryImages.length) % galleryImages.length
+    );
+  }, []);
+
+  // Lock page scroll + keyboard controls while the lightbox is open.
+  useEffect(() => {
+    if (!lightboxOpen) return;
+    const previous = document.body.style.overflow;
     document.body.style.overflow = "hidden";
-  };
-
-  const closeLightbox = () => {
-    setLightboxOpen(false);
-    document.body.style.overflow = "auto";
-  };
-
-  const navigate = (direction: "next" | "prev") => {
-    if (direction === "next") {
-      setCurrentIndex((prev) => (prev + 1) % galleryImages.length);
-    } else {
-      setCurrentIndex((prev) => (prev - 1 + galleryImages.length) % galleryImages.length);
-    }
-  };
-
-  React.useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (!lightboxOpen) return;
+    const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") closeLightbox();
       if (e.key === "ArrowRight") navigate("next");
       if (e.key === "ArrowLeft") navigate("prev");
     };
+    window.addEventListener("keydown", onKey);
+    return () => {
+      document.body.style.overflow = previous;
+      window.removeEventListener("keydown", onKey);
+    };
+  }, [lightboxOpen, closeLightbox, navigate]);
 
-    window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [lightboxOpen]);
+  const current = galleryImages[currentIndex];
 
   return (
-    <section className="py-24 relative overflow-hidden bg-black">
-      {/* Background Decoration */}
-      <div className="absolute top-0 left-0 w-full h-full opacity-10 pointer-events-none">
-         <Image src="/images/products/shopbg.png" fill className="object-cover" alt="bg" />
+    <section className="relative py-16 md:py-24" aria-labelledby="visit-title">
+      {/* 3D stage anchor with fill 0: products bow out before the gallery */}
+      <div className="pointer-events-none absolute left-1/2 top-0 h-40 w-40" data-stage="gallery" data-stage-set="perfume" data-stage-fill="0" data-stage-rot="8.2" aria-hidden="true" />
+      <div className="container-custom">
+        <div className="mb-8 grid gap-6 md:mb-12 md:grid-cols-2 md:items-end">
+          <div>
+            <LabelHeading id="visit-title" tilt={-1}>
+              Come see us in Saima Mall
+            </LabelHeading>
+          </div>
+          <div className="text-sm leading-relaxed text-muted-foreground md:text-right">
+            <p>Shop G-16, Saima Shopping Mall, Main Rashid Minhas Road, Karachi</p>
+            <a
+              href={MAPS_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-2 inline-flex items-center gap-1.5 text-foreground underline underline-offset-4 hover:text-primary"
+            >
+              <MapPin className="h-4 w-4" aria-hidden="true" />
+              Get directions
+            </a>
+          </div>
+        </div>
+
+        {/* Four equal 4:3 cards — matches the photos exactly, so nothing is cropped or blown up */}
+        <ul className="grid grid-cols-2 gap-3 md:gap-5 lg:grid-cols-4">
+          {galleryImages.map((image, index) => (
+            <li key={image.src}>
+              <button
+                type="button"
+                onClick={() => openLightbox(index)}
+                aria-label={`Open photo: ${image.caption}`}
+                className="group block w-full rounded-2xl bg-card p-2 text-left shadow-soft transition-transform duration-500 hover:-translate-y-1"
+              >
+                <div className="relative aspect-[4/3] overflow-hidden rounded-xl bg-secondary">
+                  <Image
+                    src={image.src}
+                    alt={image.alt}
+                    fill
+                    sizes="(max-width: 1024px) 50vw, 25vw"
+                    className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]"
+                  />
+                </div>
+                <p className="px-2 pb-1.5 pt-3 text-sm font-medium">{image.caption}</p>
+              </button>
+            </li>
+          ))}
+        </ul>
+
+        <div className="mt-8 flex justify-center">
+          <Link
+            href="/deals"
+            className="inline-flex h-11 items-center rounded-full border border-foreground/20 px-7 text-sm font-medium transition-colors hover:border-foreground/50"
+          >
+            See all beauty boxes
+          </Link>
+        </div>
       </div>
 
-      <div className="container-custom relative z-10">
-        <div className="mb-16 border-l-8 border-[#529538] pl-8">
-          {/* Left to Right Animation for Heading */}
+      {/* Lightbox */}
+      <AnimatePresence>
+        {lightboxOpen && (
           <motion.div
-            initial={{ opacity: 0, x: -100 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
+            role="dialog"
+            aria-modal="true"
+            aria-label={current.caption}
+            className="fixed inset-0 z-[100] flex items-center justify-center bg-black/90 p-4"
+            onClick={closeLightbox}
+            initial={reduceMotion ? false : { opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
           >
-            <h2 className="text-5xl md:text-7xl font-black uppercase tracking-tighter text-white mb-4">
-              Visit Our <span className="text-[#529538]">Shop</span>
-            </h2>
-            <p className="text-gray-400 uppercase tracking-widest text-sm max-w-2xl">
-              Shop No- G-16 Saima shopping mall main Rashid Minhas Road Karachi
-            </p>
+            <button
+              type="button"
+              onClick={closeLightbox}
+              aria-label="Close photo"
+              className="absolute right-4 top-4 rounded-full p-2 text-white/80 hover:text-white md:right-8 md:top-8"
+            >
+              <X size={28} strokeWidth={1.5} />
+            </button>
+            <button
+              type="button"
+              onClick={(e) => {
+                e.stopPropagation();
+                navigate("prev");
+              }}
+              aria-label="Previous photo"
+              className="absolute left-2 rounded-full p-2 text-white/80 hover:text-white md:left-8"
+            >
+              <ChevronLeft size={36} strokeWidth={1.5} />
+            </button>
+            <button
+              type="button"
+              onClick={(e) => {
+                e.stopPropagation();
+                navigate("next");
+              }}
+              aria-label="Next photo"
+              className="absolute right-2 rounded-full p-2 text-white/80 hover:text-white md:right-8"
+            >
+              <ChevronRight size={36} strokeWidth={1.5} />
+            </button>
+
+            <figure className="w-full max-w-5xl" onClick={(e) => e.stopPropagation()}>
+              <div className="relative aspect-[16/10] overflow-hidden rounded-xl">
+                <Image src={current.src} alt={current.alt} fill sizes="100vw" className="object-contain" />
+              </div>
+              <figcaption className="mt-4 text-center font-display text-xl text-white">{current.caption}</figcaption>
+            </figure>
           </motion.div>
-        </div>
-
-        {/* Gallery Grid */}
-<div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-6">
-  {galleryImages.map((image, index) => (
-    <motion.button
-      key={index}
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ delay: index * 0.1 }}
-      onClick={() => openLightbox(index)}
-      // Border color yahan change kar di hai: border-[#529538]/30
-      className="group relative aspect-[4/5] overflow-hidden border border-[#529538]/30 bg-zinc-900 shadow-2xl transition-all duration-500 hover:border-[#529538]"
-    >
-      <Image
-        src={image.src}
-        alt={image.alt}
-        fill
-        // 'grayscale' class hata di hai taake colors nazar ayein
-        className="object-cover transition-transform duration-700 group-hover:scale-110"
-        sizes="(max-width: 768px) 100vw, 25vw"
-      />
-
-      {/* View Space Button Overlay */}
-      <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-all flex items-center justify-center backdrop-blur-[2px]">
-        <span className="text-white font-black uppercase tracking-widest border border-[#529538] bg-[#529538]/20 px-6 py-2">
-          View Space
-        </span>
-      </div>
-
-      <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 p-6 transform translate-y-2 group-hover:translate-y-0 transition-transform">
-        <p className="text-white text-xs font-bold uppercase tracking-wider leading-relaxed">
-          {image.caption}
-        </p>
-      </div>
-    </motion.button>
-  ))}
-</div>
-      </div>
-
-      {/* Lightbox - Luxury Mode */}
-      {lightboxOpen && (
-        <div className="fixed inset-0 z-[100] bg-black/98 flex items-center justify-center p-4" onClick={closeLightbox}>
-          <button onClick={closeLightbox} className="absolute top-8 right-8 text-white hover:text-[#529538] transition-colors z-[110]">
-            <X size={48} strokeWidth={1} />
-          </button>
-
-          <button onClick={(e) => { e.stopPropagation(); navigate("prev"); }} className="absolute left-8 text-white hover:text-[#529538] transition-colors hidden md:block">
-            <ChevronLeft size={64} strokeWidth={1} />
-          </button>
-
-          <button onClick={(e) => { e.stopPropagation(); navigate("next"); }} className="absolute right-8 text-white hover:text-[#529538] transition-colors hidden md:block">
-            <ChevronRight size={64} strokeWidth={1} />
-          </button>
-
-          <motion.div 
-            initial={{ scale: 0.9, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            className="max-w-6xl w-full relative" 
-            onClick={(e) => e.stopPropagation()}
-          >
-            <div className="relative aspect-video md:aspect-[16/9] overflow-hidden rounded-sm border border-white/10">
-                <Image
-                src={galleryImages[currentIndex].src}
-                alt={galleryImages[currentIndex].alt}
-                fill
-                className="object-contain"
-                />
-            </div>
-            <div className="mt-8 text-center">
-                <p className="text-[#529538] font-black uppercase tracking-[0.4em] text-sm mb-2">Ayan Store Karachi</p>
-                <p className="text-white text-2xl font-light tracking-wide max-w-3xl mx-auto italic">
-                "{galleryImages[currentIndex].caption}"
-                </p>
-            </div>
-          </motion.div>
-        </div>
-      )}
+        )}
+      </AnimatePresence>
     </section>
   );
 }

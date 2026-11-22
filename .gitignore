@@ -42,3 +42,7 @@ next-env.d.ts
 
 # OS
 Thumbs.db
+
+# Build output at any depth + editor/agent folders
+**/.next/
+.sixth/

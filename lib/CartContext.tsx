@@ -31,6 +31,9 @@ export function CartProvider({ children }: { children: ReactNode }) {
     try {
       const saved = localStorage.getItem("ayan-cart");
       if (saved) {
+        // Hydrate from localStorage after mount (server render has no storage, so this
+        // can't be a lazy initializer without a hydration mismatch).
+        // eslint-disable-next-line react-hooks/set-state-in-effect
         setItems(JSON.parse(saved));
       }
     } catch {

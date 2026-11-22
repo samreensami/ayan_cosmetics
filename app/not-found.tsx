@@ -11,7 +11,7 @@ import { Home, ShoppingBag } from "lucide-react";
 
 export default function NotFound() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-primary/5 via-white to-gold/5 flex items-center justify-center px-4">
+    <div className="min-h-screen bg-gradient-to-br from-primary/5 via-background to-gold/5 flex items-center justify-center px-4">
       <div className="text-center max-w-md">
         {/* 404 Number */}
         <h1 className="text-8xl md:text-9xl font-bold text-primary/20 mb-4">
@@ -19,10 +19,10 @@ export default function NotFound() {
         </h1>
 
         {/* Message */}
-        <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4">
+        <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-4">
           Page Not Found
         </h2>
-        <p className="text-gray-600 mb-8">
+        <p className="text-muted-foreground mb-8">
           Oops! The page you&apos;re looking for doesn&apos;t exist. It might have been
           moved or deleted.
         </p>

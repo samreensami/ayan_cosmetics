@@ -4,179 +4,132 @@ import Image from "next/image";
 import { Instagram, Phone, MapPin, MessageCircle, Mail } from "lucide-react";
 import { SHOP_CONTACT } from "@/lib/whatsapp";
 
-/**
- * Footer Component for AYAN Cosmetics
- */
-
 const footerLinks = {
   shop: [
-    { href: "/shop", label: "All Products" },
-    { href: "/shop?category=Lipstick", label: "Lipstick" },
-    { href: "/shop?category=Foundation", label: "Foundation" },
+    { href: "/shop", label: "All products" },
+    { href: "/shop?category=Makeup", label: "Makeup" },
     { href: "/shop?category=Skincare", label: "Skincare" },
-    { href: "/shop?category=Perfume", label: "Perfumes" },
-    { href: "/shop?category=Cosmetic+Bags", label: "Cosmetic Bags" },
+    { href: "/shop?category=Perfumes", label: "Perfumes" },
+    { href: "/shop?category=Hair%20Care", label: "Hair care" },
+    { href: "/shop?category=Bundles", label: "Beauty boxes" },
   ],
-  support: [
-    { href: "/about", label: "About Us" },
+  concerns: [
+    { href: "/shop?concern=Glass%20Skin%20Glow", label: "Glass skin glow" },
+    { href: "/shop?concern=Acne%20Prone", label: "Acne-prone skin" },
+    { href: "/shop?concern=Dark%20Spots", label: "Dark spots" },
+    { href: "/shop?concern=Dry%20Skin", label: "Dry skin" },
+  ],
+  help: [
+    { href: "/deals", label: "Deals" },
+    { href: "/about", label: "About us" },
     { href: "/contact", label: "Contact" },
-    { href: "/shop", label: "Shop by Concern" },
   ],
 };
 
-export default function Footer() {
+function LinkColumn({ title, links }: { title: string; links: { href: string; label: string }[] }) {
   return (
-    <footer className="bg-gray-900 text-white">
-      {/* Trust Signals Bar */}
-      <div className="bg-primary py-4">
-        <div className="container-custom">
-          <div className="flex flex-wrap justify-center gap-6 md:gap-12 text-sm font-medium text-white">
-            <div className="flex items-center gap-2">
-              <span className="text-gold">✓</span>
-              Cash on Delivery Available
-            </div>
-            <div className="flex items-center gap-2">
-              <span className="text-gold">✓</span>
-              100% Genuine Products
-            </div>
-            <div className="flex items-center gap-2">
-              <span className="text-gold">✓</span>
-              Fast Delivery in Karachi
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Main Footer Content */}
-      <div className="container-custom py-12 md:py-16">
-        <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
-          {/* Brand Column */}
-          <div className="lg:col-span-1">
-            <Link href="/" className="inline-block mb-4">
-              <Image
-                src="/images/products/logo.png"
-                alt="AYAN Cosmetics"
-                width={140}
-                height={50}
-                className="h-12 w-auto brightness-0 invert"
-              />
+    <div>
+      <h3 className="mb-4 font-sans text-sm font-medium">{title}</h3>
+      <ul className="space-y-2.5">
+        {links.map((link) => (
+          <li key={link.href}>
+            <Link href={link.href} className="text-sm text-muted-foreground transition-colors hover:text-foreground">
+              {link.label}
             </Link>
-            <p className="text-gray-400 text-sm mb-4 leading-relaxed">
-              Your trusted destination for genuine cosmetics, fragrances, and
-              beauty accessories in Karachi.
-            </p>
-            {/* Contact Info */}
-            <div className="space-y-3">
-              <a
-                href={`tel:${SHOP_CONTACT.phone}`}
-                className="flex items-center gap-3 text-gray-400 hover:text-primary transition-colors"
-              >
-                <Phone className="h-4 w-4" />
-                <span className="text-sm">{SHOP_CONTACT.phone}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+export default function Footer() {
+  const year = new Date().getFullYear();
+
+  return (
+    <footer className="mt-8 border-t border-border bg-secondary/50">
+      <div className="container-custom grid gap-10 py-14 md:grid-cols-12 md:py-20">
+        {/* Brand */}
+        <div className="md:col-span-4">
+          <Link href="/" className="inline-flex items-center gap-2.5" aria-label="AYAN Cosmetics home">
+            <span className="flex items-center rounded-full px-1.5 py-0.5 dark:bg-[#FBF8F3]">
+              <Image src="/images/products/logo.png" alt="" width={110} height={42} className="h-9 w-auto" />
+            </span>
+            <span className="font-display text-2xl">AYAN <span className="italic">Cosmetics</span></span>
+          </Link>
+          <p className="mt-4 max-w-xs text-sm leading-relaxed text-muted-foreground">
+            Genuine cosmetics, skincare and fragrances from our shop in Saima Mall, Karachi.
+          </p>
+
+          <ul className="mt-6 space-y-3 text-sm">
+            <li>
+              <a href={`tel:${SHOP_CONTACT.phone}`} className="inline-flex items-center gap-3 hover:text-primary">
+                <Phone className="h-4 w-4 text-muted-foreground" aria-hidden="true" />
+                {SHOP_CONTACT.phone}
               </a>
+            </li>
+            <li>
               <a
                 href={`https://wa.me/${SHOP_CONTACT.whatsapp}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-3 text-gray-400 hover:text-[#25D366] transition-colors"
+                className="inline-flex items-center gap-3 hover:text-primary"
               >
-                <MessageCircle className="h-4 w-4" />
-                <span className="text-sm">WhatsApp</span>
+                <MessageCircle className="h-4 w-4 text-muted-foreground" aria-hidden="true" />
+                WhatsApp us
               </a>
+            </li>
+            <li>
               <a
                 href="https://instagram.com/AYANCOSMETICS.OFFICIAL"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-3 text-gray-400 hover:text-pink-500 transition-colors"
+                className="inline-flex items-center gap-3 hover:text-primary"
               >
-                <Instagram className="h-4 w-4" />
-                <span className="text-sm">{SHOP_CONTACT.instagram}</span>
+                <Instagram className="h-4 w-4 text-muted-foreground" aria-hidden="true" />
+                {SHOP_CONTACT.instagram}
               </a>
-            </div>
-          </div>
+            </li>
+          </ul>
+        </div>
 
-          {/* Shop Links */}
-          <div>
-            <h3 className="text-lg font-semibold mb-4 text-white">Shop</h3>
-            <ul className="space-y-2">
-              {footerLinks.shop.map((link) => (
-                <li key={link.href}>
-                  <Link
-                    href={link.href}
-                    className="text-gray-400 hover:text-primary transition-colors text-sm"
-                  >
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
+        <div className="grid grid-cols-2 gap-8 sm:grid-cols-3 md:col-span-5">
+          <LinkColumn title="Shop" links={footerLinks.shop} />
+          <LinkColumn title="Shop by concern" links={footerLinks.concerns} />
+          <LinkColumn title="Help" links={footerLinks.help} />
+        </div>
 
-          {/* Support Links */}
-          <div>
-            <h3 className="text-lg font-semibold mb-4 text-white">Support</h3>
-            <ul className="space-y-2">
-              {footerLinks.support.map((link) => (
-                <li key={link.href}>
-                  <Link
-                    href={link.href}
-                    className="text-gray-400 hover:text-primary transition-colors text-sm"
-                  >
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Location */}
-          <div>
-            <h3 className="text-lg font-semibold mb-4 text-white">Visit Us</h3>
-            <div className="flex items-start gap-3 text-gray-400">
-              <MapPin className="h-5 w-5 mt-0.5 flex-shrink-0 text-primary" />
-              <div className="text-sm leading-relaxed">
-                <p className="font-medium text-white">New AYAN Cosmetics</p>
-                <p>Shop No. G-16, Saima Shopping Mall,</p>
-                <p>Main Rashid Minhas Road,</p>
-                <p>Karachi, Pakistan</p>
-              </div>
-            </div>
-          </div>
+        <div className="md:col-span-3">
+          <h3 className="mb-4 font-sans text-sm font-medium">Visit the shop</h3>
+          <address className="flex items-start gap-3 text-sm not-italic leading-relaxed text-muted-foreground">
+            <MapPin className="mt-0.5 h-4 w-4 shrink-0" aria-hidden="true" />
+            <span>
+              <span className="block text-foreground">New AYAN Cosmetics</span>
+              Shop No. G-16, Saima Shopping Mall,
+              <br />
+              Main Rashid Minhas Road, Karachi
+            </span>
+          </address>
         </div>
       </div>
 
-      {/* Disclaimer & Copyright */}
-      <div className="border-t border-gray-800 bg-gray-950/50">
-        <div className="container-custom py-6">
-          {/* Disclaimer */}
-          <p className="text-xs text-gray-500 text-center mb-4 leading-relaxed max-w-3xl mx-auto">
-            We are an independent retailer based in Saima Mall, Karachi. All
-            brand names, trademarks, and images belong to their respective
-            owners. We sell genuine products.
+      <div className="border-t border-border">
+        <div className="container-custom space-y-4 py-6 text-xs text-muted-foreground">
+          <p className="max-w-3xl leading-relaxed">
+            We are an independent retailer based in Saima Mall, Karachi. All brand names, trademarks and
+            images belong to their respective owners. We sell genuine products.
           </p>
-
-          {/* Copyright & Developer Signature */}
-          <div className="flex flex-col md:flex-row items-center justify-between gap-4 border-t border-gray-900 pt-4">
-            <p className="text-sm text-gray-500">
-              © {new Date().getFullYear()} AYAN Cosmetics. All rights reserved.
-            </p>
-            
-            {/* Developer Credit Line */}
-            <div className="flex items-center gap-2 text-xs text-gray-400 bg-gray-900/60 px-4 py-2 rounded-full border border-gray-800">
-              <span>Built by Samreen Sami</span>
-              <span className="text-gray-600">|</span>
-              <a 
-                href="mailto:samreen.sami84@gmail.com" 
-                className="flex items-center gap-1 hover:text-primary transition-colors"
-                title="Contact Developer"
+          <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+            <p>© {year} AYAN Cosmetics. Owner: Rehan Khan, {SHOP_CONTACT.phone}</p>
+            <p className="inline-flex items-center gap-2">
+              Built by Samreen Sami
+              <a
+                href="mailto:samreen.sami84@gmail.com"
+                className="inline-flex items-center gap-1 underline underline-offset-4 hover:text-foreground"
               >
-                <Mail className="h-3 w-3" />
+                <Mail className="h-3 w-3" aria-hidden="true" />
                 samreen.sami84@gmail.com
               </a>
-            </div>
-
-            <p className="text-sm text-gray-500">
-              Owner: Rehan Khan — {SHOP_CONTACT.phone}
             </p>
           </div>
         </div>

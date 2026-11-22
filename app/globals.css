@@ -2,112 +2,208 @@
 @tailwind components;
 @tailwind utilities;
 
+/*
+ * AYAN Cosmetics theme tokens.
+ * Five themes, switched by next-themes via a class on <html>:
+ *   midnight (default, dark rose) · ivory · noir · rose · emerald
+ * Every colour in the UI comes from these variables — never hardcode bg-white/text-black.
+ * Product photos and shade swatches are NEVER tinted by theme.
+ */
+/* Theme tokens are deliberately outside @layer so Tailwind never purges them. */
+:root,
+.ivory {
+  --background: 38 50% 97%;
+  --foreground: 26 13% 10%;
+  --card: 0 0% 100%;
+  --card-foreground: 26 13% 10%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 26 13% 10%;
+  --primary: 155 79% 20%;
+  --primary-foreground: 0 0% 100%;
+  --secondary: 37 35% 93%;
+  --secondary-foreground: 26 13% 10%;
+  --muted: 37 35% 93%;
+  --muted-foreground: 32 8% 39%;
+  --accent: 38 44% 89%;
+  --accent-foreground: 26 13% 10%;
+  --gold: 38 39% 47%;
+  --rose: 6 47% 83%;
+  --sage: 135 17% 66%;
+  --border: 37 26% 87%;
+  --input: 37 26% 87%;
+  --ring: 155 79% 20%;
+  color-scheme: light;
+}
+
+.midnight {
+  --background: 320 18% 7%;
+  --foreground: 342 36% 95%;
+  --card: 322 15% 10%;
+  --card-foreground: 342 36% 95%;
+  --popover: 322 15% 10%;
+  --popover-foreground: 342 36% 95%;
+  --primary: 348 61% 77%;
+  --primary-foreground: 342 45% 11%;
+  --secondary: 327 18% 12%;
+  --secondary-foreground: 342 36% 95%;
+  --muted: 327 18% 12%;
+  --muted-foreground: 337 13% 68%;
+  --accent: 330 18% 15%;
+  --accent-foreground: 342 36% 95%;
+  --gold: 34 53% 68%;
+  --rose: 345 31% 42%;
+  --sage: 140 15% 34%;
+  --border: 330 16% 17%;
+  --input: 330 16% 17%;
+  --ring: 348 61% 77%;
+  color-scheme: dark;
+}
+
+.noir {
+  --background: 30 7% 5%;
+  --foreground: 37 35% 93%;
+  --card: 30 9% 9%;
+  --card-foreground: 37 35% 93%;
+  --popover: 30 9% 9%;
+  --popover-foreground: 37 35% 93%;
+  --primary: 39 52% 69%;
+  --primary-foreground: 34 18% 8%;
+  --secondary: 30 10% 11%;
+  --secondary-foreground: 37 35% 93%;
+  --muted: 30 10% 11%;
+  --muted-foreground: 39 7% 61%;
+  --accent: 30 14% 15%;
+  --accent-foreground: 37 35% 93%;
+  --gold: 39 52% 69%;
+  --rose: 357 22% 34%;
+  --sage: 136 12% 49%;
+  --border: 30 10% 16%;
+  --input: 30 10% 16%;
+  --ring: 39 52% 69%;
+  color-scheme: dark;
+}
+
+.rose {
+  --background: 10 60% 96%;
+  --foreground: 352 24% 13%;
+  --card: 0 0% 100%;
+  --card-foreground: 352 24% 13%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 352 24% 13%;
+  --primary: 352 33% 46%;
+  --primary-foreground: 0 0% 100%;
+  --secondary: 9 50% 92%;
+  --secondary-foreground: 352 24% 13%;
+  --muted: 9 50% 92%;
+  --muted-foreground: 350 11% 43%;
+  --accent: 10 44% 89%;
+  --accent-foreground: 352 24% 13%;
+  --gold: 38 39% 47%;
+  --rose: 6 47% 83%;
+  --sage: 136 14% 66%;
+  --border: 9 43% 88%;
+  --input: 9 43% 88%;
+  --ring: 352 33% 46%;
+  color-scheme: light;
+}
+
+.emerald {
+  --background: 162 69% 14%;
+  --foreground: 42 39% 94%;
+  --card: 163 65% 17%;
+  --card-foreground: 42 39% 94%;
+  --popover: 163 65% 17%;
+  --popover-foreground: 42 39% 94%;
+  --primary: 43 67% 70%;
+  --primary-foreground: 161 61% 11%;
+  --secondary: 162 66% 16%;
+  --secondary-foreground: 42 39% 94%;
+  --muted: 162 66% 16%;
+  --muted-foreground: 144 15% 75%;
+  --accent: 162 61% 20%;
+  --accent-foreground: 42 39% 94%;
+  --gold: 43 67% 70%;
+  --rose: 356 24% 39%;
+  --sage: 143 34% 67%;
+  --border: 161 50% 24%;
+  --input: 161 50% 24%;
+  --ring: 43 67% 70%;
+  color-scheme: dark;
+}
+
+:root {
+  --radius: 0.875rem;
+  /* Fixed header = announcement bar (2rem) + nav (4rem). Pages pad their top with .pt-header */
+  --header-h: 6rem;
+}
+
 @layer base {
-  :root {
-    --background: 0 0% 100%;
-    --foreground: 0 0% 5%;
-    --card: 0 0% 100%;
-    --card-foreground: 0 0% 5%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 5%;
-    --primary: 145 100% 35%;
-    --primary-foreground: 0 0% 100%;
-    --secondary: 0 0% 96%;
-    --secondary-foreground: 0 0% 5%;
-    --muted: 0 0% 96%;
-    --muted-foreground: 0 0% 45%;
-    --accent: 48 100% 50%;
-    --accent-foreground: 0 0% 5%;
-    --destructive: 0 85% 50%;
-    --destructive-foreground: 0 0% 100%;
-    --border: 0 0% 90%;
-    --input: 0 0% 90%;
-    --ring: 145 100% 35%;
-    --radius: 0.75rem;
-  }
 
   * {
     @apply border-border;
   }
 
-  body {
-    @apply bg-background text-foreground antialiased;
-  }
-
   html {
     scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-feature-settings: "kern", "liga";
+    transition: background-color 0.4s ease, color 0.4s ease;
+  }
+
+  h1, h2 {
+    @apply font-display;
+    font-optical-sizing: auto;
+    letter-spacing: -0.01em;
+  }
+
+  ::selection {
+    background: hsl(var(--primary) / 0.25);
+  }
+
+  *:focus-visible {
+    @apply outline-none ring-2 ring-ring ring-offset-2 ring-offset-background;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
   }
 }
 
 @layer components {
-  .glass-card {
-    @apply bg-white/80 backdrop-blur-xl border border-white/30 rounded-2xl shadow-xl;
+  /* Neutral frame for product imagery & shade swatches — identical in every theme */
+  .product-frame {
+    background-color: #f4f1ec;
   }
 
-  /* Light inviting green gradient for Hero background */
-  .hero-gradient-light {
-    background: linear-gradient(
-      135deg,
-      #626563 0%,
-      #7ff4ac 25%,
-      #86ac99 50%,
-      #c4f09e 75%,
-      #62e894 100%
-    );
+  .swatch-ring {
+    box-shadow: 0 0 0 1px #e6dfd4;
   }
 
-  /* AYAN Logo Text - Red with Gold Glow (matching visiting card) */
-  .ayan-logo-text {
-    color: #DC2626;
-    text-shadow:
-      0 0 10px rgba(255, 215, 0, 1),
-      0 0 20px rgba(255, 215, 0, 0.9),
-      0 0 30px rgba(255, 215, 0, 0.7),
-      0 0 40px rgba(255, 215, 0, 0.5),
-      0 0 50px rgba(255, 215, 0, 0.3),
-      2px 2px 4px rgba(0, 0, 0, 0.3);
-    filter: drop-shadow(0 0 15px rgba(255, 215, 0, 0.6));
+  /* Small eyebrow-free section heading pattern */
+  .section-title {
+    @apply font-display text-3xl md:text-5xl leading-[1.05] text-foreground;
   }
 
-  .gold-shimmer {
-    background: linear-gradient(90deg, #ffd700, #fff9c4, #ffd700);
-    background-size: 200% 100%;
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-    animation: shimmer 3s linear infinite;
-  }
-
-  .product-card {
-    @apply transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl rounded-2xl overflow-hidden;
-  }
-
-  .section-heading {
-    @apply relative inline-block pb-3;
-  }
-
-  .section-heading::after {
-    content: "";
-    @apply absolute bottom-0 left-1/2 -translate-x-1/2 w-16 h-1 bg-primary rounded-full;
-  }
-
-  .whatsapp-pulse {
-    animation: pulse-glow 2s ease-in-out infinite;
-  }
-
-  /* Navbar with vibrant green background */
-  .navbar-green {
-    background-color: #00b140;
+  .hairline {
+    @apply h-px w-full bg-border;
   }
 }
 
 @layer utilities {
-  .container-custom {
-    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  .pt-header {
+    padding-top: var(--header-h);
   }
 
-  .text-gradient {
-    @apply bg-gradient-to-r from-primary via-green-500 to-primary bg-clip-text text-transparent;
+  .container-custom {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
   }
 
   .no-scrollbar {
@@ -118,37 +214,8 @@
   .no-scrollbar::-webkit-scrollbar {
     display: none;
   }
-}
 
-@keyframes slideRight {
-  0%   { opacity: 0; transform: translateX(80px); }
-  100% { opacity: 1; transform: translateX(0); }
-}
-
-@keyframes slideLeft {
-  0%   { opacity: 0; transform: translateX(-80px); }
-  100% { opacity: 1; transform: translateX(0); }
-}
-
-@keyframes fadeIn {
-  0%   { opacity: 0; }
-  100% { opacity: 1; }
-}
-
-@keyframes shimmer {
-  0% { background-position: -200% 0; }
-  100% { background-position: 200% 0; }
-}
-
-@keyframes pulse-glow {
-  0%, 100% { box-shadow: 0 0 15px rgba(0, 177, 64, 0.5); }
-  50% { box-shadow: 0 0 30px rgba(0, 177, 64, 0.8); }
-}
-
-::selection {
-  @apply bg-primary/30;
-}
-
-*:focus-visible {
-  @apply outline-none ring-2 ring-primary ring-offset-2;
+  .text-balance {
+    text-wrap: balance;
+  }
 }

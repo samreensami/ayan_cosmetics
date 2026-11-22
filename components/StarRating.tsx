@@ -33,8 +33,8 @@ export default function StarRating({
               sizeClasses[size],
               "transition-colors duration-200",
               star <= rating
-                ? "text-[#529538] fill-[#529538]"
-                : "text-gray-300 fill-gray-300"
+                ? "text-primary fill-primary"
+                : "text-muted-foreground fill-secondary"
             )}
           />
         ))}
@@ -42,10 +42,10 @@ export default function StarRating({
       
       {/* FIXED: Logic to show rating and review count if needed */}
       {(showCount || reviewCount !== undefined) && (
-        <div className="ml-2 flex items-center gap-2 text-sm text-gray-500">
+        <div className="ml-2 flex items-center gap-2 text-sm text-muted-foreground">
           {showCount && <span>{rating.toFixed(1)}/5</span>}
           {reviewCount !== undefined && (
-            <span className="border-l border-gray-300 pl-2">
+            <span className="border-l border-border pl-2">
               {reviewCount} Reviews
             </span>
           )}
@@ -90,8 +90,8 @@ export function InteractiveStarRating({
                 sizeClasses[size],
                 "transition-all duration-300",
                 isActive
-                  ? "text-[#529538] fill-[#529538] drop-shadow-[0_0_8px_rgba(82,149,56,0.5)]"
-                  : "text-zinc-700 fill-zinc-900 hover:text-[#529538]/50"
+                  ? "text-gold fill-gold"
+                  : "text-foreground fill-background hover:text-primary/50"
               )}
             />
           </button>

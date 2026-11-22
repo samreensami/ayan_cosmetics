@@ -1,101 +1,85 @@
-"use client";
-
-import React from "react";
 import Link from "next/link";
-import { motion } from "framer-motion";
-import {
-  Heart, Droplets, Sparkles, SprayCan,
-  Eye, ShoppingBag, Layers, Scissors,
-} from "lucide-react";
+import { products, type Product } from "@/lib/products";
+import LabelHeading from "@/components/LabelHeading";
+import ProductMedia from "@/components/ProductMedia";
+import { mediaFitFor } from "@/lib/media";
+import { cn } from "@/lib/utils";
 
-const categories = [
-  { name: "Lipstick",       slug: "Lipstick",       icon: Heart       },
-  { name: "Foundation",     slug: "Foundation",     icon: Droplets    },
-  { name: "Skincare",       slug: "Skincare",       icon: Sparkles    },
-  { name: "Perfumes",       slug: "Perfume",        icon: SprayCan    },
-  { name: "Eye Makeup",     slug: "Eyeshadow",      icon: Eye         },
-  { name: "Cosmetic Bags",  slug: "Cosmetic+Bags",  icon: ShoppingBag },
-  { name: "Mascara",        slug: "Mascara",        icon: Layers      },
-  { name: "Haircare",       slug: "Haircare",       icon: Scissors    },
+interface CategoryTile {
+  name: string;
+  /** Shop URL — uses a real `category` from lib/products.ts or a `q` keyword search */
+  href: string;
+  /** How to pick the cover photo from the catalogue */
+  match: (p: Product) => boolean;
+}
+
+const byName = (kw: string) => (p: Product) => p.name.toLowerCase().includes(kw);
+const byCategory = (c: Product["category"]) => (p: Product) => p.category === c;
+
+const categories: CategoryTile[] = [
+  { name: "Lipstick", href: "/shop?q=lip", match: byName("lipstick") },
+  { name: "Foundation", href: "/shop?q=foundation", match: byName("foundation") },
+  { name: "Skincare", href: "/shop?category=Skincare", match: byCategory("Skincare") },
+  { name: "Eye makeup", href: "/shop?q=eye", match: byName("eyeshadow") },
+  { name: "Mascara", href: "/shop?q=mascara", match: byName("mascara") },
+  { name: "Perfumes", href: "/shop?category=Perfumes", match: byCategory("Perfumes") },
+  { name: "Hair care", href: "/shop?category=Hair%20Care", match: byCategory("Hair Care") },
+  { name: "Beauty boxes", href: "/shop?category=Bundles", match: byCategory("Bundles") },
 ];
 
-const row1 = [...categories.slice(0, 4), ...categories.slice(0, 4)];
-const row2 = [...categories.slice(4, 8), ...categories.slice(4, 8)];
+/** Small, varied tilts like swatch cards on a counter — straighten on hover/focus (desktop only). */
+const TILTS = ["md:-rotate-2", "md:rotate-1", "md:-rotate-1", "md:rotate-2"];
+
+function coverFor(tile: CategoryTile): Product | undefined {
+  return products.find((p) => tile.match(p) && p.inStock && p.image) ?? products.find(tile.match);
+}
 
 export default function CategoryGrid() {
   return (
-    <section className="py-20 bg-[#529538] overflow-hidden border-t border-white/10"> 
+    <section className="relative py-16 md:py-24" aria-labelledby="categories-title">
+      {/* 3D stage anchor: mascara (wand out) + nail polish perch top-right of this section */}
+      <div
+        className="pointer-events-none absolute -top-4 right-3 h-36 w-28 md:right-[5%] md:top-0 md:h-56 md:w-44"
+        data-stage="categories"
+        data-stage-set="mascara"
+        data-stage-fill="0.95"
+        data-stage-rot="7.0"
+        data-stage-cap="0.7"
+        aria-hidden="true"
+      />
       <div className="container-custom">
-        {/* Section Header */}
-        <div className="text-center mb-16">
-          <h2 className="text-4xl font-bold text-white mb-4 tracking-tight uppercase">
-            Shop by Category
-          </h2>
-          <div className="h-1 w-24 bg-white/30 mx-auto rounded-full"></div>
-        </div>
-
-        <div className="flex flex-col gap-10">
-          {/* Row 1: Right to Left */}
-          <div className="flex overflow-hidden">
-            <motion.div 
-              className="flex gap-6 whitespace-nowrap"
-              animate={{ x: ["0%", "-50%"] }}
-              transition={{ ease: "linear", duration: 15, repeat: Infinity }}
-            >
-              {row1.map((category, index) => (
-                <CategoryCard key={`row1-${index}`} category={category} />
-              ))}
-            </motion.div>
-          </div>
-
-          {/* Row 2: Left to Right */}
-          <div className="flex overflow-hidden">
-            <motion.div 
-              className="flex gap-6 whitespace-nowrap"
-              animate={{ x: ["-50%", "0%"] }}
-              transition={{ ease: "linear", duration: 15, repeat: Infinity }}
-            >
-              {row2.map((category, index) => (
-                <CategoryCard key={`row2-${index}`} category={category} />
-              ))}
-            </motion.div>
-          </div>
-        </div>
-
-        {/* View All Button */}
-        <div className="text-center mt-16">
-          <Link
-            href="/shop"
-            className="px-10 py-3 bg-white text-[#529538] font-bold uppercase tracking-widest hover:bg-black hover:text-white transition-all duration-300 inline-block rounded-none shadow-lg"
-          >
-            View All Collection
+        <div className="mb-10 flex flex-wrap items-end justify-between gap-x-6 gap-y-4 md:mb-14">
+          <LabelHeading id="categories-title">Shop by category</LabelHeading>
+          <Link href="/shop" className="shrink-0 text-sm underline underline-offset-4 hover:text-primary">
+            View all products
           </Link>
         </div>
+
+        <ul className="no-scrollbar -mx-4 flex snap-x snap-mandatory scroll-px-4 gap-3 overflow-x-auto px-4 md:mx-0 md:grid md:grid-cols-4 md:gap-5 md:overflow-visible md:px-0">
+          {categories.map((tile, index) => {
+            const cover = coverFor(tile);
+            return (
+              <li key={tile.name} className="w-[42%] shrink-0 snap-start sm:w-[30%] md:w-auto">
+                <Link
+                  href={tile.href}
+                  className={cn(
+                    "group block rounded-3xl bg-card p-2 shadow-soft transition-transform duration-500 ease-out md:p-2.5",
+                    "hover:-translate-y-1 hover:rotate-0 focus-visible:rotate-0",
+                    TILTS[index % TILTS.length]
+                  )}
+                >
+                  <div className="product-frame relative aspect-[4/5] overflow-hidden rounded-2xl">
+                    {cover && (
+                      <ProductMedia src={cover.image} alt="" fit={mediaFitFor(cover)} sizes="(max-width: 768px) 42vw, 25vw" />
+                    )}
+                  </div>
+                  <p className="px-2 pb-2 pt-3 font-display text-lg md:text-xl">{tile.name}</p>
+                </Link>
+              </li>
+            );
+          })}
+        </ul>
       </div>
     </section>
-  );
-}
-
-function CategoryCard({ category }: { category: any }) {
-  const Icon = category.icon;
-  return (
-    <Link
-      href={`/shop?category=${category.slug}`}
-      className="
-        flex flex-col items-center justify-center gap-4
-        w-[200px] h-[160px] rounded-xl border border-white/20
-        bg-white/10 backdrop-blur-md
-        hover:bg-white hover:scale-105
-        transition-all duration-500 group
-      "
-    >
-      <Icon
-        className="h-10 w-10 text-white group-hover:text-[#529538] transition-colors duration-300"
-        strokeWidth={1.2}
-      />
-      <span className="text-xs font-bold tracking-[0.2em] uppercase text-white group-hover:text-[#529538] transition-colors duration-300">
-        {category.name}
-      </span>
-    </Link>
   );
 }
