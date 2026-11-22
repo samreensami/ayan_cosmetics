@@ -52,6 +52,7 @@ const config: Config = {
         },
         gold: "hsl(var(--gold))",
         rose: "hsl(var(--rose))",
+        sage: "hsl(var(--sage))",
         destructive: {
           DEFAULT: "hsl(0 72% 45%)",
           foreground: "hsl(0 0% 100%)",
@@ -91,12 +92,23 @@ const config: Config = {
           "0%": { backgroundPosition: "-200% 0" },
           "100%": { backgroundPosition: "200% 0" },
         },
+        // Seamless ticker: content is rendered twice, so -50% lands on an identical frame.
+        marquee: {
+          from: { transform: "translate3d(0, 0, 0)" },
+          to: { transform: "translate3d(-50%, 0, 0)" },
+        },
+        "marquee-reverse": {
+          from: { transform: "translate3d(-50%, 0, 0)" },
+          to: { transform: "translate3d(0, 0, 0)" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
         float: "float 6s ease-in-out infinite",
         shimmer: "shimmer 3s linear infinite",
+        marquee: "marquee var(--marquee-duration, 40s) linear infinite",
+        "marquee-reverse": "marquee-reverse var(--marquee-duration, 40s) linear infinite",
       },
       backdropBlur: {
         xs: "2px",

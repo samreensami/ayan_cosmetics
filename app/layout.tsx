@@ -9,6 +9,7 @@ import { CartProvider } from "@/lib/CartContext";
 import FloatingCart from "@/components/FloatingCart";
 import AyanAIChat from "@/components/AyanAIChat";
 import ThemeProvider from "@/components/ThemeProvider";
+import GlitterBackground from "@/components/GlitterBackground";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -25,7 +26,7 @@ const bodoni = Bodoni_Moda({
 });
 
 export const viewport: Viewport = {
-  themeColor: "#FBF8F3",
+  themeColor: "#FDF8F6",
 };
 
 export const metadata: Metadata = {
@@ -72,6 +73,7 @@ export default function RootLayout({
     >
       <body className="font-sans" suppressHydrationWarning>
         <ThemeProvider>
+          <GlitterBackground />
           <CartProvider>
             <Navbar />
             <main id="main" className="min-h-screen">

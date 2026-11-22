@@ -4,6 +4,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import Image from "next/image";
 import { X, ChevronLeft, ChevronRight, MapPin } from "lucide-react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import LabelHeading from "@/components/LabelHeading";
 
 const galleryImages = [
   {
@@ -71,12 +72,16 @@ export default function ShopGallery() {
   const current = galleryImages[currentIndex];
 
   return (
-    <section className="py-16 md:py-24" aria-labelledby="visit-title">
+    <section className="relative py-16 md:py-24" aria-labelledby="visit-title">
+      {/* 3D stage anchor with fill 0: products bow out before the gallery */}
+      <div className="pointer-events-none absolute left-1/2 top-0 h-40 w-40" data-stage="gallery" data-stage-set="perfume" data-stage-fill="0" data-stage-rot="8.2" aria-hidden="true" />
       <div className="container-custom">
         <div className="mb-8 grid gap-6 md:mb-12 md:grid-cols-2 md:items-end">
-          <h2 id="visit-title" className="section-title">
-            Come see us in Saima Mall
-          </h2>
+          <div>
+            <LabelHeading id="visit-title" tilt={-1}>
+              Come see us in Saima Mall
+            </LabelHeading>
+          </div>
           <div className="text-sm leading-relaxed text-muted-foreground md:text-right">
             <p>Shop G-16, Saima Shopping Mall, Main Rashid Minhas Road, Karachi</p>
             <a

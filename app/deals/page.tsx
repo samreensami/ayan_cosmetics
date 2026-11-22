@@ -15,7 +15,7 @@ export default function DealsPage() {
   };
 
   return (
-    <div className="bg-background min-h-screen text-foreground pt-24 pb-16 font-sans">
+    <div className="min-h-screen pt-header pb-16">
       
       {/* ── Header ── */}
       <div className="mb-12 border-b border-border">

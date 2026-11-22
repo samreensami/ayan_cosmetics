@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { getFeaturedProducts } from "@/lib/products";
 import ProductCard from "@/components/ProductCard";
+import LabelHeading from "@/components/LabelHeading";
 
 interface FeaturedProductsProps {
   title?: string;
@@ -17,12 +18,22 @@ export default function FeaturedProducts({
   if (products.length === 0) return null;
 
   return (
-    <section className="bg-secondary/60 py-16 md:py-24" aria-labelledby="featured-title">
+    <section className="relative bg-secondary/60 py-16 md:py-24" aria-labelledby="featured-title">
+      {/* 3D stage anchor: a faceted perfume bottle, top-left, stopper lifted */}
+      <div
+        className="pointer-events-none absolute -top-6 left-2 h-32 w-28 md:left-[3%] md:-top-10 md:h-56 md:w-44"
+        data-stage="featured"
+        data-stage-set="perfume"
+        data-stage-fill="0.95"
+        data-stage-rot="7.6"
+        data-stage-cap="0.3"
+        aria-hidden="true"
+      />
       <div className="container-custom">
-        <div className="mb-8 flex items-end justify-between gap-6 md:mb-12">
-          <h2 id="featured-title" className="section-title max-w-xl text-balance">
+        <div className="mb-10 flex items-end justify-between gap-6 md:mb-14">
+          <LabelHeading id="featured-title" tilt={1.2}>
             {title}
-          </h2>
+          </LabelHeading>
           {showViewAll && (
             <Link href="/shop" className="shrink-0 text-sm underline underline-offset-4 hover:text-primary">
               Shop all

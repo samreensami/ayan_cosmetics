@@ -4,8 +4,8 @@
 
 /*
  * AYAN Cosmetics theme tokens.
- * Four themes, switched by next-themes via a class on <html>:
- *   ivory (default) · noir · rose · emerald
+ * Five themes, switched by next-themes via a class on <html>:
+ *   blush (default, pastel) · ivory · noir · rose · emerald
  * Every colour in the UI comes from these variables — never hardcode bg-white/text-black.
  * Product photos and shade swatches are NEVER tinted by theme.
  */
@@ -28,9 +28,34 @@
   --accent-foreground: 26 13% 10%;
   --gold: 38 39% 47%;
   --rose: 6 47% 83%;
+  --sage: 135 17% 66%;
   --border: 37 26% 87%;
   --input: 37 26% 87%;
   --ring: 155 79% 20%;
+  color-scheme: light;
+}
+
+.blush {
+  --background: 17 64% 98%;
+  --foreground: 345 16% 20%;
+  --card: 0 0% 100%;
+  --card-foreground: 345 16% 20%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 345 16% 20%;
+  --primary: 345 32% 50%;
+  --primary-foreground: 0 0% 100%;
+  --secondary: 7 53% 94%;
+  --secondary-foreground: 345 16% 20%;
+  --muted: 7 53% 94%;
+  --muted-foreground: 339 9% 43%;
+  --accent: 132 23% 91%;
+  --accent-foreground: 137 13% 21%;
+  --gold: 38 39% 47%;
+  --rose: 349 63% 86%;
+  --sage: 135 17% 62%;
+  --border: 3 39% 90%;
+  --input: 3 39% 90%;
+  --ring: 345 32% 50%;
   color-scheme: light;
 }
 
@@ -51,6 +76,7 @@
   --accent-foreground: 37 35% 93%;
   --gold: 39 52% 69%;
   --rose: 357 22% 34%;
+  --sage: 136 12% 49%;
   --border: 30 10% 16%;
   --input: 30 10% 16%;
   --ring: 39 52% 69%;
@@ -74,6 +100,7 @@
   --accent-foreground: 352 24% 13%;
   --gold: 38 39% 47%;
   --rose: 6 47% 83%;
+  --sage: 136 14% 66%;
   --border: 9 43% 88%;
   --input: 9 43% 88%;
   --ring: 352 33% 46%;
@@ -97,6 +124,7 @@
   --accent-foreground: 42 39% 94%;
   --gold: 43 67% 70%;
   --rose: 356 24% 39%;
+  --sage: 143 34% 67%;
   --border: 161 50% 24%;
   --input: 161 50% 24%;
   --ring: 43 67% 70%;
@@ -105,6 +133,8 @@
 
 :root {
   --radius: 0.875rem;
+  /* Fixed header = announcement bar (2rem) + nav (4rem). Pages pad their top with .pt-header */
+  --header-h: 6rem;
 }
 
 @layer base {
@@ -168,6 +198,10 @@
 }
 
 @layer utilities {
+  .pt-header {
+    padding-top: var(--header-h);
+  }
+
   .container-custom {
     @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
   }

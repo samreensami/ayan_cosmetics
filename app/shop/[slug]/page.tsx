@@ -82,7 +82,7 @@ export default async function ProductDetailPage({
   const whatsappLink = generateWhatsAppLink(product.name);
 
   return (
-    <div className="pt-16">
+    <div className="pt-header">
       <nav aria-label="Breadcrumb" className="container-custom pt-6 text-sm text-muted-foreground">
         <Link href="/shop" className="inline-flex items-center gap-2 hover:text-foreground">
           <ArrowLeft className="h-4 w-4" aria-hidden="true" />

@@ -4,9 +4,9 @@
  * The 3D hero reads its material/lighting colours from `scene` below.
  */
 
-export const THEMES = ["ivory", "noir", "rose", "emerald"] as const;
+export const THEMES = ["blush", "ivory", "noir", "rose", "emerald"] as const;
 export type ThemeName = (typeof THEMES)[number];
-export const DEFAULT_THEME: ThemeName = "ivory";
+export const DEFAULT_THEME: ThemeName = "blush";
 
 export interface ThemeMeta {
   name: ThemeName;
@@ -25,6 +25,19 @@ export interface ThemeMeta {
 }
 
 export const THEME_META: Record<ThemeName, ThemeMeta> = {
+  blush: {
+    name: "blush",
+    label: "Blush & Sage",
+    swatch: ["#F8E3E3", "#8FAF97"],
+    metaColor: "#FDF8F6",
+    scene: {
+      liquid: "#f6c1cb",
+      metal: "#d4b07a",
+      lipstick: "#c45f74",
+      glow: "#fff4f2",
+      shadow: "#8a5a66",
+    },
+  },
   ivory: {
     name: "ivory",
     label: "Ivory Glow",

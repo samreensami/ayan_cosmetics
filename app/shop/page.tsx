@@ -98,7 +98,7 @@ function ShopContent() {
   }, [searchQuery, filters]);
 
   return (
-    <div className="pt-16">
+    <div className="pt-header">
       {/* ── Header ── */}
       <section className="border-b border-border">
         <div className="container-custom grid gap-6 py-10 md:grid-cols-12 md:items-end md:py-16">

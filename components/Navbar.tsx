@@ -8,6 +8,15 @@ import { Search, ShoppingBag } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useCart } from "@/lib/CartContext";
 import ThemePicker from "@/components/ThemePicker";
+import Marquee from "@/components/Marquee";
+
+const announcements = [
+  "Cash on delivery across Karachi",
+  "100% genuine, sealed products",
+  "Same-day dispatch",
+  "7-day returns",
+  "Free shade matching on WhatsApp",
+];
 
 const navLinks = [
   { href: "/shop", label: "Shop" },
@@ -79,6 +88,21 @@ export default function Navbar() {
       >
         Skip to content
       </a>
+
+      {/* Announcement bar — collapses once you scroll */}
+      <div
+        className={cn(
+          "overflow-hidden bg-primary text-primary-foreground transition-[height] duration-300",
+          isScrolled || isMenuOpen ? "h-0" : "h-8"
+        )}
+      >
+        <Marquee
+          items={announcements}
+          duration={45}
+          className="h-8 items-center text-xs"
+          separator={<span aria-hidden="true" className="opacity-60">✦</span>}
+        />
+      </div>
 
       <nav className="container-custom flex h-16 items-center justify-between gap-4" aria-label="Main">
         <Logo />
