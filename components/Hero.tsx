@@ -37,49 +37,43 @@ export default function Hero() {
   return (
     <section className="relative overflow-hidden pt-header" aria-labelledby="hero-title">
       <div className="container-custom grid items-center gap-y-6 pb-14 pt-6 md:grid-cols-12 md:gap-x-12 md:py-16 lg:py-20">
-        {/* ── Vanity-mirror arch with the 3D scene ── */}
+        {/* ── 3D products (no frame) — a soft pool of light behind them ── */}
         <motion.div
-          className="relative order-1 mx-auto aspect-[4/5] w-full max-w-[280px] md:order-2 md:col-span-5 md:max-w-[400px] lg:max-w-[440px]"
+          className="relative order-1 mx-auto aspect-[4/5] w-full max-w-[260px] md:order-2 md:col-span-5 md:max-w-[380px] lg:max-w-[420px]"
           data-stage="hero"
           data-stage-set="glass"
-          data-stage-fill="0.66"
+          data-stage-fill="0.56"
           data-stage-cap="0.35"
           initial={reduceMotion ? false : { opacity: 0, scale: 0.96 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 1.2, ease }}
         >
-          {/* In "stage" mode the products render on a fixed canvas *behind* the page, so the
-              arch must stay see-through; otherwise it gets a soft fill. */}
           <div
-            className={
-              "absolute inset-0 overflow-hidden rounded-t-full border border-border " +
-              (mode === "stage" ? "bg-transparent" : "bg-secondary")
-            }
-          >
-            {/* soft light pooling inside the arch */}
-            <div
-              className={"absolute inset-0 " + (mode === "stage" ? "opacity-40" : "")}
-              style={{
-                background:
-                  "radial-gradient(60% 45% at 50% 38%, hsl(var(--rose) / 0.55), transparent 70%), radial-gradient(50% 30% at 50% 100%, hsl(var(--gold) / 0.25), transparent 70%)",
-              }}
-            />
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-[-10%] rounded-full opacity-70 blur-2xl"
+            style={{
+              background:
+                "radial-gradient(50% 45% at 50% 45%, hsl(var(--rose) / 0.6), transparent 70%), radial-gradient(40% 25% at 50% 85%, hsl(var(--gold) / 0.3), transparent 70%)",
+            }}
+          />
 
-            {mode === "image" && (
+          {mode === "image" && (
+            <div className="absolute inset-[8%] overflow-hidden rounded-[2rem]">
               <Image
                 src="/images/products/hero1.png"
                 alt="Glowing, dewy skin — AYAN Glass Skin Collection"
                 fill
                 priority
-                sizes="(max-width: 768px) 280px, 440px"
+                sizes="(max-width: 768px) 260px, 420px"
                 className="object-cover object-[70%_center]"
               />
-            )}
-            {mode === "still" && <HeroScene colors={colors} />}
-          </div>
-
-          {/* Mirror rim */}
-          <div className="pointer-events-none absolute -inset-2 rounded-t-full border border-gold/40" aria-hidden="true" />
+            </div>
+          )}
+          {mode === "still" && (
+            <div className="absolute inset-[10%]">
+              <HeroScene colors={colors} />
+            </div>
+          )}
         </motion.div>
 
         {/* ── Copy ── */}

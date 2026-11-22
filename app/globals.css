@@ -5,7 +5,7 @@
 /*
  * AYAN Cosmetics theme tokens.
  * Five themes, switched by next-themes via a class on <html>:
- *   blush (default, pastel) · ivory · noir · rose · emerald
+ *   midnight (default, dark rose) · ivory · noir · rose · emerald
  * Every colour in the UI comes from these variables — never hardcode bg-white/text-black.
  * Product photos and shade swatches are NEVER tinted by theme.
  */
@@ -35,28 +35,28 @@
   color-scheme: light;
 }
 
-.blush {
-  --background: 17 64% 98%;
-  --foreground: 345 16% 20%;
-  --card: 0 0% 100%;
-  --card-foreground: 345 16% 20%;
-  --popover: 0 0% 100%;
-  --popover-foreground: 345 16% 20%;
-  --primary: 345 32% 50%;
-  --primary-foreground: 0 0% 100%;
-  --secondary: 7 53% 94%;
-  --secondary-foreground: 345 16% 20%;
-  --muted: 7 53% 94%;
-  --muted-foreground: 339 9% 43%;
-  --accent: 132 23% 91%;
-  --accent-foreground: 137 13% 21%;
-  --gold: 38 39% 47%;
-  --rose: 349 63% 86%;
-  --sage: 135 17% 62%;
-  --border: 3 39% 90%;
-  --input: 3 39% 90%;
-  --ring: 345 32% 50%;
-  color-scheme: light;
+.midnight {
+  --background: 320 18% 7%;
+  --foreground: 342 36% 95%;
+  --card: 322 15% 10%;
+  --card-foreground: 342 36% 95%;
+  --popover: 322 15% 10%;
+  --popover-foreground: 342 36% 95%;
+  --primary: 348 61% 77%;
+  --primary-foreground: 342 45% 11%;
+  --secondary: 327 18% 12%;
+  --secondary-foreground: 342 36% 95%;
+  --muted: 327 18% 12%;
+  --muted-foreground: 337 13% 68%;
+  --accent: 330 18% 15%;
+  --accent-foreground: 342 36% 95%;
+  --gold: 34 53% 68%;
+  --rose: 345 31% 42%;
+  --sage: 140 15% 34%;
+  --border: 330 16% 17%;
+  --input: 330 16% 17%;
+  --ring: 348 61% 77%;
+  color-scheme: dark;
 }
 
 .noir {

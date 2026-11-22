@@ -2,7 +2,8 @@
 
 import React, { useState } from "react";
 import Image from "next/image";
-import { ImageIcon } from "lucide-react";
+import ProductMedia from "@/components/ProductMedia";
+import type { MediaFit } from "@/lib/media";
 
 /**
  * ProductImage Component
@@ -17,6 +18,8 @@ interface ProductImageProps {
   isNew?: boolean;
   isBestSeller?: boolean;
   priority?: boolean;
+  /** "showcase" for wide in-store photos such as beauty boxes */
+  fit?: MediaFit;
 }
 
 export default function ProductImage({
@@ -25,35 +28,18 @@ export default function ProductImage({
   isNew,
   isBestSeller,
   priority = false,
+  fit = "cover",
 }: ProductImageProps) {
-  const [imageError, setImageError] = useState(false);
-
   return (
     <div className="product-frame relative aspect-[4/5] overflow-hidden rounded-3xl">
-      {imageError ? (
-        // Fallback placeholder when image fails to load
-        <div className="absolute inset-0 flex flex-col items-center justify-center">
-          <ImageIcon className="mb-4 h-16 w-16 text-neutral-300" />
-          <span className="max-w-[220px] px-4 text-center text-sm text-neutral-500">
-            {alt}
-          </span>
-          <span className="mt-2 text-xs text-neutral-400">
-            Photo coming soon
-          </span>
-        </div>
-      ) : (
-        <Image
-          src={src}
-          alt={alt}
-          fill
-          className="object-cover"
-          priority={priority}
-          sizes="(max-width: 1024px) 100vw, 50vw"
-          onError={() => setImageError(true)}
-          placeholder="blur"
-          blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAFxEAAwEAAAAAAAAAAAAAAAAAAAECEf/aAAwDAQACEQMRAD8Ams0t0JRgjCgDxiqoowzp//Z"
-        />
-      )}
+      <ProductMedia
+        src={src}
+        alt={alt}
+        fit={fit}
+        sizes="(max-width: 1024px) 100vw, 50vw"
+        priority={priority}
+        hoverZoom={false}
+      />
 
       {/* Badges */}
       <div className="absolute top-4 left-4 flex flex-col gap-2">

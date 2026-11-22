@@ -26,7 +26,7 @@ const bodoni = Bodoni_Moda({
 });
 
 export const viewport: Viewport = {
-  themeColor: "#FDF8F6",
+  themeColor: "#140E12",
 };
 
 export const metadata: Metadata = {

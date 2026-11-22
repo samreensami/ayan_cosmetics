@@ -45,7 +45,7 @@ export default function ContactPage() {
             {/* Address Card */}
             <div className="group p-8 rounded-[30px] bg-card border border-border hover:border-primary/50 transition-all duration-500 flex gap-6">
               <div className="w-12 h-12 bg-background rounded-xl flex items-center justify-center border border-border group-hover:bg-primary group-hover:border-primary transition-colors duration-500 shrink-0">
-                <MapPin className="h-5 w-5 text-primary group-hover:text-background" />
+                <MapPin className="h-5 w-5 text-primary group-hover:text-primary-foreground" />
               </div>
               <div>
                 <h3 className="text-sm font-semibold text-muted-foreground mb-2">Our Location</h3>
@@ -59,7 +59,7 @@ export default function ContactPage() {
             {/* Phone Card */}
             <div className="group p-8 rounded-[30px] bg-card border border-border hover:border-primary/50 transition-all duration-500 flex gap-6">
               <div className="w-12 h-12 bg-background rounded-xl flex items-center justify-center border border-border group-hover:bg-primary group-hover:border-primary transition-colors duration-500 shrink-0">
-                <Phone className="h-5 w-5 text-primary group-hover:text-background" />
+                <Phone className="h-5 w-5 text-primary group-hover:text-primary-foreground" />
               </div>
               <div>
                 <h3 className="text-sm font-semibold text-muted-foreground mb-2">Call Support</h3>
@@ -76,7 +76,7 @@ export default function ContactPage() {
             {/* Timings Card */}
             <div className="group p-8 rounded-[30px] bg-card border border-border hover:border-primary/50 transition-all duration-500 flex gap-6">
               <div className="w-12 h-12 bg-background rounded-xl flex items-center justify-center border border-border group-hover:bg-primary group-hover:border-primary transition-colors duration-500 shrink-0">
-                <Clock className="h-5 w-5 text-primary group-hover:text-background" />
+                <Clock className="h-5 w-5 text-primary group-hover:text-primary-foreground" />
               </div>
               <div>
                 <h3 className="text-sm font-semibold text-muted-foreground mb-2">Store Hours</h3>

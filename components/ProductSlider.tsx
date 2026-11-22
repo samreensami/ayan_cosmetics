@@ -145,7 +145,7 @@ function SliderCard({
             href={whatsappLink}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center justify-center w-11 md:w-12 h-11 md:h-12 border-2 border-primary/25 rounded-2xl text-primary hover:bg-primary hover:text-background hover:border-transparent transition-all duration-200"
+            className="flex items-center justify-center w-11 md:w-12 h-11 md:h-12 border-2 border-primary/25 rounded-2xl text-primary hover:bg-primary hover:text-primary-foreground hover:border-transparent transition-all duration-200"
             aria-label={`Order ${product.name} on WhatsApp`}
           >
             <MessageCircle className="h-5 w-5" />
@@ -255,7 +255,7 @@ export default function ProductSlider({ products }: { products: Product[] }) {
           "absolute left-0 top-1/2 -translate-y-1/2 z-20 flex h-12 w-12 items-center justify-center rounded-full bg-card shadow-md border border-border transition-all duration-200",
           currentIndex === 0
             ? "text-muted-foreground cursor-not-allowed"
-            : "text-foreground hover:bg-primary hover:text-background hover:border-primary hover:shadow-xl active:scale-95",
+            : "text-foreground hover:bg-primary hover:text-primary-foreground hover:border-primary hover:shadow-xl active:scale-95",
         ].join(" ")}
       >
         <ChevronLeft className="h-6 w-6" />
@@ -270,7 +270,7 @@ export default function ProductSlider({ products }: { products: Product[] }) {
           "absolute right-0 top-1/2 -translate-y-1/2 z-20 flex h-12 w-12 items-center justify-center rounded-full bg-card shadow-md border border-border transition-all duration-200",
           currentIndex === products.length - 1
             ? "text-muted-foreground cursor-not-allowed"
-            : "text-foreground hover:bg-primary hover:text-background hover:border-primary hover:shadow-xl active:scale-95",
+            : "text-foreground hover:bg-primary hover:text-primary-foreground hover:border-primary hover:shadow-xl active:scale-95",
         ].join(" ")}
       >
         <ChevronRight className="h-6 w-6" />

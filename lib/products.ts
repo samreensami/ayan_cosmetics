@@ -58,7 +58,10 @@ export interface Product {
   name: string;
   brand: string;
   category: Category;
+  /** PRICE in PKR, e.g. 2100. Leave 0 to show "Price on WhatsApp". */
   price: number;
+  /** Optional old price for a sale, shown struck through, e.g. 2500 */
+  originalPrice?: number;
   image: string;
   images?: string[];
   shortDescription: string;

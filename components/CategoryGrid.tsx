@@ -1,7 +1,8 @@
-import Image from "next/image";
 import Link from "next/link";
 import { products, type Product } from "@/lib/products";
 import LabelHeading from "@/components/LabelHeading";
+import ProductMedia from "@/components/ProductMedia";
+import { mediaFitFor } from "@/lib/media";
 import { cn } from "@/lib/utils";
 
 interface CategoryTile {
@@ -47,7 +48,7 @@ export default function CategoryGrid() {
         aria-hidden="true"
       />
       <div className="container-custom">
-        <div className="mb-10 flex items-end justify-between gap-6 md:mb-14">
+        <div className="mb-10 flex flex-wrap items-end justify-between gap-x-6 gap-y-4 md:mb-14">
           <LabelHeading id="categories-title">Shop by category</LabelHeading>
           <Link href="/shop" className="shrink-0 text-sm underline underline-offset-4 hover:text-primary">
             View all products
@@ -69,13 +70,7 @@ export default function CategoryGrid() {
                 >
                   <div className="product-frame relative aspect-[4/5] overflow-hidden rounded-2xl">
                     {cover && (
-                      <Image
-                        src={cover.image}
-                        alt=""
-                        fill
-                        sizes="(max-width: 768px) 42vw, 25vw"
-                        className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04]"
-                      />
+                      <ProductMedia src={cover.image} alt="" fit={mediaFitFor(cover)} sizes="(max-width: 768px) 42vw, 25vw" />
                     )}
                   </div>
                   <p className="px-2 pb-2 pt-3 font-display text-lg md:text-xl">{tile.name}</p>

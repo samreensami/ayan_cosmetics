@@ -46,7 +46,7 @@ export default function FloatingCart() {
         <button
           type="button"
           onClick={toggleCart}
-          className="fixed bottom-24 right-5 z-40 flex h-14 w-14 items-center justify-center rounded-full bg-primary text-primary-foreground shadow-soft transition-transform hover:scale-105"
+          className="fixed bottom-20 right-4 z-40 flex h-12 w-12 md:bottom-24 md:right-6 md:h-14 md:w-14 items-center justify-center rounded-full bg-primary text-primary-foreground shadow-soft transition-transform hover:scale-105"
           aria-label={`Open bag (${totalQty} items)`}
         >
           <ShoppingBag className="h-6 w-6" aria-hidden="true" />
@@ -60,7 +60,7 @@ export default function FloatingCart() {
         {isOpen && (
           <>
             <motion.div
-              className="fixed inset-0 z-40 bg-black/40"
+              className="fixed inset-0 z-[60] bg-black/40"
               onClick={closeCart}
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -71,7 +71,7 @@ export default function FloatingCart() {
               role="dialog"
               aria-modal="true"
               aria-labelledby="cart-title"
-              className="fixed right-0 top-0 z-50 flex h-full w-full max-w-md flex-col bg-background shadow-soft"
+              className="fixed right-0 top-0 z-[61] flex h-full w-full max-w-md flex-col bg-background shadow-soft"
               initial={reduceMotion ? { opacity: 0 } : { x: "100%" }}
               animate={reduceMotion ? { opacity: 1 } : { x: 0 }}
               exit={reduceMotion ? { opacity: 0 } : { x: "100%" }}

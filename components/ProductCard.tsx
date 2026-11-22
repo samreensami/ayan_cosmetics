@@ -2,22 +2,22 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
-import Image from "next/image";
 import { Check, MessageCircle, Plus } from "lucide-react";
 import { Product } from "@/lib/products";
 import { useCart } from "@/lib/CartContext";
 import { generateWhatsAppLink } from "@/lib/whatsapp";
 import { cn } from "@/lib/utils";
+import ProductMedia from "@/components/ProductMedia";
+import { mediaFitFor } from "@/lib/media";
+import Price from "@/components/Price";
 
 export default function ProductCard({ product }: { product: Product }) {
   const [justAdded, setJustAdded] = useState(false);
-  const [imageError, setImageError] = useState(false);
   const { addToCart } = useCart();
 
   if (!product || !product.id) return null;
 
-  // Prices are wired in Phase 4 (see SPEC.md); until then the WhatsApp message omits price.
-  const orderViaWhatsApp = generateWhatsAppLink(product.name);
+  const orderViaWhatsApp = generateWhatsAppLink(product.name, product.price > 0 ? product.price : undefined);
 
   const handleAddToCart = () => {
     addToCart(product);
@@ -35,20 +35,12 @@ export default function ProductCard({ product }: { product: Product }) {
         className="product-frame relative block aspect-[4/5] overflow-hidden rounded-2xl"
         aria-label={product.name}
       >
-        {!imageError ? (
-          <Image
-            src={product.image}
-            alt=""
-            fill
-            sizes="(max-width: 640px) 50vw, (max-width: 1024px) 50vw, 25vw"
-            className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04]"
-            onError={() => setImageError(true)}
-          />
-        ) : (
-          <span className="absolute inset-0 flex items-center justify-center text-sm text-neutral-500">
-            Photo coming soon
-          </span>
-        )}
+        <ProductMedia
+          src={product.image}
+          alt=""
+          fit={mediaFitFor(product)}
+          sizes="(max-width: 640px) 50vw, (max-width: 1024px) 50vw, 25vw"
+        />
 
         {badge && (
           <span className="absolute left-3 top-3 rounded-full bg-white/90 px-2.5 py-1 text-[11px] font-medium text-neutral-900 backdrop-blur">
@@ -70,6 +62,7 @@ export default function ProductCard({ product }: { product: Product }) {
             {product.name}
           </Link>
         </h3>
+        <Price value={product.price} compareAt={product.originalPrice} className="mt-1.5" />
 
         {/* Actions */}
         <div className="mt-auto flex items-center gap-2 pt-4">

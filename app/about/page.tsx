@@ -111,7 +111,7 @@ export default function AboutPage() {
                   className="group p-10 rounded-[40px] bg-background border border-border hover:border-primary transition-colors duration-500"
                 >
                   <div className="w-16 h-16 bg-card rounded-2xl flex items-center justify-center mb-8 group-hover:bg-primary transition-colors duration-500">
-                    <Icon className="h-8 w-8 text-primary group-hover:text-background" />
+                    <Icon className="h-8 w-8 text-primary group-hover:text-primary-foreground" />
                   </div>
                   <h3 className="text-2xl font-semibold mb-4">{value.title}</h3>
                   <p className="text-muted-foreground leading-relaxed font-medium">{value.description}</p>
@@ -135,7 +135,7 @@ export default function AboutPage() {
               <div className="space-y-10">
                 <div className="flex items-center gap-6 group">
                   <div className="w-12 h-12 rounded-full border border-border flex items-center justify-center group-hover:bg-primary group-hover:border-primary transition-all">
-                    <MapPin className="h-5 w-5 text-muted-foreground group-hover:text-background" />
+                    <MapPin className="h-5 w-5 text-muted-foreground group-hover:text-primary-foreground" />
                   </div>
                   <p className="text-muted-foreground font-bold text-[10px] md:text-xs">
                     Shop No- G-16 Saima shopping mall main Rashid Minhas Road Karachi
@@ -143,7 +143,7 @@ export default function AboutPage() {
                 </div>
                 <div className="flex items-center gap-6 group">
                   <div className="w-12 h-12 rounded-full border border-border flex items-center justify-center group-hover:bg-primary group-hover:border-primary transition-all">
-                    <Phone className="h-5 w-5 text-muted-foreground group-hover:text-background" />
+                    <Phone className="h-5 w-5 text-muted-foreground group-hover:text-primary-foreground" />
                   </div>
                   <a href={`tel:${SHOP_CONTACT.phone}`} className="text-foreground font-semibold text-xl hover:text-primary transition-colors italic">
                     {SHOP_CONTACT.phone}

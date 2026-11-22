@@ -85,7 +85,7 @@ export default function AyanAIChat() {
 
   return (
     /* ── BOTTOM-LEFT — keeps WhatsApp button on right free ── */
-    <div className="fixed bottom-6 left-6 z-50 font-sans antialiased">
+    <div className="fixed bottom-4 left-4 z-50 font-sans antialiased md:bottom-6 md:left-6">
 
       {/* ── TRIGGER BUTTON ── */}
       <AnimatePresence>
@@ -97,12 +97,10 @@ export default function AyanAIChat() {
             whileHover={{ scale: 1.08 }}
             whileTap={{ scale: 0.92 }}
             onClick={() => setIsOpen(true)}
-            className="relative w-16 h-16 rounded-full bg-primary flex items-center justify-center shadow-[0_8px_32px_rgba(0,177,64,0.45)] group cursor-pointer"
+            className="relative flex h-12 w-12 cursor-pointer items-center justify-center rounded-full bg-primary shadow-soft group md:h-14 md:w-14"
             aria-label="Open Ayan AI chat"
           >
-            <span className="absolute inset-0 rounded-full bg-primary animate-ping opacity-30" />
-            <span className="absolute -inset-1.5 rounded-full border border-primary/40 animate-pulse" />
-            <BotMessageSquare className="w-7 h-7 text-foreground relative z-10" strokeWidth={1.8} />
+            <BotMessageSquare className="relative z-10 h-6 w-6 text-primary-foreground" strokeWidth={1.8} />
 
             {/* tooltip — appears to the right */}
             <span className="pointer-events-none absolute left-[calc(100%+14px)] top-1/2 -translate-y-1/2 bg-background border border-border text-foreground text-[9px] font-semibold px-3 py-1.5 rounded-xl whitespace-nowrap shadow-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300">
@@ -148,7 +146,7 @@ export default function AyanAIChat() {
                 </button>
                 <button
                   onClick={() => setIsOpen(false)}
-                  className="w-7 h-7 rounded-full bg-card border border-border flex items-center justify-center text-muted-foreground hover:text-background hover:border-border transition-all"
+                  className="w-7 h-7 rounded-full bg-card border border-border flex items-center justify-center text-muted-foreground hover:text-foreground hover:border-border transition-all"
                   aria-label="Close chat"
                 >
                   <X size={13} />
@@ -161,10 +159,10 @@ export default function AyanAIChat() {
               {messages.map((msg) => (
                 <div
                   key={msg.id}
-                  className={`flex flex-col${msg.role === "user" ? "items-end" : "items-start"}`}
+                  className={`flex flex-col ${msg.role === "user" ? "items-end" : "items-start"}`}
                 >
                   <div
-                    className={`max-w-[88%] rounded-2xl px-4 py-3 text-[12px] leading-[1.65]${
+                    className={`max-w-[88%] rounded-2xl px-4 py-3 text-[12px] leading-[1.65] ${
                       msg.role === "user"
                         ? "bg-primary text-primary-foreground font-semibold rounded-br-[4px]"
                         : "bg-card text-muted-foreground border border-border rounded-bl-[4px]"
@@ -229,7 +227,7 @@ export default function AyanAIChat() {
                 value={inputValue}
                 onChange={(e) => setInputValue(e.target.value)}
                 placeholder="Ask about shades, products, delivery..."
-                className="flex-1 bg-card border border-border focus:border-primary/50 text-foreground placeholder-background text-xs rounded-full h-11 px-4 focus:outline-none transition-all font-medium"
+                className="flex-1 bg-card border border-border focus:border-primary/50 text-foreground placeholder:text-muted-foreground text-xs rounded-full h-11 px-4 focus:outline-none transition-all font-medium"
               />
               <button
                 type="submit"

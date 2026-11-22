@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { Search, ShoppingBag } from "lucide-react";
+import { Search, ShoppingBag, Sparkles } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useCart } from "@/lib/CartContext";
 import ThemePicker from "@/components/ThemePicker";
@@ -18,9 +18,10 @@ const announcements = [
   "Free shade matching on WhatsApp",
 ];
 
-const navLinks = [
+const navLinks: { href: string; label: string; highlight?: boolean }[] = [
   { href: "/shop", label: "Shop" },
-  { href: "/deals", label: "Deals" },
+  // Highlighted: beauty boxes & deals are the shop's best sellers
+  { href: "/deals", label: "Deals", highlight: true },
   { href: "/about", label: "About" },
   { href: "/contact", label: "Visit us" },
 ];
@@ -111,18 +112,32 @@ export default function Navbar() {
         <ul className="hidden md:flex items-center gap-8">
           {navLinks.map((link) => (
             <li key={link.href}>
-              <Link
-                href={link.href}
-                aria-current={isActive(link.href) ? "page" : undefined}
-                className={cn(
-                  "relative py-1 text-sm transition-colors",
-                  isActive(link.href)
-                    ? "text-foreground after:absolute after:inset-x-0 after:-bottom-0.5 after:h-px after:bg-foreground"
-                    : "text-muted-foreground hover:text-foreground"
-                )}
-              >
-                {link.label}
-              </Link>
+              {link.highlight ? (
+                <Link
+                  href={link.href}
+                  aria-current={isActive(link.href) ? "page" : undefined}
+                  className={cn(
+                    "inline-flex items-center gap-1.5 rounded-full bg-primary px-4 py-1.5 text-sm font-medium text-primary-foreground shadow-soft transition-transform hover:-translate-y-0.5",
+                    isActive(link.href) && "ring-2 ring-primary/40 ring-offset-2 ring-offset-background"
+                  )}
+                >
+                  <Sparkles className="h-3.5 w-3.5" aria-hidden="true" />
+                  {link.label}
+                </Link>
+              ) : (
+                <Link
+                  href={link.href}
+                  aria-current={isActive(link.href) ? "page" : undefined}
+                  className={cn(
+                    "relative py-1 text-sm transition-colors",
+                    isActive(link.href)
+                      ? "text-foreground after:absolute after:inset-x-0 after:-bottom-0.5 after:h-px after:bg-foreground"
+                      : "text-muted-foreground hover:text-foreground"
+                  )}
+                >
+                  {link.label}
+                </Link>
+              )}
             </li>
           ))}
         </ul>
@@ -195,9 +210,18 @@ export default function Navbar() {
                 href={link.href}
                 onClick={closeMenu}
                 aria-current={isActive(link.href) && link.href !== "/" ? "page" : undefined}
-                className="flex items-baseline justify-between py-4 font-display text-3xl"
+                className={cn(
+                  "flex items-center justify-between py-4 font-display text-3xl",
+                  "highlight" in link && link.highlight && "text-primary"
+                )}
               >
                 {link.label}
+                {"highlight" in link && link.highlight && (
+                  <span className="inline-flex items-center gap-1 rounded-full bg-primary px-3 py-1 font-sans text-xs font-medium text-primary-foreground">
+                    <Sparkles className="h-3 w-3" aria-hidden="true" />
+                    Beauty boxes
+                  </span>
+                )}
               </Link>
             </li>
           ))}

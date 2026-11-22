@@ -5,6 +5,8 @@ import { MessageCircle, ArrowLeft, CheckCircle, Truck, Shield } from "lucide-rea
 import StarRating from "@/components/StarRating";
 import ReviewSection from "@/components/ReviewSection";
 import ProductCard from "@/components/ProductCard";
+import { mediaFitFor } from "@/lib/media";
+import Price from "@/components/Price";
 import ProductImage, { ProductThumbnail } from "@/components/ProductImage";
 import {
   products,
@@ -79,7 +81,7 @@ export default async function ProductDetailPage({
   // Get product data
   const relatedProducts = getRelatedProducts(product, 4);
   const reviews = getProductReviews(product.id);
-  const whatsappLink = generateWhatsAppLink(product.name);
+  const whatsappLink = generateWhatsAppLink(product.name, product.price > 0 ? product.price : undefined);
 
   return (
     <div className="pt-header">
@@ -98,6 +100,7 @@ export default async function ProductDetailPage({
             alt={product.name}
             isNew={product.isNew}
             isBestSeller={product.isBestSeller}
+            fit={mediaFitFor(product)}
             priority
           />
           {product.images && product.images.length > 1 && (
@@ -113,7 +116,9 @@ export default async function ProductDetailPage({
           <p className="text-sm text-muted-foreground">{product.brand}</p>
           <h1 className="mt-2 font-display text-3xl leading-tight md:text-5xl text-balance">{product.name}</h1>
 
-          <div className="mt-4">
+          <Price value={product.price} compareAt={product.originalPrice} className="mt-4 text-xl md:text-2xl" />
+
+          <div className="mt-3">
             <StarRating rating={product.rating} reviewCount={product.reviewCount} size="md" />
           </div>
 

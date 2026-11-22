@@ -11,7 +11,7 @@ export default function ThemeProvider({ children }: { children: ReactNode }) {
       themes={[...THEMES]}
       defaultTheme={DEFAULT_THEME}
       enableSystem={false}
-      storageKey="ayan-theme"
+      storageKey="ayan-theme-v2"
       disableTransitionOnChange={false}
     >
       {children}

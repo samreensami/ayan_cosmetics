@@ -5,8 +5,8 @@ import tailwindcssAnimate from "tailwindcss-animate";
  * Tailwind CSS Configuration for AYAN Cosmetics
  * */
 const config: Config = {
-  // `dark:` variants apply in both dark themes (noir, emerald)
-  darkMode: ["variant", "&:is(.noir *, .emerald *)"],
+  // `dark:` variants apply in the dark themes (midnight, noir, emerald)
+  darkMode: ["variant", "&:is(.midnight *, .noir *, .emerald *)"],
   content: [
     "./pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./components/**/*.{js,ts,jsx,tsx,mdx}",

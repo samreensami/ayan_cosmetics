@@ -30,7 +30,7 @@ export default function FeaturedProducts({
         aria-hidden="true"
       />
       <div className="container-custom">
-        <div className="mb-10 flex items-end justify-between gap-6 md:mb-14">
+        <div className="mb-10 flex flex-wrap items-end justify-between gap-x-6 gap-y-4 md:mb-14">
           <LabelHeading id="featured-title" tilt={1.2}>
             {title}
           </LabelHeading>
