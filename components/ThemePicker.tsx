@@ -3,7 +3,7 @@
 import { useEffect, useId, useRef, useState, useSyncExternalStore } from "react";
 import { useTheme } from "next-themes";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
-import { Check } from "lucide-react";
+import { Check, ChevronDown } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { DEFAULT_THEME, THEMES, THEME_META, isThemeName } from "@/lib/themes";
 
@@ -77,9 +77,16 @@ export default function ThemePicker({ className }: { className?: string }) {
         aria-expanded={open}
         aria-controls={menuId}
         aria-label={`Change theme (current: ${activeMeta.label})`}
-        className="flex h-9 w-9 items-center justify-center rounded-full border border-border bg-card/70 backdrop-blur transition-colors hover:border-foreground/30"
+        title="Change theme"
+        className="flex h-9 items-center gap-1 rounded-full border border-border bg-card/70 pl-2 pr-1.5 backdrop-blur transition-colors hover:border-foreground/30"
       >
         <Swatch colors={activeMeta.swatch} />
+        {/* Small arrow so visitors can tell this opens a theme menu */}
+        <ChevronDown
+          className={cn("h-3.5 w-3.5 text-muted-foreground transition-transform duration-200", open && "rotate-180")}
+          strokeWidth={2.25}
+          aria-hidden="true"
+        />
       </button>
 
       <AnimatePresence>
@@ -94,6 +101,7 @@ export default function ThemePicker({ className }: { className?: string }) {
             transition={{ duration: 0.18, ease: "easeOut" }}
             className="absolute right-0 top-11 z-[60] w-52 origin-top-right rounded-2xl border border-border bg-popover p-1.5 text-popover-foreground shadow-soft"
           >
+            <p className="px-3 pb-1.5 pt-1 text-xs text-muted-foreground">Choose a theme</p>
             {THEMES.map((name) => {
               const meta = THEME_META[name];
               const selected = name === active;
