@@ -2,30 +2,32 @@
 
 import React, { useCallback, useEffect, useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { X, ChevronLeft, ChevronRight, MapPin } from "lucide-react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import LabelHeading from "@/components/LabelHeading";
 
+// In-store photos of the vanity cases on display (all 4:3, so cards use 4:3 — no cropping).
 const galleryImages = [
   {
     src: "/images/products/box1.png",
-    alt: "Inside the AYAN Cosmetics shop at Saima Mall, Karachi",
-    caption: "Our counter at Saima Mall",
+    alt: "Holographic rose-gold vanity case on display at AYAN Cosmetics",
+    caption: "Holographic vanity case",
   },
   {
     src: "/images/products/box2.jpg",
-    alt: "Branded makeup display at AYAN Cosmetics",
-    caption: "Makeup from brands you know",
+    alt: "Clear acrylic vanity case with silver trim at AYAN Cosmetics",
+    caption: "Clear acrylic vanity case",
   },
   {
     src: "/images/products/box3.jpg",
-    alt: "Perfume and fragrance display at AYAN Cosmetics",
-    caption: "Fragrances for every occasion",
+    alt: "Classic brown vanity case with silver lock at AYAN Cosmetics",
+    caption: "Classic brown vanity case",
   },
   {
     src: "/images/products/box4.jpg",
-    alt: "Makeup counter at the AYAN Cosmetics shop",
-    caption: "Try before you buy, in store",
+    alt: "Red diamond-pattern vanity case with combination lock at AYAN Cosmetics",
+    caption: "Red diamond vanity case",
   },
 ];
 
@@ -96,33 +98,38 @@ export default function ShopGallery() {
           </div>
         </div>
 
-        {/* Asymmetric gallery: one large frame, three smaller */}
-        <div className="grid grid-cols-2 gap-3 md:grid-cols-4 md:grid-rows-2 md:gap-4">
+        {/* Four equal 4:3 cards — matches the photos exactly, so nothing is cropped or blown up */}
+        <ul className="grid grid-cols-2 gap-3 md:gap-5 lg:grid-cols-4">
           {galleryImages.map((image, index) => (
-            <button
-              key={image.src}
-              type="button"
-              onClick={() => openLightbox(index)}
-              aria-label={`Open photo: ${image.caption}`}
-              className={
-                "group relative overflow-hidden rounded-2xl bg-secondary text-left " +
-                (index === 0
-                  ? "col-span-2 aspect-[4/3] md:row-span-2 md:aspect-auto"
-                  : "aspect-square " + (index === 3 ? "md:col-span-2 md:aspect-[2/1]" : ""))
-              }
-            >
-              <Image
-                src={image.src}
-                alt={image.alt}
-                fill
-                sizes={index === 0 ? "(max-width: 768px) 100vw, 50vw" : "(max-width: 768px) 50vw, 25vw"}
-                className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]"
-              />
-              <span className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/60 to-transparent p-4 pt-10 text-sm text-white">
-                {image.caption}
-              </span>
-            </button>
+            <li key={image.src}>
+              <button
+                type="button"
+                onClick={() => openLightbox(index)}
+                aria-label={`Open photo: ${image.caption}`}
+                className="group block w-full rounded-2xl bg-card p-2 text-left shadow-soft transition-transform duration-500 hover:-translate-y-1"
+              >
+                <div className="relative aspect-[4/3] overflow-hidden rounded-xl bg-secondary">
+                  <Image
+                    src={image.src}
+                    alt={image.alt}
+                    fill
+                    sizes="(max-width: 1024px) 50vw, 25vw"
+                    className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]"
+                  />
+                </div>
+                <p className="px-2 pb-1.5 pt-3 text-sm font-medium">{image.caption}</p>
+              </button>
+            </li>
           ))}
+        </ul>
+
+        <div className="mt-8 flex justify-center">
+          <Link
+            href="/deals"
+            className="inline-flex h-11 items-center rounded-full border border-foreground/20 px-7 text-sm font-medium transition-colors hover:border-foreground/50"
+          >
+            See all beauty boxes
+          </Link>
         </div>
       </div>
 
