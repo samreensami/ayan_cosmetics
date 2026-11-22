@@ -103,7 +103,7 @@ export default function AyanAIChat() {
             <BotMessageSquare className="relative z-10 h-6 w-6 text-primary-foreground" strokeWidth={1.8} />
 
             {/* tooltip — appears to the right */}
-            <span className="pointer-events-none absolute left-[calc(100%+14px)] top-1/2 -translate-y-1/2 bg-background border border-border text-foreground text-[9px] font-semibold px-3 py-1.5 rounded-xl whitespace-nowrap shadow-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+            <span className="pointer-events-none absolute left-[calc(100%+14px)] top-1/2 -translate-y-1/2 bg-background border border-border text-foreground text-xs font-semibold px-3 py-1.5 rounded-xl whitespace-nowrap shadow-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300">
               Ayan AI ✨
             </span>
           </motion.button>

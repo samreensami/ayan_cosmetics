@@ -130,7 +130,7 @@ export default async function ProductDetailPage({
                 <li key={concern}>
                   <Link
                     href={`/shop?concern=${encodeURIComponent(concern)}`}
-                    className="inline-block rounded-full border border-border px-3 py-1 text-xs hover:border-foreground/40"
+                    className="inline-flex min-h-9 items-center rounded-full border border-border px-3.5 py-1.5 text-xs hover:border-foreground/40"
                   >
                     {concern}
                   </Link>

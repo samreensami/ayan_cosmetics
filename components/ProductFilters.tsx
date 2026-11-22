@@ -169,13 +169,13 @@ export default function ProductFilters({
           {filters.category && filters.category !== "all" && (
             <Badge className="bg-primary text-primary-foreground gap-1">
               {filters.category}
-              <button onClick={() => updateFilter("category", "")} className="ml-1"><X className="h-3 w-3" /></button>
+              <button type="button" onClick={() => updateFilter("category", "")} aria-label="Remove category filter" className="-my-1.5 -mr-2 ml-0.5 rounded-full p-1.5 hover:bg-foreground/10"><X className="h-3.5 w-3.5" /></button>
             </Badge>
           )}
           {filters.brand && filters.brand !== "all" && (
             <Badge className="bg-gold text-foreground gap-1">
               {filters.brand}
-              <button onClick={() => updateFilter("brand", "")} className="ml-1"><X className="h-3 w-3" /></button>
+              <button type="button" onClick={() => updateFilter("brand", "")} aria-label="Remove brand filter" className="-my-1.5 -mr-2 ml-0.5 rounded-full p-1.5 hover:bg-foreground/10"><X className="h-3.5 w-3.5" /></button>
             </Badge>
           )}
         </div>

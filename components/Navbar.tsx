@@ -28,20 +28,20 @@ const navLinks: { href: string; label: string; highlight?: boolean }[] = [
 
 function Logo() {
   return (
-    <Link href="/" className="flex items-center gap-2.5 shrink-0" aria-label="AYAN Cosmetics home">
+    <Link href="/" className="flex min-w-0 shrink items-center gap-1.5 min-[400px]:gap-2.5" aria-label="AYAN Cosmetics home">
       {/* The logo artwork is black/red — dark themes get an ivory medallion so it stays visible.
           The artwork itself is never recoloured. */}
-      <span className="flex items-center rounded-full px-1.5 py-0.5 dark:bg-[#FBF8F3]">
+      <span className="flex shrink-0 items-center rounded-full px-1 py-0.5 min-[400px]:px-1.5 dark:bg-[#FBF8F3]">
         <Image
           src="/images/products/logo.png"
           alt=""
           width={96}
           height={36}
-          className="h-6 w-auto sm:h-7 md:h-8"
+          className="h-5 w-auto min-[400px]:h-6 sm:h-7 md:h-8"
           priority
         />
       </span>
-      <span className="font-display text-lg leading-none tracking-tight sm:text-xl md:text-2xl">
+      <span className="whitespace-nowrap font-display text-[15px] leading-none tracking-tight min-[400px]:text-lg sm:text-xl md:text-2xl">
         AYAN <span className="italic">Cosmetics</span>
       </span>
     </Link>
@@ -105,7 +105,7 @@ export default function Navbar() {
         />
       </div>
 
-      <nav className="container-custom flex h-16 items-center justify-between gap-4" aria-label="Main">
+      <nav className="container-custom flex h-16 items-center justify-between gap-2 md:gap-4" aria-label="Main">
         <Logo />
 
         {/* Desktop links */}
@@ -143,7 +143,7 @@ export default function Navbar() {
         </ul>
 
         {/* Actions */}
-        <div className="flex items-center gap-1.5 md:gap-2">
+        <div className="flex shrink-0 items-center gap-0.5 min-[400px]:gap-1.5 md:gap-2">
           <Link
             href="/shop"
             aria-label="Search products"
